@@ -1,0 +1,236 @@
+# Bioconductor
+
+
+
+O projeto Bioconductor desenvolve, apoia e dissemina software de código aberto gratuito que facilite a análise rigorosa e reprodutível de dados de ensaios biológicos atuais e emergentes. 
+  
+Conta com mais de 2000 pacotes.
+A versão atual (3.17) requer a versão 4.3.0 do R.
+   
+Para instalar pacotes do Bioconductor precisa do pacote BiocManager:
+
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install(version = "3.16") 
+  
+Depois os pacotes podem ser instalados assim:
+  
+BiocManager::install(c("GenomicFeatures", "AnnotationDbi"))
+  
+Para procurar pacotes:
+
+```{r 09- bioconductor}
+BiocManager::available("expression")
+```
+
+O site é: https://bioconductor.org/
+
+
+## Pacote msa
+
+
+Vamos instalar o pacote msa (Multiple Sequence Alignment):
+An R Package for Multiple Sequence Alignment
+Enrico Bonatesta, Christoph Kainrath, and Ulrich Bodenhofer
+Institute of Bioinformatics, Johannes Kepler University Linz, Austria
+
+BiocManager::install("msa")
+
+Vamos carregar algumas sequências usando o pacote ape:
+
+```{r 09- msa}
+library(ape)
+id_seq<-c("NM_022942.1","NM_009738.3","NM_001313861.2")
+seq_bche<-read.GenBank(id_seq)
+seq_bche
+```
+
+Temos que salvar em formato fasta, para depois usar esse arquivo no msa.  
+O formato FASTA é um formato baseado em texto para representar tanto sequencias de nucleotideos quanto sequencias de aminoácidos. O formato também permite sequências de nomes e comentários precedendo as sequências.  
+  
+
+```{r 09- msa 2}
+write.FASTA(seq_bche, file = "seq_bche.fasta")
+```
+
+  
+Agora vamos fazer o alinhamento usando o pacote msa, onde informamos o tipo de sequência em type (pode ser dna,rna ou protein), em method escolhemos o método de alinhamento, sendo as opções: "ClustalW", "ClustalOmega" e "Muscle". Iremos utilizar o  ClustalW.
+  
+
+```{r 09- msa 3, message=FALSE, warning=FALSE}
+library(msa)
+
+alin<-msa("seq_bche.fasta", type = "dna", method = "ClustalW")
+
+alin
+```
+
+Para ver o alinhamento vamos usar outro pacote, o ggmsa:
+instalar o pacote ggmsa
+BiocManager::install("ggmsa")
+
+Precisamos fazer algumas transformações no objeto alin antes de usar no ggmsa:
+  
+
+```{r 09- msa 4, message=FALSE, warning=FALSE}
+library(ggmsa)
+# converter para o formato do ape
+ali_bche<-msaConvert(alin, type="ape::DNAbin")
+
+# salvar no formato fasta
+write.FASTA(ali_bche, file = "ali_bche.fas")
+
+# ler o arquivo fasta
+ali_bche2<-read.FASTA("ali_bche.fas")
+```
+
+Agora vamos gerar a figura com o alinhamento:
+
+```{r 09- msa 5}
+ggmsa(ali_bche2, 1000, 1030, char_width = 0.5, seq_name = F) 
+```
+
+Acrescentando uma camada:
+
+```{r 09- msa 6}
+ggmsa(ali_bche2, 1000, 1020, char_width = 0.5, seq_name = T) + geom_seqlogo(color = "Chemistry_NT")
+```
+
+Acrescentando a sequência consenso:
+
+```{r 09- msa 7}
+
+ggmsa(ali_bche2, 1000, 1020, char_width = 0.8, seq_name = T) + geom_seqlogo(color = "Chemistry_NT") + geom_msaBar()
+```
+
+
+Esquema de cores
+ggmsa predefine vários esquemas de cores para renderização. Podemos usar available_msa() para listar os esquemas de cores disponíveis.  
+Observe que aminoácidos (proteína) e nucleotídeos (DNA/RNA) têm nomes diferentes.   
+
+DNA:  
+Chemistry_NT Shapely_NT Taylor_NT Zappo_NT  
+
+Proteínas:  
+
+Clustal Chemistry_AA Shapely_AA Zappo_AA Taylor_AA LETTER CN6 Hydrophobicity  
+
+
+
+Abaixo estão as camadas de anotação suportadas pelo ggmsa:  
+
+Annotation modules	Type	Description
+geom_seqlogo()	geometric layer	automatically generated sequence logos for a MSA
+geom_GC()	      annotation module	shows GC content with bubble chart
+geom_seed()	    annotation module	highlights seed region on miRNA sequences
+geom_msaBar()	  annotation module	shows sequences conservation by a bar chart
+geom_helix()	  annotation module	depicts RNA secondary structure as arc diagrams(need extra data)
+
+  
+  
+## Pacote multiMiR
+
+Para insatalar:
+BiocManager::install("multiMiR")
+
+
+Os microRNAs (miRNAs) regulam a expressão promovendo a degradação ou reprimindo a tradução de transcritos alvo. Os sítios alvo de miRNA foram catalogados em bancos de dados com base em validação experimental e previsão computacional usando uma variedade de algoritmos.
+
+O pacote R multiMiR  (http://multimir.org), é uma coleção abrangente de interações miRNA-alvo previstas e validadas e suas associações com doenças e medicamentos. O multiMiR inclui vários novos recursos não disponíveis em pacotes R existentes.
+
+As informações de cada banco de dados externo são armazenadas em uma tabela no banco de dados multiMiR. Para ver uma lista das tabelas, podemos usar a função multimir_dbTables().
+
+```{r 09- multiMiR}
+library(multiMiR)
+multimir_dbTables()
+```
+
+Podemos ver os detalhes de cada banco:
+
+```{r 09- multiMiR 2}
+multimir_dbInfo()
+```
+
+Entre os 14 bancos de dados externos, oito contêm interações miRNA-alvo previstas, três têm interações miRNA-alvo validadas experimentalmente e os três restantes contêm associações miRNA-droga/doença. 
+
+Para verificar essas categorias e bancos de dados de dentro do R, temos um conjunto de quatro funções auxiliares:
+
+```{r 09- multiMiR 3}
+predicted_tables()
+validated_tables()
+diseasedrug_tables()
+reverse_table_lookup("targetscan")
+```
+
+Para ver quantos registros existem nesses 14 bancos de dados externos, nos referimos à função multimir_dbCount.
+
+```{r 09- multiMiR 4}
+multimir_dbCount()
+```
+
+A função list_multimir() listar todos os miRNAs únicos, genes alvo, drogas e doenças no banco de dados multiMiR. Uma opção para limitar o número de registros retornados foi adicionada para ajudar nos testes e na exploração.
+
+```{r 09- multiMiR 5}
+miRNAs<- list_multimir("mirna", limit = 10)
+genes<- list_multimir("gene", limit = 10)
+drugs<- list_multimir("drug", limit = 10)
+diseases<- list_multimir("disease", limit = 10)
+
+miRNAs
+genes
+drugs
+diseases
+```
+
+get_multimir() é a principal função no pacote para recuperar interações miRNA-alvo previstas e validadas e suas associações de doenças e medicamentos do banco de dados multiMiR.
+
+Podemos pesquisar por miRNA:
+
+```{r 09- multiMiR 6}
+example1 <- get_multimir(mirna = 'hsa-miR-125a-5p', summary = TRUE)
+
+# Check which types of associations were returned
+table(example1@data$type)
+# Detailed information of the validated miRNA-target interaction
+head(example1@data)
+```
+
+Podemos pesquisar por medicamento:
+
+```{r 09- multiMiR 7}
+example2 <- get_multimir(disease.drug = 'cisplatin', table = 'disease.drug')
+head(example2@data)
+```
+
+Podemos pesquisar por gene:
+
+```{r 09- multiMiR 8}
+example3 <- get_multimir(org     = "hsa",
+                         target  = "BCHE",
+                         table   = "predicted",
+                         summary = TRUE,
+                         predicted.cutoff      = 35,
+                         predicted.cutoff.type = "p",
+                         predicted.site        = "all")
+
+table(example3@data$type)
+head(example3@data)
+head(example3@summary)
+```
+
+Você pode ter uma lista de genes envolvidos em um processo biológico comum. É interessante verificar se alguns, ou todos, desses genes são direcionados pelo(s) mesmo(s) miRNA(s).
+
+```{r 09- multiMiR 9}
+example4 <- get_multimir(org     = 'hsa',
+                         target  = c('AKT2', 'CERS6', 'S1PR3', 'SULF2'),
+                         table   = 'predicted',
+                         summary = TRUE,
+                         predicted.cutoff.type = 'n',
+                         predicted.cutoff      = 500000)
+
+example4.counts <- addmargins(table(example4@summary[, 2:3]))
+example4.counts <- example4.counts[-nrow(example4.counts), ]
+example4.counts <- example4.counts[order(example4.counts[, 5], decreasing = TRUE), ]
+head(example4.counts)
+```
+

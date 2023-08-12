@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 9 Bioconductor | Análises de Dados com R</title>
+  <meta name="description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 9 Bioconductor | Análises de Dados com R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bookdown.org/ricardo_lehtonen/analise/capa.png" />
+  <meta property="og:description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 9 Bioconductor | Análises de Dados com R" />
+  
+  <meta name="twitter:description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  <meta name="twitter:image" content="https://bookdown.org/ricardo_lehtonen/analise/capa.png" />
+
+<meta name="author" content="Ricardo Lehtonen R. de Souza" />
+
+
+<meta name="date" content="2023-07-31" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="network.html"/>
+<link rel="next" href="dados-não-estruturados.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script>
+<link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet" />
+<script src="libs/tabwid-1.1.3/tabwid.js"></script>
+<link href="libs/wordcloud2-0.0.1/wordcloud.css" rel="stylesheet" />
+<script src="libs/wordcloud2-0.0.1/wordcloud2-all.js"></script>
+<script src="libs/wordcloud2-0.0.1/hover.js"></script>
+<script src="libs/wordcloud2-binding-0.2.1/wordcloud2.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Análises de dados com R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefácio</a></li>
+<li class="chapter" data-level="1" data-path="introdução.html"><a href="introdução.html"><i class="fa fa-check"></i><b>1</b> Introdução</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introdução.html"><a href="introdução.html#o-que-é-r"><i class="fa fa-check"></i><b>1.1</b> O que é R</a></li>
+<li class="chapter" data-level="1.2" data-path="introdução.html"><a href="introdução.html#instalação"><i class="fa fa-check"></i><b>1.2</b> Instalação</a></li>
+<li class="chapter" data-level="1.3" data-path="introdução.html"><a href="introdução.html#rstudio"><i class="fa fa-check"></i><b>1.3</b> RStudio</a></li>
+<li class="chapter" data-level="1.4" data-path="introdução.html"><a href="introdução.html#objetos-do-r"><i class="fa fa-check"></i><b>1.4</b> Objetos do R</a></li>
+<li class="chapter" data-level="1.5" data-path="introdução.html"><a href="introdução.html#nomes-dos-objetos-do-r"><i class="fa fa-check"></i><b>1.5</b> Nomes dos objetos do R</a></li>
+<li class="chapter" data-level="1.6" data-path="introdução.html"><a href="introdução.html#vetores"><i class="fa fa-check"></i><b>1.6</b> Vetores</a></li>
+<li class="chapter" data-level="1.7" data-path="introdução.html"><a href="introdução.html#operações-com-vetores"><i class="fa fa-check"></i><b>1.7</b> Operações com Vetores</a></li>
+<li class="chapter" data-level="1.8" data-path="introdução.html"><a href="introdução.html#fatores"><i class="fa fa-check"></i><b>1.8</b> Fatores</a></li>
+<li class="chapter" data-level="1.9" data-path="introdução.html"><a href="introdução.html#matrizes"><i class="fa fa-check"></i><b>1.9</b> Matrizes</a></li>
+<li class="chapter" data-level="1.10" data-path="introdução.html"><a href="introdução.html#listas"><i class="fa fa-check"></i><b>1.10</b> Listas</a></li>
+<li class="chapter" data-level="1.11" data-path="introdução.html"><a href="introdução.html#data-frame"><i class="fa fa-check"></i><b>1.11</b> Data frame</a></li>
+<li class="chapter" data-level="1.12" data-path="introdução.html"><a href="introdução.html#sequências"><i class="fa fa-check"></i><b>1.12</b> Sequências</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html"><i class="fa fa-check"></i><b>2</b> Carregar e manipular dados</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#ler-arquivos-txt-e-csv"><i class="fa fa-check"></i><b>2.1</b> Ler arquivos txt e csv</a></li>
+<li class="chapter" data-level="2.2" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#ler-arquivos-xlsx"><i class="fa fa-check"></i><b>2.2</b> Ler arquivos xlsx</a></li>
+<li class="chapter" data-level="2.3" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#gravar-arquivos-txt-e-xlsx"><i class="fa fa-check"></i><b>2.3</b> Gravar arquivos txt e xlsx</a></li>
+<li class="chapter" data-level="2.4" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#manipulação-de-dados-r-base"><i class="fa fa-check"></i><b>2.4</b> Manipulação de dados (R base)</a></li>
+<li class="chapter" data-level="2.5" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#transformação-de-dados"><i class="fa fa-check"></i><b>2.5</b> Transformação de dados</a></li>
+<li class="chapter" data-level="2.6" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#técnicas-de-normalização"><i class="fa fa-check"></i><b>2.6</b> Técnicas de normalização</a></li>
+<li class="chapter" data-level="2.7" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#juntar-dados-r-base"><i class="fa fa-check"></i><b>2.7</b> Juntar dados (R base)</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html"><i class="fa fa-check"></i><b>3</b> O sistema tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#manipulação-de-dados-com-tidyverse"><i class="fa fa-check"></i><b>3.1</b> Manipulação de dados com tidyverse</a></li>
+<li class="chapter" data-level="3.2" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-filter"><i class="fa fa-check"></i><b>3.2</b> Função filter</a></li>
+<li class="chapter" data-level="3.3" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-arrange"><i class="fa fa-check"></i><b>3.3</b> Função arrange</a></li>
+<li class="chapter" data-level="3.4" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-select"><i class="fa fa-check"></i><b>3.4</b> Função select</a></li>
+<li class="chapter" data-level="3.5" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-mutate-e-transmutate"><i class="fa fa-check"></i><b>3.5</b> Função mutate e transmutate</a></li>
+<li class="chapter" data-level="3.6" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#funções-group_by-e-summarise"><i class="fa fa-check"></i><b>3.6</b> Funções group_by e summarise</a></li>
+<li class="chapter" data-level="3.7" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#funções-pull-e-distinct"><i class="fa fa-check"></i><b>3.7</b> Funções pull e distinct</a></li>
+<li class="chapter" data-level="3.8" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#pipes"><i class="fa fa-check"></i><b>3.8</b> Pipes</a></li>
+<li class="chapter" data-level="3.9" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#pipe-nativa-do-r"><i class="fa fa-check"></i><b>3.9</b> Pipe nativa do R</a></li>
+<li class="chapter" data-level="3.10" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#tibble"><i class="fa fa-check"></i><b>3.10</b> Tibble</a></li>
+<li class="chapter" data-level="3.11" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#juntar-dados"><i class="fa fa-check"></i><b>3.11</b> Juntar dados</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="gráficos.html"><a href="gráficos.html"><i class="fa fa-check"></i><b>4</b> Gráficos</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="gráficos.html"><a href="gráficos.html#gráficos-com-o-pacote-graphics-r-base"><i class="fa fa-check"></i><b>4.1</b> Gráficos com o pacote graphics (R base)</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="gráficos.html"><a href="gráficos.html#introdução-aos-gráficos-do-r"><i class="fa fa-check"></i><b>4.1.1</b> Introdução aos gráficos do R</a></li>
+<li class="chapter" data-level="4.1.2" data-path="gráficos.html"><a href="gráficos.html#salvar"><i class="fa fa-check"></i><b>4.1.2</b> Salvar</a></li>
+<li class="chapter" data-level="4.1.3" data-path="gráficos.html"><a href="gráficos.html#histogramas"><i class="fa fa-check"></i><b>4.1.3</b> Histogramas</a></li>
+<li class="chapter" data-level="4.1.4" data-path="gráficos.html"><a href="gráficos.html#boxplot"><i class="fa fa-check"></i><b>4.1.4</b> Boxplot</a></li>
+<li class="chapter" data-level="4.1.5" data-path="gráficos.html"><a href="gráficos.html#barplot"><i class="fa fa-check"></i><b>4.1.5</b> Barplot</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="gráficos.html"><a href="gráficos.html#o-pacote-ggplot2"><i class="fa fa-check"></i><b>4.2</b> O pacote ggplot2</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="gráficos.html"><a href="gráficos.html#gráficos-de-pontos-dispersão"><i class="fa fa-check"></i><b>4.2.1</b> Gráficos de pontos (dispersão)</a></li>
+<li class="chapter" data-level="4.2.2" data-path="gráficos.html"><a href="gráficos.html#salvar-1"><i class="fa fa-check"></i><b>4.2.2</b> Salvar</a></li>
+<li class="chapter" data-level="4.2.3" data-path="gráficos.html"><a href="gráficos.html#histogramas-1"><i class="fa fa-check"></i><b>4.2.3</b> Histogramas</a></li>
+<li class="chapter" data-level="4.2.4" data-path="gráficos.html"><a href="gráficos.html#density-plot"><i class="fa fa-check"></i><b>4.2.4</b> Density plot</a></li>
+<li class="chapter" data-level="4.2.5" data-path="gráficos.html"><a href="gráficos.html#boxplot-1"><i class="fa fa-check"></i><b>4.2.5</b> Boxplot</a></li>
+<li class="chapter" data-level="4.2.6" data-path="gráficos.html"><a href="gráficos.html#gráfico-q-q"><i class="fa fa-check"></i><b>4.2.6</b> Gráfico Q-Q</a></li>
+<li class="chapter" data-level="4.2.7" data-path="gráficos.html"><a href="gráficos.html#figura-com-vários-gráficos"><i class="fa fa-check"></i><b>4.2.7</b> Figura com vários gráficos</a></li>
+<li class="chapter" data-level="4.2.8" data-path="gráficos.html"><a href="gráficos.html#ajustes-de-posição"><i class="fa fa-check"></i><b>4.2.8</b> Ajustes de Posição</a></li>
+<li class="chapter" data-level="4.2.9" data-path="gráficos.html"><a href="gráficos.html#geom-smooth"><i class="fa fa-check"></i><b>4.2.9</b> Geom Smooth</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="gráficos.html"><a href="gráficos.html#outros-pacotes-gráficos"><i class="fa fa-check"></i><b>4.3</b> Outros pacotes gráficos</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="gráficos.html"><a href="gráficos.html#usando-as-cores"><i class="fa fa-check"></i><b>4.3.1</b> Usando as cores</a></li>
+<li class="chapter" data-level="4.3.2" data-path="gráficos.html"><a href="gráficos.html#análise-gráfica-exploratória"><i class="fa fa-check"></i><b>4.3.2</b> Análise gráfica exploratória</a></li>
+<li class="chapter" data-level="4.3.3" data-path="gráficos.html"><a href="gráficos.html#ggplot2-mais-parâmetros"><i class="fa fa-check"></i><b>4.3.3</b> GGPLOT2: mais parâmetros</a></li>
+<li class="chapter" data-level="4.3.4" data-path="gráficos.html"><a href="gráficos.html#diagrama-de-venn"><i class="fa fa-check"></i><b>4.3.4</b> Diagrama de Venn</a></li>
+<li class="chapter" data-level="4.3.5" data-path="gráficos.html"><a href="gráficos.html#diagramas"><i class="fa fa-check"></i><b>4.3.5</b> Diagramas</a></li>
+<li class="chapter" data-level="4.3.6" data-path="gráficos.html"><a href="gráficos.html#outra-opção-é-o-pacote-ggflowchart"><i class="fa fa-check"></i><b>4.3.6</b> Outra opção é o pacote ggflowchart</a></li>
+<li class="chapter" data-level="4.3.7" data-path="gráficos.html"><a href="gráficos.html#datas-e-séries-temporais"><i class="fa fa-check"></i><b>4.3.7</b> Datas e séries temporais</a></li>
+<li class="chapter" data-level="4.3.8" data-path="gráficos.html"><a href="gráficos.html#time-series---dados-de-casos-de-covid-no-paraná"><i class="fa fa-check"></i><b>4.3.8</b> Time series - Dados de casos de COVID no Paraná</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="estatística.html"><a href="estatística.html"><i class="fa fa-check"></i><b>5</b> Estatística</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="estatística.html"><a href="estatística.html#estatística-descritiva"><i class="fa fa-check"></i><b>5.1</b> Estatística descritiva</a></li>
+<li class="chapter" data-level="5.2" data-path="estatística.html"><a href="estatística.html#testes-estatísticos"><i class="fa fa-check"></i><b>5.2</b> Testes estatísticos</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="estatística.html"><a href="estatística.html#normalidade"><i class="fa fa-check"></i><b>5.2.1</b> Normalidade</a></li>
+<li class="chapter" data-level="5.2.2" data-path="estatística.html"><a href="estatística.html#assimetria-e-curtose"><i class="fa fa-check"></i><b>5.2.2</b> Assimetria e curtose</a></li>
+<li class="chapter" data-level="5.2.3" data-path="estatística.html"><a href="estatística.html#teste-t"><i class="fa fa-check"></i><b>5.2.3</b> Teste t</a></li>
+<li class="chapter" data-level="5.2.4" data-path="estatística.html"><a href="estatística.html#teste-qui-quadrado"><i class="fa fa-check"></i><b>5.2.4</b> Teste qui-quadrado</a></li>
+<li class="chapter" data-level="5.2.5" data-path="estatística.html"><a href="estatística.html#correlação"><i class="fa fa-check"></i><b>5.2.5</b> Correlação</a></li>
+<li class="chapter" data-level="5.2.6" data-path="estatística.html"><a href="estatística.html#regressão"><i class="fa fa-check"></i><b>5.2.6</b> Regressão</a></li>
+<li class="chapter" data-level="5.2.7" data-path="estatística.html"><a href="estatística.html#anova"><i class="fa fa-check"></i><b>5.2.7</b> ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="estatística.html"><a href="estatística.html#visualização-de-resultados-estatísticos"><i class="fa fa-check"></i><b>5.3</b> Visualização de resultados estatísticos</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="funções-e-loops.html"><a href="funções-e-loops.html"><i class="fa fa-check"></i><b>6</b> Funções e loops</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="funções-e-loops.html"><a href="funções-e-loops.html#funções"><i class="fa fa-check"></i><b>6.1</b> Funções</a></li>
+<li class="chapter" data-level="6.2" data-path="funções-e-loops.html"><a href="funções-e-loops.html#loops"><i class="fa fa-check"></i><b>6.2</b> Loops</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="funções-e-loops.html"><a href="funções-e-loops.html#for"><i class="fa fa-check"></i><b>6.2.1</b> for</a></li>
+<li class="chapter" data-level="6.2.2" data-path="funções-e-loops.html"><a href="funções-e-loops.html#while"><i class="fa fa-check"></i><b>6.2.2</b> while</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="funções-e-loops.html"><a href="funções-e-loops.html#if-e-else"><i class="fa fa-check"></i><b>6.3</b> if e else</a></li>
+<li class="chapter" data-level="6.4" data-path="funções-e-loops.html"><a href="funções-e-loops.html#funções-apply-lapply-sapply-tapply-mapply"><i class="fa fa-check"></i><b>6.4</b> Funções apply, lapply, sapply, tapply, mapply</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="genética.html"><a href="genética.html"><i class="fa fa-check"></i><b>7</b> Genética</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="genética.html"><a href="genética.html#genética-de-populações"><i class="fa fa-check"></i><b>7.1</b> Genética de populações</a></li>
+<li class="chapter" data-level="7.2" data-path="genética.html"><a href="genética.html#genotipagem-com-genetics-e-loop"><i class="fa fa-check"></i><b>7.2</b> Genotipagem com genetics e loop</a></li>
+<li class="chapter" data-level="7.3" data-path="genética.html"><a href="genética.html#heredogramas"><i class="fa fa-check"></i><b>7.3</b> Heredogramas</a></li>
+<li class="chapter" data-level="7.4" data-path="genética.html"><a href="genética.html#análises-filogenéticas"><i class="fa fa-check"></i><b>7.4</b> Análises filogenéticas</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>8</b> Network</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="network.html"><a href="network.html#pacote-igraph"><i class="fa fa-check"></i><b>8.1</b> Pacote Igraph</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="bioconductor.html"><a href="bioconductor.html"><i class="fa fa-check"></i><b>9</b> Bioconductor</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="bioconductor.html"><a href="bioconductor.html#pacote-msa"><i class="fa fa-check"></i><b>9.1</b> Pacote msa</a></li>
+<li class="chapter" data-level="9.2" data-path="bioconductor.html"><a href="bioconductor.html#pacote-multimir"><i class="fa fa-check"></i><b>9.2</b> Pacote multiMiR</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html"><i class="fa fa-check"></i><b>10</b> Dados não estruturados</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#texto"><i class="fa fa-check"></i><b>10.1</b> Texto</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#análise-de-sentimentos"><i class="fa fa-check"></i><b>10.1.1</b> Análise de sentimentos</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#imagens"><i class="fa fa-check"></i><b>10.2</b> Imagens</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#edição-de-imagens"><i class="fa fa-check"></i><b>10.2.1</b> Edição de imagens</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#áudio"><i class="fa fa-check"></i><b>10.3</b> Áudio</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html"><i class="fa fa-check"></i><b>11</b> Pesquisa bibliográfica e Bibliometria</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#pesquisa-bibliográfica"><i class="fa fa-check"></i><b>11.1</b> Pesquisa bibliográfica</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#termos-da-busca"><i class="fa fa-check"></i><b>11.1.1</b> Termos da busca</a></li>
+<li class="chapter" data-level="11.1.2" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#bases-de-dados"><i class="fa fa-check"></i><b>11.1.2</b> Bases de dados</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#pubmed"><i class="fa fa-check"></i><b>11.2</b> PubMed</a></li>
+<li class="chapter" data-level="11.3" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#bibliometria"><i class="fa fa-check"></i><b>11.3</b> Bibliometria</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>12</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="r-markdown.html"><a href="r-markdown.html#incluindo-gráficos"><i class="fa fa-check"></i><b>12.1</b> Incluindo gráficos</a></li>
+<li class="chapter" data-level="12.2" data-path="r-markdown.html"><a href="r-markdown.html#chunk-opções"><i class="fa fa-check"></i><b>12.2</b> Chunk: opções</a></li>
+<li class="chapter" data-level="12.3" data-path="r-markdown.html"><a href="r-markdown.html#formatação"><i class="fa fa-check"></i><b>12.3</b> Formatação</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://docs.ufpr.br/~lehtonen/" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análises de Dados com R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="bioconductor" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Capítulo 9</span> Bioconductor<a href="bioconductor.html#bioconductor" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>O projeto Bioconductor desenvolve, apoia e dissemina software de código aberto gratuito que facilite a análise rigorosa e reprodutível de dados de ensaios biológicos atuais e emergentes.</p>
+<p>Conta com mais de 2000 pacotes.
+A versão atual (3.17) requer a versão 4.3.0 do R.</p>
+<p>Para instalar pacotes do Bioconductor precisa do pacote BiocManager:</p>
+<p>if (!require(“BiocManager”, quietly = TRUE))
+install.packages(“BiocManager”)
+BiocManager::install(version = “3.16”)</p>
+<p>Depois os pacotes podem ser instalados assim:</p>
+<p>BiocManager::install(c(“GenomicFeatures”, “AnnotationDbi”))</p>
+<p>Para procurar pacotes:</p>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="bioconductor.html#cb442-1" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">available</span>(<span class="st">&quot;expression&quot;</span>)</span></code></pre></div>
+<pre><code>##  [1] &quot;easyDifferentialGeneCoexpression&quot; &quot;ExpressionAtlas&quot;                 
+##  [3] &quot;ExpressionNormalizationWorkflow&quot;  &quot;geneExpressionFromGEO&quot;           
+##  [5] &quot;GeneExpressionSignature&quot;          &quot;lungExpression&quot;                  
+##  [7] &quot;maqcExpression4plex&quot;              &quot;NormExpression&quot;                  
+##  [9] &quot;RVerbalExpressions&quot;               &quot;statsExpressions&quot;</code></pre>
+<p>O site é: <a href="https://bioconductor.org/" class="uri">https://bioconductor.org/</a></p>
+<div id="pacote-msa" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Pacote msa<a href="bioconductor.html#pacote-msa" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Vamos instalar o pacote msa (Multiple Sequence Alignment):
+An R Package for Multiple Sequence Alignment
+Enrico Bonatesta, Christoph Kainrath, and Ulrich Bodenhofer
+Institute of Bioinformatics, Johannes Kepler University Linz, Austria</p>
+<p>BiocManager::install(“msa”)</p>
+<p>Vamos carregar algumas sequências usando o pacote ape:</p>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="bioconductor.html#cb444-1" tabindex="-1"></a><span class="fu">library</span>(ape)</span>
+<span id="cb444-2"><a href="bioconductor.html#cb444-2" tabindex="-1"></a>id_seq<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;NM_022942.1&quot;</span>,<span class="st">&quot;NM_009738.3&quot;</span>,<span class="st">&quot;NM_001313861.2&quot;</span>)</span>
+<span id="cb444-3"><a href="bioconductor.html#cb444-3" tabindex="-1"></a>seq_bche<span class="ot">&lt;-</span><span class="fu">read.GenBank</span>(id_seq)</span>
+<span id="cb444-4"><a href="bioconductor.html#cb444-4" tabindex="-1"></a>seq_bche</span></code></pre></div>
+<pre><code>## 3 DNA sequences in binary format stored in a list.
+## 
+## Mean sequence length: 3435 
+##    Shortest sequence: 1878 
+##     Longest sequence: 6209 
+## 
+## Labels:
+## NM_022942.1
+## NM_009738.3
+## NM_001313861.2
+## 
+## Base composition:
+##     a     c     g     t 
+## 0.310 0.201 0.197 0.292 
+## (Total: 10.3 kb)</code></pre>
+<p>Temos que salvar em formato fasta, para depois usar esse arquivo no msa.<br />
+O formato FASTA é um formato baseado em texto para representar tanto sequencias de nucleotideos quanto sequencias de aminoácidos. O formato também permite sequências de nomes e comentários precedendo as sequências.</p>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="bioconductor.html#cb446-1" tabindex="-1"></a><span class="fu">write.FASTA</span>(seq_bche, <span class="at">file =</span> <span class="st">&quot;seq_bche.fasta&quot;</span>)</span></code></pre></div>
+<p>Agora vamos fazer o alinhamento usando o pacote msa, onde informamos o tipo de sequência em type (pode ser dna,rna ou protein), em method escolhemos o método de alinhamento, sendo as opções: “ClustalW”, “ClustalOmega” e “Muscle”. Iremos utilizar o ClustalW.</p>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="bioconductor.html#cb447-1" tabindex="-1"></a><span class="fu">library</span>(msa)</span>
+<span id="cb447-2"><a href="bioconductor.html#cb447-2" tabindex="-1"></a></span>
+<span id="cb447-3"><a href="bioconductor.html#cb447-3" tabindex="-1"></a>alin<span class="ot">&lt;-</span><span class="fu">msa</span>(<span class="st">&quot;seq_bche.fasta&quot;</span>, <span class="at">type =</span> <span class="st">&quot;dna&quot;</span>, <span class="at">method =</span> <span class="st">&quot;ClustalW&quot;</span>)</span></code></pre></div>
+<pre><code>## use default substitution matrix</code></pre>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="bioconductor.html#cb449-1" tabindex="-1"></a>alin</span></code></pre></div>
+<pre><code>## CLUSTAL 2.1  
+## 
+## Call:
+##    msa(&quot;seq_bche.fasta&quot;, type = &quot;dna&quot;, method = &quot;ClustalW&quot;)
+## 
+## MsaDNAMultipleAlignment with 3 rows and 6219 columns
+##     aln 
+## [1] ------------------------------------...------------------------------------
+## [2] CTTCTCTCCTGAAGCCTGCCTGCAATGGTGGAGGAA...GAATCATATGCACAAAATAAAAACTTCCTTGTATAA
+## [3] ------------------------------------...------------------------------------
+## Con ------------------------------------...------------------------------------</code></pre>
+<p>Para ver o alinhamento vamos usar outro pacote, o ggmsa:
+instalar o pacote ggmsa
+BiocManager::install(“ggmsa”)</p>
+<p>Precisamos fazer algumas transformações no objeto alin antes de usar no ggmsa:</p>
+<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="bioconductor.html#cb451-1" tabindex="-1"></a><span class="fu">library</span>(ggmsa)</span>
+<span id="cb451-2"><a href="bioconductor.html#cb451-2" tabindex="-1"></a><span class="co"># converter para o formato do ape</span></span>
+<span id="cb451-3"><a href="bioconductor.html#cb451-3" tabindex="-1"></a>ali_bche<span class="ot">&lt;-</span><span class="fu">msaConvert</span>(alin, <span class="at">type=</span><span class="st">&quot;ape::DNAbin&quot;</span>)</span>
+<span id="cb451-4"><a href="bioconductor.html#cb451-4" tabindex="-1"></a></span>
+<span id="cb451-5"><a href="bioconductor.html#cb451-5" tabindex="-1"></a><span class="co"># salvar no formato fasta</span></span>
+<span id="cb451-6"><a href="bioconductor.html#cb451-6" tabindex="-1"></a><span class="fu">write.FASTA</span>(ali_bche, <span class="at">file =</span> <span class="st">&quot;ali_bche.fas&quot;</span>)</span>
+<span id="cb451-7"><a href="bioconductor.html#cb451-7" tabindex="-1"></a></span>
+<span id="cb451-8"><a href="bioconductor.html#cb451-8" tabindex="-1"></a><span class="co"># ler o arquivo fasta</span></span>
+<span id="cb451-9"><a href="bioconductor.html#cb451-9" tabindex="-1"></a>ali_bche2<span class="ot">&lt;-</span><span class="fu">read.FASTA</span>(<span class="st">&quot;ali_bche.fas&quot;</span>)</span></code></pre></div>
+<p>Agora vamos gerar a figura com o alinhamento:</p>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="bioconductor.html#cb452-1" tabindex="-1"></a><span class="fu">ggmsa</span>(ali_bche2, <span class="dv">1000</span>, <span class="dv">1030</span>, <span class="at">char_width =</span> <span class="fl">0.5</span>, <span class="at">seq_name =</span> F) </span></code></pre></div>
+<p><img src="_main_files/figure-html/09-%20msa%205-1.png" width="672" /></p>
+<p>Acrescentando uma camada:</p>
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="bioconductor.html#cb453-1" tabindex="-1"></a><span class="fu">ggmsa</span>(ali_bche2, <span class="dv">1000</span>, <span class="dv">1020</span>, <span class="at">char_width =</span> <span class="fl">0.5</span>, <span class="at">seq_name =</span> T) <span class="sc">+</span> <span class="fu">geom_seqlogo</span>(<span class="at">color =</span> <span class="st">&quot;Chemistry_NT&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/09-%20msa%206-1.png" width="672" /></p>
+<p>Acrescentando a sequência consenso:</p>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="bioconductor.html#cb454-1" tabindex="-1"></a><span class="fu">ggmsa</span>(ali_bche2, <span class="dv">1000</span>, <span class="dv">1020</span>, <span class="at">char_width =</span> <span class="fl">0.8</span>, <span class="at">seq_name =</span> T) <span class="sc">+</span> <span class="fu">geom_seqlogo</span>(<span class="at">color =</span> <span class="st">&quot;Chemistry_NT&quot;</span>) <span class="sc">+</span> <span class="fu">geom_msaBar</span>()</span></code></pre></div>
+<pre><code>## Coordinate system already present. Adding new coordinate system, which will
+## replace the existing one.</code></pre>
+<p><img src="_main_files/figure-html/09-%20msa%207-1.png" width="672" /></p>
+<p>Esquema de cores
+ggmsa predefine vários esquemas de cores para renderização. Podemos usar available_msa() para listar os esquemas de cores disponíveis.<br />
+Observe que aminoácidos (proteína) e nucleotídeos (DNA/RNA) têm nomes diferentes.</p>
+<p>DNA:<br />
+Chemistry_NT Shapely_NT Taylor_NT Zappo_NT</p>
+<p>Proteínas:</p>
+<p>Clustal Chemistry_AA Shapely_AA Zappo_AA Taylor_AA LETTER CN6 Hydrophobicity</p>
+<p>Abaixo estão as camadas de anotação suportadas pelo ggmsa:</p>
+<p>Annotation modules Type Description
+geom_seqlogo() geometric layer automatically generated sequence logos for a MSA
+geom_GC() annotation module shows GC content with bubble chart
+geom_seed() annotation module highlights seed region on miRNA sequences
+geom_msaBar() annotation module shows sequences conservation by a bar chart
+geom_helix() annotation module depicts RNA secondary structure as arc diagrams(need extra data)</p>
+</div>
+<div id="pacote-multimir" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Pacote multiMiR<a href="bioconductor.html#pacote-multimir" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Para insatalar:
+BiocManager::install(“multiMiR”)</p>
+<p>Os microRNAs (miRNAs) regulam a expressão promovendo a degradação ou reprimindo a tradução de transcritos alvo. Os sítios alvo de miRNA foram catalogados em bancos de dados com base em validação experimental e previsão computacional usando uma variedade de algoritmos.</p>
+<p>O pacote R multiMiR (<a href="http://multimir.org" class="uri">http://multimir.org</a>), é uma coleção abrangente de interações miRNA-alvo previstas e validadas e suas associações com doenças e medicamentos. O multiMiR inclui vários novos recursos não disponíveis em pacotes R existentes.</p>
+<p>As informações de cada banco de dados externo são armazenadas em uma tabela no banco de dados multiMiR. Para ver uma lista das tabelas, podemos usar a função multimir_dbTables().</p>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="bioconductor.html#cb456-1" tabindex="-1"></a><span class="fu">library</span>(multiMiR)</span></code></pre></div>
+<pre><code>## Welcome to multiMiR.
+## 
+## multiMiR database URL has been set to the 
+## default value: http://multimir.org/
+## 
+## Database Version: 2.3.0  Updated: 2020-04-15</code></pre>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="bioconductor.html#cb458-1" tabindex="-1"></a><span class="fu">multimir_dbTables</span>()</span></code></pre></div>
+<pre><code>##  [1] &quot;diana_microt&quot; &quot;elmmo&quot;        &quot;map_counts&quot;   &quot;map_metadata&quot; &quot;microcosm&quot;   
+##  [6] &quot;mir2disease&quot;  &quot;miranda&quot;      &quot;mirdb&quot;        &quot;mirecords&quot;    &quot;mirna&quot;       
+## [11] &quot;mirtarbase&quot;   &quot;pharmaco_mir&quot; &quot;phenomir&quot;     &quot;pictar&quot;       &quot;pita&quot;        
+## [16] &quot;tarbase&quot;      &quot;target&quot;       &quot;targetscan&quot;</code></pre>
+<p>Podemos ver os detalhes de cada banco:</p>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="bioconductor.html#cb460-1" tabindex="-1"></a><span class="fu">multimir_dbInfo</span>()</span></code></pre></div>
+<pre><code>##        map_name                  source_name source_version  source_date
+## 1  diana_microt                 DIANA-microT              5   Sept, 2013
+## 2         elmmo                        EIMMo              5    Jan, 2011
+## 3     microcosm                    MicroCosm              5   Sept, 2009
+## 4   mir2disease                  miR2Disease                Mar 14, 2011
+## 5       miranda                      miRanda                   Aug, 2010
+## 6         mirdb                        miRDB              6   June, 2019
+## 7     mirecords                    miRecords              4 Apr 27, 2013
+## 8    mirtarbase                   miRTarBase            7.0   Sept, 2017
+## 9  pharmaco_mir Pharmaco-miR (Verified Sets)                            
+## 10     phenomir                     PhenomiR              2 Feb 15, 2011
+## 11       pictar                       PicTar              2 Dec 21, 2012
+## 12         pita                         PITA              6 Aug 31, 2008
+## 13      tarbase                      TarBase              8         2018
+## 14   targetscan                   TargetScan            7.2  March, 2018
+##                                                                                 source_url
+## 1           http://diana.imis.athena-innovation.gr/DianaTools/index.php?r=microT_CDS/index
+## 2                                  http://www.mirz.unibas.ch/miRNAtargetPredictionBulk.php
+## 3                http://www.ebi.ac.uk/enright-srv/microcosm/cgi-bin/targets/v5/download.pl
+## 4                                                               http://www.mir2disease.org
+## 5                                         http://www.microrna.org/microrna/getDownloads.do
+## 6                                                                         http://mirdb.org
+## 7                                                http://mirecords.biolead.org/download.php
+## 8                                       http://mirtarbase.mbc.nctu.edu.tw/php/download.php
+## 9                                       http://www.pharmaco-mir.org/home/download_VERSE_db
+## 10                                             http://mips.helmholtz-muenchen.de/phenomir/
+## 11                                                             http://dorina.mdc-berlin.de
+## 12                                  http://genie.weizmann.ac.il/pubs/mir07/mir07_data.html
+## 13 http://carolina.imis.athena-innovation.gr/diana_tools/web/index.php?r=tarbasev8%2Findex
+## 14               http://www.targetscan.org/cgi-bin/targetscan/data_download.cgi?db=vert_61</code></pre>
+<p>Entre os 14 bancos de dados externos, oito contêm interações miRNA-alvo previstas, três têm interações miRNA-alvo validadas experimentalmente e os três restantes contêm associações miRNA-droga/doença.</p>
+<p>Para verificar essas categorias e bancos de dados de dentro do R, temos um conjunto de quatro funções auxiliares:</p>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="bioconductor.html#cb462-1" tabindex="-1"></a><span class="fu">predicted_tables</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;diana_microt&quot; &quot;elmmo&quot;        &quot;microcosm&quot;    &quot;miranda&quot;      &quot;mirdb&quot;       
+## [6] &quot;pictar&quot;       &quot;pita&quot;         &quot;targetscan&quot;</code></pre>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="bioconductor.html#cb464-1" tabindex="-1"></a><span class="fu">validated_tables</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;mirecords&quot;  &quot;mirtarbase&quot; &quot;tarbase&quot;</code></pre>
+<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="bioconductor.html#cb466-1" tabindex="-1"></a><span class="fu">diseasedrug_tables</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;mir2disease&quot;  &quot;pharmaco_mir&quot; &quot;phenomir&quot;</code></pre>
+<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="bioconductor.html#cb468-1" tabindex="-1"></a><span class="fu">reverse_table_lookup</span>(<span class="st">&quot;targetscan&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;predicted&quot;</code></pre>
+<p>Para ver quantos registros existem nesses 14 bancos de dados externos, nos referimos à função multimir_dbCount.</p>
+<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="bioconductor.html#cb470-1" tabindex="-1"></a><span class="fu">multimir_dbCount</span>()</span></code></pre></div>
+<pre><code>##        map_name human_count mouse_count rat_count total_count
+## 1  diana_microt     7664602     3747171         0    11411773
+## 2         elmmo     3959112     1449133    547191     5955436
+## 3     microcosm      762987      534735    353378     1651100
+## 4   mir2disease        2875           0         0        2875
+## 5       miranda     5429955     2379881    247368     8057204
+## 6         mirdb     1990425     1091263    199250     3280938
+## 7     mirecords        2425         449       171        3045
+## 8    mirtarbase      544588       50673       652      595913
+## 9  pharmaco_mir         308           5         0         313
+## 10     phenomir       15138         491         0       15629
+## 11       pictar      404066      302236         0      706302
+## 12         pita     7710936     5163153         0    12874089
+## 13      tarbase      433048      209831      1307      644186
+## 14   targetscan    13906497    10442093         0    24348590</code></pre>
+<p>A função list_multimir() listar todos os miRNAs únicos, genes alvo, drogas e doenças no banco de dados multiMiR. Uma opção para limitar o número de registros retornados foi adicionada para ajudar nos testes e na exploração.</p>
+<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="bioconductor.html#cb472-1" tabindex="-1"></a>miRNAs<span class="ot">&lt;-</span> <span class="fu">list_multimir</span>(<span class="st">&quot;mirna&quot;</span>, <span class="at">limit =</span> <span class="dv">10</span>)</span>
+<span id="cb472-2"><a href="bioconductor.html#cb472-2" tabindex="-1"></a>genes<span class="ot">&lt;-</span> <span class="fu">list_multimir</span>(<span class="st">&quot;gene&quot;</span>, <span class="at">limit =</span> <span class="dv">10</span>)</span>
+<span id="cb472-3"><a href="bioconductor.html#cb472-3" tabindex="-1"></a>drugs<span class="ot">&lt;-</span> <span class="fu">list_multimir</span>(<span class="st">&quot;drug&quot;</span>, <span class="at">limit =</span> <span class="dv">10</span>)</span>
+<span id="cb472-4"><a href="bioconductor.html#cb472-4" tabindex="-1"></a>diseases<span class="ot">&lt;-</span> <span class="fu">list_multimir</span>(<span class="st">&quot;disease&quot;</span>, <span class="at">limit =</span> <span class="dv">10</span>)</span>
+<span id="cb472-5"><a href="bioconductor.html#cb472-5" tabindex="-1"></a></span>
+<span id="cb472-6"><a href="bioconductor.html#cb472-6" tabindex="-1"></a>miRNAs</span></code></pre></div>
+<pre><code>##    mature_mirna_uid org mature_mirna_acc mature_mirna_id
+## 1              7829 ath     MIMAT0000184      ath-miR163
+## 2              7833 ath     MIMAT0000201   ath-miR170-3p
+## 3              7831 ath     MIMAT0000206   ath-miR173-5p
+## 4              7828 ath     MIMAT0001001      ath-miR400
+## 5              7837 ath     MIMAT0001004   ath-miR403-3p
+## 6              7830 ath     MIMAT0001011   ath-miR408-3p
+## 7              7838 ath     MIMAT0003931   ath-miR472-3p
+## 8              7846 ath     MIMAT0003933     ath-miR774a
+## 9              7839 ath     MIMAT0003934      ath-miR775
+## 10             7841 ath     MIMAT0003937      ath-miR778</code></pre>
+<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="bioconductor.html#cb474-1" tabindex="-1"></a>genes</span></code></pre></div>
+<pre><code>##    target_uid org target_symbol target_entrez target_ensembl
+## 1      112854 ath     AT1G02860                             
+## 2      112855 ath     AT1G06180                             
+## 3      112856 ath     AT1G06580                             
+## 4      112857 ath     AT1G15125                             
+## 5      112868 ath     At1g31280                             
+## 6      112869 ath     At1g50055                             
+## 7      112870 ath     At1g51480                             
+## 8      112871 ath     At1g53290                             
+## 9      112872 ath     At1g62720                             
+## 10     112873 ath     At1g62930</code></pre>
+<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="bioconductor.html#cb476-1" tabindex="-1"></a>drugs</span></code></pre></div>
+<pre><code>##                     drug
+## 1  3,3&#39;-diindolylmethane
+## 2           5-fluoroucil
+## 3                abt-737
+## 4           alitretinoin
+## 5        arabinocytosine
+## 6       arsenic trioxide
+## 7                azd6244
+## 8              bleomycin
+## 9               butyrate
+## 10            calcitriol</code></pre>
+<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="bioconductor.html#cb478-1" tabindex="-1"></a>diseases</span></code></pre></div>
+<pre><code>##                                                     disease
+## 1  ACTH-INDEPENDENT MACRONODULAR ADRENAL HYPERPLASIA; AIMAH
+## 2                        ACUTE LYMPHOBLASTIC LEUKEMIA (ALL)
+## 3                         ACUTE MYELOGENEOUS LEUKEMIA (AML)
+## 4                              ACUTE MYELOID LEUKEMIA (AML)
+## 5                        ACUTE PROMYELOCYTIC LEUKEMIA (APL)
+## 6                                                   ADENOMA
+## 7                             ADENOMAS, MULTIPLE COLORECTAL
+## 8                                  ADRENOCORTICAL CARCINOMA
+## 9                             ALCOHOLIC LIVER DISEASE (ALD)
+## 10                                      ALZHEIMER&#39;S DISEASE
+## 11                     ALZHEIMER DISEASE, SUSCEPTIBILITY TO
+## 12         AMYOTROPHIC LATERAL SCLEROSIS, SUSCEPTIBILITY TO
+## 13                       ANAPLASTIC THYROID CARCINOMA (ATC)
+## 14                                         ANXIETY DISORDER
+## 15                                                   ASTHMA
+## 16                                AUTISM, SUSCEPTIBILITY TO
+## 17                                BECKER MUSCULAR DYSTROPHY
+## 18                                           BLADDER CANCER
+## 19                                            BREAST CANCER
+## 20                                         BURKITT LYMPHOMA</code></pre>
+<p>get_multimir() é a principal função no pacote para recuperar interações miRNA-alvo previstas e validadas e suas associações de doenças e medicamentos do banco de dados multiMiR.</p>
+<p>Podemos pesquisar por miRNA:</p>
+<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="bioconductor.html#cb480-1" tabindex="-1"></a>example1 <span class="ot">&lt;-</span> <span class="fu">get_multimir</span>(<span class="at">mirna =</span> <span class="st">&#39;hsa-miR-125a-5p&#39;</span>, <span class="at">summary =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## Searching mirecords ...
+## Searching mirtarbase ...
+## Searching tarbase ...</code></pre>
+<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="bioconductor.html#cb482-1" tabindex="-1"></a><span class="co"># Check which types of associations were returned</span></span>
+<span id="cb482-2"><a href="bioconductor.html#cb482-2" tabindex="-1"></a><span class="fu">table</span>(example1<span class="sc">@</span>data<span class="sc">$</span>type)</span></code></pre></div>
+<pre><code>## 
+## validated 
+##      1378</code></pre>
+<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="bioconductor.html#cb484-1" tabindex="-1"></a><span class="co"># Detailed information of the validated miRNA-target interaction</span></span>
+<span id="cb484-2"><a href="bioconductor.html#cb484-2" tabindex="-1"></a><span class="fu">head</span>(example1<span class="sc">@</span>data)</span></code></pre></div>
+<pre><code>##    database mature_mirna_acc mature_mirna_id target_symbol target_entrez
+## 1 mirecords     MIMAT0000443 hsa-miR-125a-5p         ERBB2          2064
+## 2 mirecords     MIMAT0000443 hsa-miR-125a-5p         ERBB3          2065
+## 3 mirecords     MIMAT0000443 hsa-miR-125a-5p         LIN28              
+## 4 mirecords     MIMAT0000443 hsa-miR-125a-5p         LIN28              
+## 5 mirecords     MIMAT0000443 hsa-miR-125a-5p        ARID3B         10620
+## 6 mirecords     MIMAT0000443 hsa-miR-125a-5p          TP53          7157
+##    target_ensembl                                              experiment
+## 1 ENSG00000141736 Western blot//activity assay//Luciferase activity assay
+## 2 ENSG00000065361 Western blot//activity assay//Luciferase activity assay
+## 3 ENSG00000131914                                                        
+## 4 ENSG00000131914                                                        
+## 5 ENSG00000179361                                            Western blot
+## 6 ENSG00000141510                                            Western blot
+##   support_type pubmed_id      type
+## 1               17110380 validated
+## 2               17110380 validated
+## 3               16227573 validated
+## 4               16227573 validated
+## 5               19881956 validated
+## 6               19818772 validated</code></pre>
+<p>Podemos pesquisar por medicamento:</p>
+<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="bioconductor.html#cb486-1" tabindex="-1"></a>example2 <span class="ot">&lt;-</span> <span class="fu">get_multimir</span>(<span class="at">disease.drug =</span> <span class="st">&#39;cisplatin&#39;</span>, <span class="at">table =</span> <span class="st">&#39;disease.drug&#39;</span>)</span></code></pre></div>
+<pre><code>## Searching mir2disease ...
+## Searching pharmaco_mir ...
+## Searching phenomir ...</code></pre>
+<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="bioconductor.html#cb488-1" tabindex="-1"></a><span class="fu">head</span>(example2<span class="sc">@</span>data)</span></code></pre></div>
+<pre><code>##       database mature_mirna_acc mature_mirna_id target_symbol target_entrez
+## 1 pharmaco_mir     MIMAT0000772  hsa-miR-345-5p         ABCC1          4363
+## 2 pharmaco_mir     MIMAT0000720 hsa-miR-376c-3p          ALK7              
+## 3 pharmaco_mir     MIMAT0000423 hsa-miR-125b-5p          BAK1           578
+## 4 pharmaco_mir                       hsa-miR-34          BCL2           596
+## 5 pharmaco_mir     MIMAT0000318 hsa-miR-200b-3p          BCL2           596
+## 6 pharmaco_mir     MIMAT0000617 hsa-miR-200c-3p          BCL2           596
+##    target_ensembl disease_drug paper_pubmedID         type
+## 1 ENSG00000103222    cisplatin       20099276 disease.drug
+## 2                    cisplatin       21224400 disease.drug
+## 3 ENSG00000030110    cisplatin       21823019 disease.drug
+## 4 ENSG00000171791    cisplatin       18803879 disease.drug
+## 5 ENSG00000171791    cisplatin       21993663 disease.drug
+## 6 ENSG00000171791    cisplatin       21993663 disease.drug</code></pre>
+<p>Podemos pesquisar por gene:</p>
+<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="bioconductor.html#cb490-1" tabindex="-1"></a>example3 <span class="ot">&lt;-</span> <span class="fu">get_multimir</span>(<span class="at">org     =</span> <span class="st">&quot;hsa&quot;</span>,</span>
+<span id="cb490-2"><a href="bioconductor.html#cb490-2" tabindex="-1"></a>                         <span class="at">target  =</span> <span class="st">&quot;BCHE&quot;</span>,</span>
+<span id="cb490-3"><a href="bioconductor.html#cb490-3" tabindex="-1"></a>                         <span class="at">table   =</span> <span class="st">&quot;predicted&quot;</span>,</span>
+<span id="cb490-4"><a href="bioconductor.html#cb490-4" tabindex="-1"></a>                         <span class="at">summary =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb490-5"><a href="bioconductor.html#cb490-5" tabindex="-1"></a>                         <span class="at">predicted.cutoff      =</span> <span class="dv">35</span>,</span>
+<span id="cb490-6"><a href="bioconductor.html#cb490-6" tabindex="-1"></a>                         <span class="at">predicted.cutoff.type =</span> <span class="st">&quot;p&quot;</span>,</span>
+<span id="cb490-7"><a href="bioconductor.html#cb490-7" tabindex="-1"></a>                         <span class="at">predicted.site        =</span> <span class="st">&quot;all&quot;</span>)</span></code></pre></div>
+<pre><code>## Searching diana_microt ...
+## Searching elmmo ...
+## Searching microcosm ...
+## Searching miranda ...
+## Searching mirdb ...
+## Searching pictar ...
+## Searching pita ...
+## Searching targetscan ...</code></pre>
+<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="bioconductor.html#cb492-1" tabindex="-1"></a><span class="fu">table</span>(example3<span class="sc">@</span>data<span class="sc">$</span>type)</span></code></pre></div>
+<pre><code>## 
+## predicted 
+##       450</code></pre>
+<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb494-1"><a href="bioconductor.html#cb494-1" tabindex="-1"></a><span class="fu">head</span>(example3<span class="sc">@</span>data)</span></code></pre></div>
+<pre><code>##       database mature_mirna_acc mature_mirna_id target_symbol target_entrez
+## 1 diana_microt     MIMAT0015021    hsa-miR-3148          BCHE           590
+## 2 diana_microt     MIMAT0015021    hsa-miR-3148          BCHE           590
+## 3 diana_microt     MIMAT0022489    hsa-miR-5696          BCHE           590
+## 4 diana_microt     MIMAT0022489    hsa-miR-5696          BCHE           590
+## 5 diana_microt     MIMAT0019060    hsa-miR-4522          BCHE           590
+## 6 diana_microt     MIMAT0019060    hsa-miR-4522          BCHE           590
+##    target_ensembl score      type
+## 1 ENSG00000114200 0.998 predicted
+## 2 ENSG00000114200 0.998 predicted
+## 3 ENSG00000114200 0.974 predicted
+## 4 ENSG00000114200 0.974 predicted
+## 5 ENSG00000114200 0.971 predicted
+## 6 ENSG00000114200 0.971 predicted</code></pre>
+<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb496-1"><a href="bioconductor.html#cb496-1" tabindex="-1"></a><span class="fu">head</span>(example3<span class="sc">@</span>summary)</span></code></pre></div>
+<pre><code>##   mature_mirna_acc mature_mirna_id target_symbol target_entrez  target_ensembl
+## 1     MIMAT0004518 hsa-miR-16-2-3p          BCHE           590 ENSG00000114200
+## 2     MIMAT0000275  hsa-miR-218-5p          BCHE           590 ENSG00000114200
+## 3     MIMAT0003294  hsa-miR-625-5p          BCHE           590 ENSG00000114200
+## 4     MIMAT0004615  hsa-miR-195-3p          BCHE           590 ENSG00000114200
+## 5     MIMAT0004796  hsa-miR-576-3p          BCHE           590 ENSG00000114200
+## 6     MIMAT0005937    hsa-miR-1279          BCHE           590 ENSG00000114200
+##   diana_microt elmmo microcosm miranda mirdb pita targetscan predicted.sum
+## 1            2     2         1       2     1    0          2             6
+## 2            0     2         1       1     0    1          1             5
+## 3            2     0         1       1     0    2          1             5
+## 4            2     2         0       2     1    0          2             5
+## 5            2     0         1       1     0    1          1             5
+## 6            2     2         0       1     1    0          1             5
+##   all.sum
+## 1       6
+## 2       5
+## 3       5
+## 4       5
+## 5       5
+## 6       5</code></pre>
+<p>Você pode ter uma lista de genes envolvidos em um processo biológico comum. É interessante verificar se alguns, ou todos, desses genes são direcionados pelo(s) mesmo(s) miRNA(s).</p>
+<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="bioconductor.html#cb498-1" tabindex="-1"></a>example4 <span class="ot">&lt;-</span> <span class="fu">get_multimir</span>(<span class="at">org     =</span> <span class="st">&#39;hsa&#39;</span>,</span>
+<span id="cb498-2"><a href="bioconductor.html#cb498-2" tabindex="-1"></a>                         <span class="at">target  =</span> <span class="fu">c</span>(<span class="st">&#39;AKT2&#39;</span>, <span class="st">&#39;CERS6&#39;</span>, <span class="st">&#39;S1PR3&#39;</span>, <span class="st">&#39;SULF2&#39;</span>),</span>
+<span id="cb498-3"><a href="bioconductor.html#cb498-3" tabindex="-1"></a>                         <span class="at">table   =</span> <span class="st">&#39;predicted&#39;</span>,</span>
+<span id="cb498-4"><a href="bioconductor.html#cb498-4" tabindex="-1"></a>                         <span class="at">summary =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb498-5"><a href="bioconductor.html#cb498-5" tabindex="-1"></a>                         <span class="at">predicted.cutoff.type =</span> <span class="st">&#39;n&#39;</span>,</span>
+<span id="cb498-6"><a href="bioconductor.html#cb498-6" tabindex="-1"></a>                         <span class="at">predicted.cutoff      =</span> <span class="dv">500000</span>)</span></code></pre></div>
+<pre><code>## Number predicted cutoff (predicted.cutoff) 500000 is larger than the total number of records in table pictar. All records will be queried.</code></pre>
+<pre><code>## Number predicted cutoff (predicted.cutoff) 500000 is larger than the total number of records in table targetscan. All records will be queried.</code></pre>
+<pre><code>## Searching diana_microt ...
+## Searching elmmo ...
+## Searching microcosm ...
+## Searching miranda ...
+## Searching mirdb ...
+## Searching pictar ...
+## Searching pita ...
+## Searching targetscan ...</code></pre>
+<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="bioconductor.html#cb502-1" tabindex="-1"></a>example4.counts <span class="ot">&lt;-</span> <span class="fu">addmargins</span>(<span class="fu">table</span>(example4<span class="sc">@</span>summary[, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]))</span>
+<span id="cb502-2"><a href="bioconductor.html#cb502-2" tabindex="-1"></a>example4.counts <span class="ot">&lt;-</span> example4.counts[<span class="sc">-</span><span class="fu">nrow</span>(example4.counts), ]</span>
+<span id="cb502-3"><a href="bioconductor.html#cb502-3" tabindex="-1"></a>example4.counts <span class="ot">&lt;-</span> example4.counts[<span class="fu">order</span>(example4.counts[, <span class="dv">5</span>], <span class="at">decreasing =</span> <span class="cn">TRUE</span>), ]</span>
+<span id="cb502-4"><a href="bioconductor.html#cb502-4" tabindex="-1"></a><span class="fu">head</span>(example4.counts)</span></code></pre></div>
+<pre><code>##                  target_symbol
+## mature_mirna_id   AKT2 CERS6 S1PR3 SULF2 Sum
+##   hsa-miR-129-5p     0     1     2     1   4
+##   hsa-miR-330-3p     0     1     2     1   4
+##   hsa-miR-144-3p     0     1     2     0   3
+##   hsa-miR-3180-5p    0     1     2     0   3
+##   hsa-miR-325-3p     1     1     0     1   3
+##   hsa-miR-34a-5p     0     1     2     0   3</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="network.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="dados-não-estruturados.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

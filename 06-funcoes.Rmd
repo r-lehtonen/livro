@@ -1,0 +1,216 @@
+# Funções e loops
+
+## Funções
+
+Uma função recebe alguns dados de entrada, faz algumas operações e devolve os dados de saída.
+
+```{r 06- funcoes}
+funcao<-function(x, y)  #criando uma função
+{                       #inicio
+  result<- x^2+y^2      #calculando
+  return(result)        #valor a ser retornado
+}                       #fim
+```
+
+                      
+Usando a função:  
+
+```{r 06- funcoes 2}
+funcao(10,6)
+```
+
+Quando ativamos um pacote, estamos ativando as funções daquele pacote.
+Podemos ver o conteúdo das funções digitando e executando o nome da função.
+
+```{r 06- funcoes 3}
+funcao
+```
+
+Outro exemplo, podemos transformar em uma função aquele script que faz um histograma e sobrepõe a curva da distribuição normal:
+
+```{r 06- funcoes 4}
+curva<-function(x){
+  m<-mean(x,na.rm=TRUE)
+  std<-sd(x,na.rm=TRUE)
+  hist(x, prob=TRUE)
+  curve(dnorm(x, mean=m, sd=std), 
+        col="darkblue", lwd=2, add=TRUE, yaxt="n")
+}
+```
+
+Usando a função:
+
+```{r 06- funcoes 5}
+library(openxlsx)
+dados<-read.xlsx("dados/pinguim.xlsx", sheet = 1, colNames = T)
+
+curva(dados$bill_length_mm)
+
+curva(dados$bill_depth_mm)
+
+curva(dados$flipper_length_mm)
+
+curva(dados$body_mass_g)
+```
+
+
+Porque escrever funções?
+  
+Uma função te força a escrever tudo em termos gerais. 
+As funções são criadas para tarefas que serão repetidas várias vezes. Em vez de copiar e colar o código várias vezes fazendo as alterações necessárias, usar funções é uma maneira muito mais razoável de resolver o problema e, uma vez criada e debbugada, é muito mais prático de usar.
+
+Um desafio é que o return só aceita um único objeto, ou seja, funções no R só retornam uma única coisa. 
+
+Quando precisa retornar mais de uma coisa, uma opção é o list(), recebe qualquer coisa. 
+
+Outra coisa que pode ser feita é quebrar uma função grande em funções menores. O R permite que uma função chame outra, o que facilita em muito o processo de criação de funções complicadas.
+
+## Loops
+
+São processos interativos para realizar uma sequências de comandos até uma condição predeterminada.
+
+### for
+
+Uma comando para isso é o for() 
+Para esse comando usamos um contador.
+Exemplo:
+
+```{r 06- loops}
+i<-1
+for(i in 1:5) print(i)
+```
+
+Podemos vários comandos. Nesse os comandos são colocados entre{}
+
+```{r 06- loops 2}
+i<-1
+for(i in 1:5){
+  print(i)
+  print(i^2)
+  print("teste")
+}
+```
+
+### while
+
+Outro comando é o while
+
+```{r 06- loops 3}
+j<-1
+while(j<6){
+  print(j)
+  print("teste")
+  j<-j+1
+}
+```
+
+## if e else
+
+Com os comandos if e else se uma condição for atendida é executada uma ação.
+
+Por exemplo:
+
+```{r 06- loops 4}
+x<-2
+
+if(x==1) print("sim") else print("não")
+
+```
+
+
+Podemos usar o if e else dentro de um loop:
+
+```{r 06- loops 5}
+i<-1
+for(i in 1:10){
+  if(i<6) print("sim") else print("não")
+}
+
+```
+
+
+Agora vamos usar um loop para fazer o teste de chi-quadrado e torná-lo mais funcional.
+Nesse exemplo temos que montar um arquivo de entrada com as seguintes características:
+- o arquivo de entrada deve ter a primeira coluna identificando  a comparação
+- os valores das duas colunas seguintes são os valores do  primeiro grupo em seguida os valores do outro grupo
+- exemplo: grupo 1 tem 200 ind. com alelo 1 e 300 com alelo 2  e o grupo 2 tem 250 com alelo 1 350 com alelo 2, então: comp1 200 300 250 350
+
+
+Vamos rodar um exemplo para isso vamos carregar o arquivo, transformar em matriz:
+
+```{r 06- loops 6}
+dados4<-read.xlsx("dados/quiquadrado.xlsx", sheet = 1, colNames = F,rowNames = T)
+dados5<-as.matrix(dados4)
+dados5
+```
+
+
+Vamos criar um objeto (nomes) com os nomes das linhas.
+Agora vamos criar o loop, usando o comando for. O número de repetições do loop vai ser definido pelo número de elementos em nomes. Vamos armazenar os resultados em um arquivo txt:
+
+
+```{r 06- loops 7}
+nomes<-row.names(dados5)
+nomes
+i<-1 
+for (i in nomes) {
+  a<-dados5[i,1] # linha i, coluna 1
+  b<-dados5[i,2] # linha i, coluna 2
+  c<-dados5[i,3] # linha i, coluna 3
+  d<-dados5[i,4] # linha i, coluna 4
+  quadrado<-rbind(c(a,c),c(b,d))
+  res_qui<-chisq.test(quadrado,correct=F)
+  write(i,file="resultados/resultado_quiquadrado.txt",  append = T)
+  capture.output(res_qui, file="resultados/resultado_quiquadrado.txt",  append = T)
+}
+```
+
+
+
+## Funções apply, lapply, sapply, tapply, mapply
+
+A família Apply representa um conjunto de funções básicas do R que permite realizar operações sobre os dados contidos nas várias estruturas disponíveis  (vetor, data frame, listas). 
+
+A utilização destas funções permitem automatizar a aplicação das operações desejadas, permitindo assim ganhos de velocidade durante procedimentos que necessitam ser repetidos sobre todos os dados.
+
+A função apply é para matriz
+
+```{r 06- apply}
+library(dplyr)
+dados3<-dados%>%
+  select(bill_length_mm:body_mass_g)
+dados3<-as.matrix(dados3)
+
+apply(dados3, 2, mean, na.rm=T) # 2 indica colunas, 1 indica linhas
+```
+
+A função lapply é para lista:
+
+```{r 06- apply 2}
+x<-list(a = 1:4, b = rnorm(10), c = rnorm(20,1), d = rnorm(100,5))
+x
+lapply(x, mean)
+```
+
+A função sapply é parecida com lapply, mas retorna vetor ou matriz:
+
+```{r 06- apply 3}
+sapply(x, mean) 
+```
+
+A função tapply é utilizada para aplicar um procedimento a diferentes partes dos dados dentro de um array, matriz ou data frame. 
+Ela difere das demais funções vistas até aqui por exigir a existência de uma variável categórica, a qual servirá para agrupar os dados aos diferentes níveis. 
+
+```{r 06- apply 4}
+tapply(dados$bill_length_mm, dados$sex, mean, na.rm=T)
+```
+
+
+A função mapply é uma versão multivariada da função lapply. As funções lapply e sapply atuam somente sobre os elementos de uma única lista. 
+No caso da função mapply a função é aplicada sobre o primeiro elemento de cada um dos argumentos, em seguida ao segundo elemento, seguindo ao terceiro, e assim por diante. 
+
+```{r 06- apply 5}
+mapply(sum, dados$bill_length_mm, dados$bill_depth_mm)
+```
+
+

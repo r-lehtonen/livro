@@ -1,0 +1,154 @@
+# O sistema tidyverse
+
+Tidyverse é um conjunto de pacotes para ciência de dados.
+Quando instalamos o pacote tidyverse ele faz a instalação de vários pacotes relacionados: *ggplot2, tibble, tidyr, readr, purrr, dplyr*
+
+```{r 03- tidyverse, message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+Carregando os dados:  
+
+```{r 03- dados}
+dados<-read.table("dados/iris.txt", head=T, sep = ",")
+```
+
+O R possui muitos dados disponíveis. Podemos carregar esses dados com a função **data()**. Esse arquivo iris pode ser carregado dessa maneira.  
+  
+  
+## Manipulação de dados com tidyverse
+
+Tem várias funções para manipular os dados, entre elas:  
+
+- Selecionar casos por seus valores (filter()).  
+- Reordenar as linhas (arrange()).  
+- Selecionar  variáveis pelo nome (select()).  
+- Criar novas variáveis (mutate()).  
+- Colapsar valores em um resumo (summarise()).  
+
+## Função filter  
+
+Definimos o objeto e depois a(s) variável(is). Nesse exemplo abaixo, filtramos os casos (linhas) em que **class** é igual a *Iris-setosa* e que **sepal_w** seja maior que 3.1:
+
+```{r 03- filter}
+setosa<-filter(dados, class=="Iris-setosa" & sepal_w > 3.1)
+head(setosa)
+```
+
+## Função arrange  
+  
+Com a função arrange podemos ordenar os dados, de forma crescente (default) ou descrescente (adicionando desc), por ou mais variáveis.
+
+```{r 03- arrange}
+ordenado<-arrange(dados, desc(sepal_l))
+ordenado<-arrange(dados, desc(sepal_l), desc(sepal_w))
+head(ordenado)
+```
+
+## Função select
+
+Com a função select podemos selecionar variáveis (colunas). Podemos especificar uma coluna ou várias colunas.  
+
+```{r 03- select}
+head(dados)
+dados2<-select(dados, petal_w )
+head(dados2)
+```
+
+## Função mutate e transmutate
+
+A função mutate cria uma nova coluna. A nova coluna será adicionada ao final do objeto. Com a função transmutate, o objeto terá apenas a(s) nova(s) coluna(s).
+No exemplo abaixo, foram criadas 2 novas colunas, indice e indice2. O conteúdo dessas novas colunas será a multiplicação dos valores de outras variáveis.  
+
+```{r 03- mutate}
+dados3<-mutate(dados, indice=sepal_l*sepal_w,
+               indice2=petal_l*petal_w)
+head(dados3)
+```
+
+
+## Funções group_by e summarise
+
+Essas duas funções são muito úteis quando usadas em conjunto. Na função group_by, especificamos o objeto e uma variável categórica.
+Em summarise podemos usar uma função como mean, assim teremos a média da variável especificada, separada pela variável categórica usada em group_by:  
+
+```{r 03- group by}
+dados4<-group_by(dados, class)
+
+dados4<-summarise(dados4, sepala=mean(sepal_l))
+head(dados4)
+```
+
+## Funções pull e distinct
+
+Para extrair uma coluna em forma de vetor:
+```{r 03- pull}
+x<-pull(dados,sepal_l) 
+x
+```
+
+Remove linhas com valores repetidos:
+```{r 03- distinct}
+y<-distinct(dados,sepal_l) 
+head(y)
+```
+
+Se quiser manter todas as colunas:
+```{r 03- distinct 2}
+y<-distinct(dados,sepal_l,.keep_all = T)
+```
+
+
+## Pipes
+
+Pipes *(%>%)* é uma ferramenta poderosa para expressar claramente uma sequência de várias operações.
+Está disponível nos pacotes do sistema tidyverse.  
+
+```{r 03- pipes}
+dados5<-dados%>%
+  filter(class=="Iris-setosa")%>%
+  mutate(indice=sepal_l*sepal_w)%>%
+  arrange(indice)
+
+head(dados5)
+```
+
+## Pipe nativa do R
+A partir da versão 4.1.0 tem uma versão nativa do R de pipes: |>
+
+```{r 03- Pipe nativa, eval=FALSE, include=FALSE}
+mtcars |>
+   group_by(cyl) |>
+   summarise(mpg = mean(mpg))
+```
+   
+
+## Tibble
+
+Uma tibble é semelhante ao data frame.
+Pode converter um data frame em tibble assim:
+```{r 03- tibble}
+head(dados)
+dados<- as_tibble(dados)
+head(dados)
+```
+
+Uma das principais diferenças entre tibbles e data frames é que tibbles não convertem automaticamente colunas de texto em fatores. Isso significa que você pode ver os dados exatamente como eles estão armazenados, o que pode ser útil para depurar e analisar dados.
+
+Outra diferença entre tibbles e data frames é que tibbles imprimem com mais linhas e colunas do que cabem na tela. Isso torna mais fácil ver todos os dados em um tibble de uma só vez, sem ter que rolar para cima e para baixo.
+
+Por fim, tibbles incluem algumas estatísticas básicas sobre cada coluna, como a média, a mediana e o desvio padrão. Isso pode ser útil para obter uma visão geral rápida dos dados em um tibble.
+
+## Juntar dados
+
+Juntar dados de diferentes planilhas é uma coisa muito útil, muitas vezes temos diversas planilhas com diferentes informações dos mesmos dados. Juntar esses dados é muito fácil, contanto que tenhamos uma coluna de identificação.  
+No pacote dplyr temos as seguintes funções:  
+
+- inner_join - Uma junção interna combina pares de observações sempre que suas chaves são iguais
+- left_join -  mantém todas as observações em x.
+- right_join - mantém todas as observações em y.
+- full_join - mantém todas as observações em x e y.
+
+
+Tem outras funções interessantes, como **recode** e **case_when()**, para saber mais consulte @wickham2023r
+

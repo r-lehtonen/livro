@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 1 Introdução | Análises de Dados com R</title>
+  <meta name="description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 1 Introdução | Análises de Dados com R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bookdown.org/ricardo_lehtonen/analise/capa.png" />
+  <meta property="og:description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 1 Introdução | Análises de Dados com R" />
+  
+  <meta name="twitter:description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  <meta name="twitter:image" content="https://bookdown.org/ricardo_lehtonen/analise/capa.png" />
+
+<meta name="author" content="Ricardo Lehtonen R. de Souza" />
+
+
+<meta name="date" content="2023-07-31" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="carregar-e-manipular-dados.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script>
+<link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet" />
+<script src="libs/tabwid-1.1.3/tabwid.js"></script>
+<link href="libs/wordcloud2-0.0.1/wordcloud.css" rel="stylesheet" />
+<script src="libs/wordcloud2-0.0.1/wordcloud2-all.js"></script>
+<script src="libs/wordcloud2-0.0.1/hover.js"></script>
+<script src="libs/wordcloud2-binding-0.2.1/wordcloud2.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Análises de dados com R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefácio</a></li>
+<li class="chapter" data-level="1" data-path="introdução.html"><a href="introdução.html"><i class="fa fa-check"></i><b>1</b> Introdução</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introdução.html"><a href="introdução.html#o-que-é-r"><i class="fa fa-check"></i><b>1.1</b> O que é R</a></li>
+<li class="chapter" data-level="1.2" data-path="introdução.html"><a href="introdução.html#instalação"><i class="fa fa-check"></i><b>1.2</b> Instalação</a></li>
+<li class="chapter" data-level="1.3" data-path="introdução.html"><a href="introdução.html#rstudio"><i class="fa fa-check"></i><b>1.3</b> RStudio</a></li>
+<li class="chapter" data-level="1.4" data-path="introdução.html"><a href="introdução.html#objetos-do-r"><i class="fa fa-check"></i><b>1.4</b> Objetos do R</a></li>
+<li class="chapter" data-level="1.5" data-path="introdução.html"><a href="introdução.html#nomes-dos-objetos-do-r"><i class="fa fa-check"></i><b>1.5</b> Nomes dos objetos do R</a></li>
+<li class="chapter" data-level="1.6" data-path="introdução.html"><a href="introdução.html#vetores"><i class="fa fa-check"></i><b>1.6</b> Vetores</a></li>
+<li class="chapter" data-level="1.7" data-path="introdução.html"><a href="introdução.html#operações-com-vetores"><i class="fa fa-check"></i><b>1.7</b> Operações com Vetores</a></li>
+<li class="chapter" data-level="1.8" data-path="introdução.html"><a href="introdução.html#fatores"><i class="fa fa-check"></i><b>1.8</b> Fatores</a></li>
+<li class="chapter" data-level="1.9" data-path="introdução.html"><a href="introdução.html#matrizes"><i class="fa fa-check"></i><b>1.9</b> Matrizes</a></li>
+<li class="chapter" data-level="1.10" data-path="introdução.html"><a href="introdução.html#listas"><i class="fa fa-check"></i><b>1.10</b> Listas</a></li>
+<li class="chapter" data-level="1.11" data-path="introdução.html"><a href="introdução.html#data-frame"><i class="fa fa-check"></i><b>1.11</b> Data frame</a></li>
+<li class="chapter" data-level="1.12" data-path="introdução.html"><a href="introdução.html#sequências"><i class="fa fa-check"></i><b>1.12</b> Sequências</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html"><i class="fa fa-check"></i><b>2</b> Carregar e manipular dados</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#ler-arquivos-txt-e-csv"><i class="fa fa-check"></i><b>2.1</b> Ler arquivos txt e csv</a></li>
+<li class="chapter" data-level="2.2" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#ler-arquivos-xlsx"><i class="fa fa-check"></i><b>2.2</b> Ler arquivos xlsx</a></li>
+<li class="chapter" data-level="2.3" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#gravar-arquivos-txt-e-xlsx"><i class="fa fa-check"></i><b>2.3</b> Gravar arquivos txt e xlsx</a></li>
+<li class="chapter" data-level="2.4" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#manipulação-de-dados-r-base"><i class="fa fa-check"></i><b>2.4</b> Manipulação de dados (R base)</a></li>
+<li class="chapter" data-level="2.5" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#transformação-de-dados"><i class="fa fa-check"></i><b>2.5</b> Transformação de dados</a></li>
+<li class="chapter" data-level="2.6" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#técnicas-de-normalização"><i class="fa fa-check"></i><b>2.6</b> Técnicas de normalização</a></li>
+<li class="chapter" data-level="2.7" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#juntar-dados-r-base"><i class="fa fa-check"></i><b>2.7</b> Juntar dados (R base)</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html"><i class="fa fa-check"></i><b>3</b> O sistema tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#manipulação-de-dados-com-tidyverse"><i class="fa fa-check"></i><b>3.1</b> Manipulação de dados com tidyverse</a></li>
+<li class="chapter" data-level="3.2" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-filter"><i class="fa fa-check"></i><b>3.2</b> Função filter</a></li>
+<li class="chapter" data-level="3.3" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-arrange"><i class="fa fa-check"></i><b>3.3</b> Função arrange</a></li>
+<li class="chapter" data-level="3.4" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-select"><i class="fa fa-check"></i><b>3.4</b> Função select</a></li>
+<li class="chapter" data-level="3.5" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-mutate-e-transmutate"><i class="fa fa-check"></i><b>3.5</b> Função mutate e transmutate</a></li>
+<li class="chapter" data-level="3.6" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#funções-group_by-e-summarise"><i class="fa fa-check"></i><b>3.6</b> Funções group_by e summarise</a></li>
+<li class="chapter" data-level="3.7" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#funções-pull-e-distinct"><i class="fa fa-check"></i><b>3.7</b> Funções pull e distinct</a></li>
+<li class="chapter" data-level="3.8" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#pipes"><i class="fa fa-check"></i><b>3.8</b> Pipes</a></li>
+<li class="chapter" data-level="3.9" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#pipe-nativa-do-r"><i class="fa fa-check"></i><b>3.9</b> Pipe nativa do R</a></li>
+<li class="chapter" data-level="3.10" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#tibble"><i class="fa fa-check"></i><b>3.10</b> Tibble</a></li>
+<li class="chapter" data-level="3.11" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#juntar-dados"><i class="fa fa-check"></i><b>3.11</b> Juntar dados</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="gráficos.html"><a href="gráficos.html"><i class="fa fa-check"></i><b>4</b> Gráficos</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="gráficos.html"><a href="gráficos.html#gráficos-com-o-pacote-graphics-r-base"><i class="fa fa-check"></i><b>4.1</b> Gráficos com o pacote graphics (R base)</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="gráficos.html"><a href="gráficos.html#introdução-aos-gráficos-do-r"><i class="fa fa-check"></i><b>4.1.1</b> Introdução aos gráficos do R</a></li>
+<li class="chapter" data-level="4.1.2" data-path="gráficos.html"><a href="gráficos.html#salvar"><i class="fa fa-check"></i><b>4.1.2</b> Salvar</a></li>
+<li class="chapter" data-level="4.1.3" data-path="gráficos.html"><a href="gráficos.html#histogramas"><i class="fa fa-check"></i><b>4.1.3</b> Histogramas</a></li>
+<li class="chapter" data-level="4.1.4" data-path="gráficos.html"><a href="gráficos.html#boxplot"><i class="fa fa-check"></i><b>4.1.4</b> Boxplot</a></li>
+<li class="chapter" data-level="4.1.5" data-path="gráficos.html"><a href="gráficos.html#barplot"><i class="fa fa-check"></i><b>4.1.5</b> Barplot</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="gráficos.html"><a href="gráficos.html#o-pacote-ggplot2"><i class="fa fa-check"></i><b>4.2</b> O pacote ggplot2</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="gráficos.html"><a href="gráficos.html#gráficos-de-pontos-dispersão"><i class="fa fa-check"></i><b>4.2.1</b> Gráficos de pontos (dispersão)</a></li>
+<li class="chapter" data-level="4.2.2" data-path="gráficos.html"><a href="gráficos.html#salvar-1"><i class="fa fa-check"></i><b>4.2.2</b> Salvar</a></li>
+<li class="chapter" data-level="4.2.3" data-path="gráficos.html"><a href="gráficos.html#histogramas-1"><i class="fa fa-check"></i><b>4.2.3</b> Histogramas</a></li>
+<li class="chapter" data-level="4.2.4" data-path="gráficos.html"><a href="gráficos.html#density-plot"><i class="fa fa-check"></i><b>4.2.4</b> Density plot</a></li>
+<li class="chapter" data-level="4.2.5" data-path="gráficos.html"><a href="gráficos.html#boxplot-1"><i class="fa fa-check"></i><b>4.2.5</b> Boxplot</a></li>
+<li class="chapter" data-level="4.2.6" data-path="gráficos.html"><a href="gráficos.html#gráfico-q-q"><i class="fa fa-check"></i><b>4.2.6</b> Gráfico Q-Q</a></li>
+<li class="chapter" data-level="4.2.7" data-path="gráficos.html"><a href="gráficos.html#figura-com-vários-gráficos"><i class="fa fa-check"></i><b>4.2.7</b> Figura com vários gráficos</a></li>
+<li class="chapter" data-level="4.2.8" data-path="gráficos.html"><a href="gráficos.html#ajustes-de-posição"><i class="fa fa-check"></i><b>4.2.8</b> Ajustes de Posição</a></li>
+<li class="chapter" data-level="4.2.9" data-path="gráficos.html"><a href="gráficos.html#geom-smooth"><i class="fa fa-check"></i><b>4.2.9</b> Geom Smooth</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="gráficos.html"><a href="gráficos.html#outros-pacotes-gráficos"><i class="fa fa-check"></i><b>4.3</b> Outros pacotes gráficos</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="gráficos.html"><a href="gráficos.html#usando-as-cores"><i class="fa fa-check"></i><b>4.3.1</b> Usando as cores</a></li>
+<li class="chapter" data-level="4.3.2" data-path="gráficos.html"><a href="gráficos.html#análise-gráfica-exploratória"><i class="fa fa-check"></i><b>4.3.2</b> Análise gráfica exploratória</a></li>
+<li class="chapter" data-level="4.3.3" data-path="gráficos.html"><a href="gráficos.html#ggplot2-mais-parâmetros"><i class="fa fa-check"></i><b>4.3.3</b> GGPLOT2: mais parâmetros</a></li>
+<li class="chapter" data-level="4.3.4" data-path="gráficos.html"><a href="gráficos.html#diagrama-de-venn"><i class="fa fa-check"></i><b>4.3.4</b> Diagrama de Venn</a></li>
+<li class="chapter" data-level="4.3.5" data-path="gráficos.html"><a href="gráficos.html#diagramas"><i class="fa fa-check"></i><b>4.3.5</b> Diagramas</a></li>
+<li class="chapter" data-level="4.3.6" data-path="gráficos.html"><a href="gráficos.html#outra-opção-é-o-pacote-ggflowchart"><i class="fa fa-check"></i><b>4.3.6</b> Outra opção é o pacote ggflowchart</a></li>
+<li class="chapter" data-level="4.3.7" data-path="gráficos.html"><a href="gráficos.html#datas-e-séries-temporais"><i class="fa fa-check"></i><b>4.3.7</b> Datas e séries temporais</a></li>
+<li class="chapter" data-level="4.3.8" data-path="gráficos.html"><a href="gráficos.html#time-series---dados-de-casos-de-covid-no-paraná"><i class="fa fa-check"></i><b>4.3.8</b> Time series - Dados de casos de COVID no Paraná</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="estatística.html"><a href="estatística.html"><i class="fa fa-check"></i><b>5</b> Estatística</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="estatística.html"><a href="estatística.html#estatística-descritiva"><i class="fa fa-check"></i><b>5.1</b> Estatística descritiva</a></li>
+<li class="chapter" data-level="5.2" data-path="estatística.html"><a href="estatística.html#testes-estatísticos"><i class="fa fa-check"></i><b>5.2</b> Testes estatísticos</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="estatística.html"><a href="estatística.html#normalidade"><i class="fa fa-check"></i><b>5.2.1</b> Normalidade</a></li>
+<li class="chapter" data-level="5.2.2" data-path="estatística.html"><a href="estatística.html#assimetria-e-curtose"><i class="fa fa-check"></i><b>5.2.2</b> Assimetria e curtose</a></li>
+<li class="chapter" data-level="5.2.3" data-path="estatística.html"><a href="estatística.html#teste-t"><i class="fa fa-check"></i><b>5.2.3</b> Teste t</a></li>
+<li class="chapter" data-level="5.2.4" data-path="estatística.html"><a href="estatística.html#teste-qui-quadrado"><i class="fa fa-check"></i><b>5.2.4</b> Teste qui-quadrado</a></li>
+<li class="chapter" data-level="5.2.5" data-path="estatística.html"><a href="estatística.html#correlação"><i class="fa fa-check"></i><b>5.2.5</b> Correlação</a></li>
+<li class="chapter" data-level="5.2.6" data-path="estatística.html"><a href="estatística.html#regressão"><i class="fa fa-check"></i><b>5.2.6</b> Regressão</a></li>
+<li class="chapter" data-level="5.2.7" data-path="estatística.html"><a href="estatística.html#anova"><i class="fa fa-check"></i><b>5.2.7</b> ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="estatística.html"><a href="estatística.html#visualização-de-resultados-estatísticos"><i class="fa fa-check"></i><b>5.3</b> Visualização de resultados estatísticos</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="funções-e-loops.html"><a href="funções-e-loops.html"><i class="fa fa-check"></i><b>6</b> Funções e loops</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="funções-e-loops.html"><a href="funções-e-loops.html#funções"><i class="fa fa-check"></i><b>6.1</b> Funções</a></li>
+<li class="chapter" data-level="6.2" data-path="funções-e-loops.html"><a href="funções-e-loops.html#loops"><i class="fa fa-check"></i><b>6.2</b> Loops</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="funções-e-loops.html"><a href="funções-e-loops.html#for"><i class="fa fa-check"></i><b>6.2.1</b> for</a></li>
+<li class="chapter" data-level="6.2.2" data-path="funções-e-loops.html"><a href="funções-e-loops.html#while"><i class="fa fa-check"></i><b>6.2.2</b> while</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="funções-e-loops.html"><a href="funções-e-loops.html#if-e-else"><i class="fa fa-check"></i><b>6.3</b> if e else</a></li>
+<li class="chapter" data-level="6.4" data-path="funções-e-loops.html"><a href="funções-e-loops.html#funções-apply-lapply-sapply-tapply-mapply"><i class="fa fa-check"></i><b>6.4</b> Funções apply, lapply, sapply, tapply, mapply</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="genética.html"><a href="genética.html"><i class="fa fa-check"></i><b>7</b> Genética</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="genética.html"><a href="genética.html#genética-de-populações"><i class="fa fa-check"></i><b>7.1</b> Genética de populações</a></li>
+<li class="chapter" data-level="7.2" data-path="genética.html"><a href="genética.html#genotipagem-com-genetics-e-loop"><i class="fa fa-check"></i><b>7.2</b> Genotipagem com genetics e loop</a></li>
+<li class="chapter" data-level="7.3" data-path="genética.html"><a href="genética.html#heredogramas"><i class="fa fa-check"></i><b>7.3</b> Heredogramas</a></li>
+<li class="chapter" data-level="7.4" data-path="genética.html"><a href="genética.html#análises-filogenéticas"><i class="fa fa-check"></i><b>7.4</b> Análises filogenéticas</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>8</b> Network</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="network.html"><a href="network.html#pacote-igraph"><i class="fa fa-check"></i><b>8.1</b> Pacote Igraph</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="bioconductor.html"><a href="bioconductor.html"><i class="fa fa-check"></i><b>9</b> Bioconductor</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="bioconductor.html"><a href="bioconductor.html#pacote-msa"><i class="fa fa-check"></i><b>9.1</b> Pacote msa</a></li>
+<li class="chapter" data-level="9.2" data-path="bioconductor.html"><a href="bioconductor.html#pacote-multimir"><i class="fa fa-check"></i><b>9.2</b> Pacote multiMiR</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html"><i class="fa fa-check"></i><b>10</b> Dados não estruturados</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#texto"><i class="fa fa-check"></i><b>10.1</b> Texto</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#análise-de-sentimentos"><i class="fa fa-check"></i><b>10.1.1</b> Análise de sentimentos</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#imagens"><i class="fa fa-check"></i><b>10.2</b> Imagens</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#edição-de-imagens"><i class="fa fa-check"></i><b>10.2.1</b> Edição de imagens</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#áudio"><i class="fa fa-check"></i><b>10.3</b> Áudio</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html"><i class="fa fa-check"></i><b>11</b> Pesquisa bibliográfica e Bibliometria</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#pesquisa-bibliográfica"><i class="fa fa-check"></i><b>11.1</b> Pesquisa bibliográfica</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#termos-da-busca"><i class="fa fa-check"></i><b>11.1.1</b> Termos da busca</a></li>
+<li class="chapter" data-level="11.1.2" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#bases-de-dados"><i class="fa fa-check"></i><b>11.1.2</b> Bases de dados</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#pubmed"><i class="fa fa-check"></i><b>11.2</b> PubMed</a></li>
+<li class="chapter" data-level="11.3" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#bibliometria"><i class="fa fa-check"></i><b>11.3</b> Bibliometria</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>12</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="r-markdown.html"><a href="r-markdown.html#incluindo-gráficos"><i class="fa fa-check"></i><b>12.1</b> Incluindo gráficos</a></li>
+<li class="chapter" data-level="12.2" data-path="r-markdown.html"><a href="r-markdown.html#chunk-opções"><i class="fa fa-check"></i><b>12.2</b> Chunk: opções</a></li>
+<li class="chapter" data-level="12.3" data-path="r-markdown.html"><a href="r-markdown.html#formatação"><i class="fa fa-check"></i><b>12.3</b> Formatação</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://docs.ufpr.br/~lehtonen/" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análises de Dados com R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introdução" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Capítulo 1</span> Introdução<a href="introdução.html#introdução" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="o-que-é-r" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> O que é R<a href="introdução.html#o-que-é-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>O R é uma linguagem de alto nível e um ambiente para análise de dados e
+geração de gráficos. Alguns pensam que o R é apenas um pacote
+estatístico, no entanto, o R é muito mais do que isso, embora a parte
+estatística seja um dos pontos fortes do R.</p>
+<p>O R tem código aberto, ou seja, pode ser modificado, aprimorado a
+qualquer momento por qualquer usuário. Ele foi criado em 1991, na Nova
+Zelândia (University of Auckland) por Ross Ihaka e Robert Gentleman.</p>
+<p>O R está estruturado em duas partes principais, a base do R e os pacotes
+que podemos ir instalando.</p>
+<p>Existem milhares de pacotes do R para as mais diversas funções, que
+encontramos no repositórios:</p>
+<ul>
+<li>CRAN package repository.</li>
+<li>Bioconductor.</li>
+</ul>
+<p>Para saber como citar o R, basta usar o seguinte comando:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="introdução.html#cb1-1" tabindex="-1"></a><span class="fu">citation</span>()</span></code></pre></div>
+<pre><code>## To cite R in publications use:
+## 
+##   R Core Team (2023). _R: A Language and Environment for Statistical
+##   Computing_. R Foundation for Statistical Computing, Vienna, Austria.
+##   &lt;https://www.R-project.org/&gt;.
+## 
+## A BibTeX entry for LaTeX users is
+## 
+##   @Manual{,
+##     title = {R: A Language and Environment for Statistical Computing},
+##     author = {{R Core Team}},
+##     organization = {R Foundation for Statistical Computing},
+##     address = {Vienna, Austria},
+##     year = {2023},
+##     url = {https://www.R-project.org/},
+##   }
+## 
+## We have invested a lot of time and effort in creating R, please cite it
+## when using it for data analysis. See also &#39;citation(&quot;pkgname&quot;)&#39; for
+## citing R packages.</code></pre>
+<p>Ajuda sobre o R</p>
+<p>O R tem um sistema de ajuda bastante elaborado que lhe permitirá obter
+muita informação extra sobre a linguagem, bem como muitos outros
+aspectos. Usando a interface gráfica (RStudio), podemos obter ajuda
+através do menu Help Se pretende simplesmente obter ajuda sobre uma
+função em particular do R, a forma mais simples é usar a função help():</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="introdução.html#cb3-1" tabindex="-1"></a><span class="fu">help</span>(sqrt)</span></code></pre></div>
+<p>Além disso, disso existem muito material disponível na internet, abaixo
+estão alguns exemplos:</p>
+<p>Stackoverflow <a href="https://stackoverflow.com/questions/tagged/r" class="uri">https://stackoverflow.com/questions/tagged/r</a></p>
+<p>Rdocumentation <a href="https://www.rdocumentation.org/" class="uri">https://www.rdocumentation.org/</a></p>
+<p>Rseek <a href="https://rseek.org/" class="uri">https://rseek.org/</a></p>
+<p>R-bloggers <a href="https://www.r-bloggers.com/" class="uri">https://www.r-bloggers.com/</a></p>
+</div>
+<div id="instalação" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Instalação<a href="introdução.html#instalação" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>O primeiro passo é instalar o R. Podemos baixar a última versão em
+<a href="https://cran.r-project.org/" class="uri">https://cran.r-project.org/</a> Nesse mesmo site temos a lista de pacotes
+disponíveis. Quando atualizamos o R, temos que instalar novamente os
+pacotes que tínhamos na versão anterior. Para facilitar, temos um pacote
+chamado installr, que permite atualizar o R, copiar e atualizar os
+pacotes para a nova versão.</p>
+</div>
+<div id="rstudio" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> RStudio<a href="introdução.html#rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Apesar de podermos utilizar o R diretamente no console, o uso da
+interface gráfica RStudio facilta muito o uso do R. Podemos baixar o
+RStudio de <a href="https://posit.co/downloads/" class="uri">https://posit.co/downloads/</a></p>
+<p>No seguinte link tem dicas de como usar o RStudio:
+<a href="https://posit.co/wp-content/uploads/2022/10/rstudio-ide-1.pdf" class="uri">https://posit.co/wp-content/uploads/2022/10/rstudio-ide-1.pdf</a></p>
+</div>
+<div id="objetos-do-r" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Objetos do R<a href="introdução.html#objetos-do-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>O R é uma linguagem baseada em objetos, de forma que as coisas que
+usamos ficam na memória do computador sob a forma de um objeto. Esses
+objetos recebem um nome e podem armazenar diferentes tipos de
+informações como números, texto, vetores, matrizes, expressões, etc.</p>
+<p>Para armazenar algo num objeto usamos o operador de atribuição: <strong>&lt;-</strong></p>
+<p>Exemplo:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="introdução.html#cb4-1" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fl">0.6</span></span></code></pre></div>
+<p>Para ver o conteúdo do objeto:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="introdução.html#cb5-1" tabindex="-1"></a>x1</span></code></pre></div>
+<pre><code>## [1] 0.6</code></pre>
+<ul>
+<li>O [1] que aparece antes do número guardado no objeto mostra o número
+da linha do conteúdo do objeto.</li>
+<li>A operação de atribuição é destrutiva no sentido que ao atribuir um
+novo valor a um objeto existente, vamos perder o conteúdo que ele
+estava armazenado anteriormente.</li>
+</ul>
+<p>Também podemos atribuir expressões numéricas a objetos. O resultado de
+tal operação é o de que o resultado do cálculo da expressão e não a
+expressão propriamente dita:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="introdução.html#cb7-1" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb7-2"><a href="introdução.html#cb7-2" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> x2<span class="sc">^</span><span class="dv">3</span></span>
+<span id="cb7-3"><a href="introdução.html#cb7-3" tabindex="-1"></a>x3</span></code></pre></div>
+<pre><code>## [1] 3375</code></pre>
+<ul>
+<li>Os objetos que criamos ficam na memória do computador e se quisermos
+podemos apagar um objeto.<br />
+</li>
+<li>Podemos ver quais os objetos atualmente na memória do computador
+usando as funções ls() ou objects().</li>
+<li>Se não necessitamos de algum dos objetos podemos apagá-lo com a
+função rm()<br />
+</li>
+<li>No RStudio, podemos ver os objetos na aba environment e, se
+quisermos apagar todos os objetos, podemos clicar no ícone da
+vassoura, nesta mesma aba.</li>
+</ul>
+</div>
+<div id="nomes-dos-objetos-do-r" class="section level2 hasAnchor" number="1.5">
+<h2><span class="header-section-number">1.5</span> Nomes dos objetos do R<a href="introdução.html#nomes-dos-objetos-do-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Para darmos nome para os objetos podemos usar letras maiúsculas ou
+minúsculas, os dígitos 0 a 9 (exceto no início do nome), o ponto
+final e não podemos usar espaços.</li>
+<li>Lembre-se de que o R é sensível às letras maiúsculas / minúsculas,
+por exemplo, o nome <strong>dados</strong> é diferente de <strong>Dados</strong>.</li>
+</ul>
+</div>
+<div id="vetores" class="section level2 hasAnchor" number="1.6">
+<h2><span class="header-section-number">1.6</span> Vetores<a href="introdução.html#vetores" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>Um dos principais objetos do R para é o vetor.</p></li>
+<li><p>Um vetor é uma estrutura de dados que permite armazenar um conjunto
+de valores do mesmo tipo (por exemplo números) sob um mesmo nome.</p></li>
+<li><p>Esses elementos podem depois ser acessados individualmente usando um
+esquema de indexação.</p></li>
+<li><p>Este tipo de estrutura de dados é bastante útil quando pretendemos
+armazenar várias coisas relacionadas.</p></li>
+<li><p>Todos os vetores em R tem um modo e um tamanho.</p></li>
+<li><p>O modo determina o tipo de valores guardado no vetor.</p></li>
+<li><p>Em R podemos ter vetores com modo character, logical, numeric e
+complex.</p></li>
+<li><p>Ou seja, podemos ter vetores para armazenar os seguintes tipos de
+dados: conjuntos de caracteres, valores lógicos (F ou T ou FALSE ou
+TRUE), números inteiros ou reais, e números complexos</p></li>
+<li><p>Para criar vetores usamos a função c() e separamos os elementos por
+vírgulas. Por exemplo, para armazenar um conjunto de notas:</p></li>
+</ul>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="introdução.html#cb9-1" tabindex="-1"></a>notas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">10</span>, <span class="fl">9.5</span>, <span class="fl">7.5</span>)</span>
+<span id="cb9-2"><a href="introdução.html#cb9-2" tabindex="-1"></a>notas</span></code></pre></div>
+<pre><code>## [1]  4.0  7.0 10.0  9.5  7.5</code></pre>
+<ul>
+<li>Comprimento e modo do vetor:</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="introdução.html#cb11-1" tabindex="-1"></a><span class="fu">length</span>(notas)</span></code></pre></div>
+<pre><code>## [1] 5</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="introdução.html#cb13-1" tabindex="-1"></a><span class="fu">mode</span>(notas)</span></code></pre></div>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<ul>
+<li>Ao criar um vetor temos que cuidar para que todos os elementos sejam
+do mesmo tipo (modo).</li>
+<li>Se criarmos um vetor com tipos diferentes, o R vai forçá-los a ser
+do mesmo tipo, como no exemplo a seguir:</li>
+</ul>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="introdução.html#cb15-1" tabindex="-1"></a>notas2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">10</span>, <span class="fl">7.5</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="st">&quot;nc&quot;</span>)</span>
+<span id="cb15-2"><a href="introdução.html#cb15-2" tabindex="-1"></a>notas2</span></code></pre></div>
+<pre><code>## [1] &quot;6&quot;   &quot;10&quot;  &quot;7.5&quot; &quot;9&quot;   &quot;8&quot;   &quot;nc&quot;</code></pre>
+<p>O vetor criado será do tipo caracter. No exemplo anterior coloquei nc
+para quem não compareceu. Para resolver isso temos outra alternativa,
+que veremos a seguir.</p>
+<ul>
+<li>No R temos um elemento especial que é o NA.</li>
+<li>Este valor representa um valor desconhecido.</li>
+<li>Por exemplo, se temos a idade de pacientes guardados num vetor, mas
+não temos essa informação de um indivíduo, podemos criar esse vetor:</li>
+</ul>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="introdução.html#cb17-1" tabindex="-1"></a>idade<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">23</span>, <span class="dv">45</span>, <span class="cn">NA</span>, <span class="dv">34</span>)</span>
+<span id="cb17-2"><a href="introdução.html#cb17-2" tabindex="-1"></a>idade</span></code></pre></div>
+<pre><code>## [1] 23 45 NA 34</code></pre>
+<ul>
+<li>Os elementos de um vetor podem ser acessados através de um índice:</li>
+</ul>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="introdução.html#cb19-1" tabindex="-1"></a>idade[<span class="dv">2</span>]</span></code></pre></div>
+<pre><code>## [1] 45</code></pre>
+<ul>
+<li>O R permite criar vetores vazios usando a função vector():</li>
+</ul>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="introdução.html#cb21-1" tabindex="-1"></a>x4 <span class="ot">&lt;-</span> <span class="fu">vector</span>()</span></code></pre></div>
+<ul>
+<li>O tamanho de um vetor existente pode ser alterado atribuindo mais
+elementos a índices até agora inexistentes:</li>
+</ul>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="introdução.html#cb22-1" tabindex="-1"></a>x4[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="dv">60</span></span>
+<span id="cb22-2"><a href="introdução.html#cb22-2" tabindex="-1"></a>x4</span></code></pre></div>
+<pre><code>## [1] NA NA 60</code></pre>
+</div>
+<div id="operações-com-vetores" class="section level2 hasAnchor" number="1.7">
+<h2><span class="header-section-number">1.7</span> Operações com Vetores<a href="introdução.html#operações-com-vetores" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>A linguagem R permite vetorizar a maioria das suas funções. Por
+exemplo, a função sqrt() que serve para calcular raíz quadrada:</li>
+</ul>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="introdução.html#cb24-1" tabindex="-1"></a>x5 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">16</span>, <span class="dv">25</span>, <span class="dv">36</span>, <span class="dv">49</span>)</span>
+<span id="cb24-2"><a href="introdução.html#cb24-2" tabindex="-1"></a>x5 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(x5)</span>
+<span id="cb24-3"><a href="introdução.html#cb24-3" tabindex="-1"></a>x5</span></code></pre></div>
+<pre><code>## [1] 3 4 5 6 7</code></pre>
+<p>O R pode ser usado para fazer operações aritméticas envolvendo vetores:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="introdução.html#cb26-1" tabindex="-1"></a>x6 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>)</span>
+<span id="cb26-2"><a href="introdução.html#cb26-2" tabindex="-1"></a>x7 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">20</span>)</span>
+<span id="cb26-3"><a href="introdução.html#cb26-3" tabindex="-1"></a>x6 <span class="sc">+</span> x7</span></code></pre></div>
+<pre><code>## [1] 25 30 35</code></pre>
+<ul>
+<li>No entanto, se os vetores tiverem tamanhos diferentes, o R vai
+reciclar os valores do vetor mais curto até este atingir o tamanho
+do maior. Por exemplo:</li>
+</ul>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="introdução.html#cb28-1" tabindex="-1"></a>x8 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">20</span>)</span>
+<span id="cb28-2"><a href="introdução.html#cb28-2" tabindex="-1"></a>x9 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">10</span>)</span>
+<span id="cb28-3"><a href="introdução.html#cb28-3" tabindex="-1"></a>x8 <span class="sc">+</span> x9</span></code></pre></div>
+<pre><code>## [1] 10 20 20 30</code></pre>
+</div>
+<div id="fatores" class="section level2 hasAnchor" number="1.8">
+<h2><span class="header-section-number">1.8</span> Fatores<a href="introdução.html#fatores" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Quando temos variáveis categóricas, podemos usar outro tipo de
+objeto do R, o fator.</li>
+<li>Cada fator tem um conjunto de níveis. Vamos ver um exemplo.
+Suponhamos que pretendemos guardar o genótipo de 10 indivíduos em um
+vetor:</li>
+</ul>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="introdução.html#cb30-1" tabindex="-1"></a>gt <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;CC&quot;</span>, <span class="st">&quot;CT&quot;</span>, <span class="st">&quot;CC&quot;</span>, <span class="st">&quot;CC&quot;</span>, <span class="st">&quot;CT&quot;</span>, <span class="st">&quot;TT&quot;</span>, <span class="st">&quot;CT&quot;</span>, <span class="st">&quot;CT&quot;</span>, <span class="st">&quot;TT&quot;</span>, <span class="st">&quot;CT&quot;</span>)</span>
+<span id="cb30-2"><a href="introdução.html#cb30-2" tabindex="-1"></a>gt</span></code></pre></div>
+<pre><code>##  [1] &quot;CC&quot; &quot;CT&quot; &quot;CC&quot; &quot;CC&quot; &quot;CT&quot; &quot;TT&quot; &quot;CT&quot; &quot;CT&quot; &quot;TT&quot; &quot;CT&quot;</code></pre>
+<p>Para transformar esse vetor de caracteres em um fator, usamos a função
+<strong>factor</strong>:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="introdução.html#cb32-1" tabindex="-1"></a>gt <span class="ot">&lt;-</span> <span class="fu">factor</span>(gt)</span>
+<span id="cb32-2"><a href="introdução.html#cb32-2" tabindex="-1"></a>gt</span></code></pre></div>
+<pre><code>##  [1] CC CT CC CC CT TT CT CT TT CT
+## Levels: CC CT TT</code></pre>
+<ul>
+<li>Suponha agora que temos 4 indivíduos cujo genótipo pretendemos
+armazenar.</li>
+<li>Imagine que por coincidência não aparece o genótipo TT.</li>
+<li>Se pretendemos que o fator resultante mantenha os 3 níveis
+possíveis, teremos que fazer:</li>
+</ul>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="introdução.html#cb34-1" tabindex="-1"></a>gt2 <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;CC&quot;</span>, <span class="st">&quot;CT&quot;</span>, <span class="st">&quot;CT&quot;</span>, <span class="st">&quot;CT&quot;</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;CC&quot;</span>, <span class="st">&quot;CT&quot;</span>,<span class="st">&quot;TT&quot;</span>))</span>
+<span id="cb34-2"><a href="introdução.html#cb34-2" tabindex="-1"></a>gt2</span></code></pre></div>
+<pre><code>## [1] CC CT CT CT
+## Levels: CC CT TT</code></pre>
+<p>Podemos usar a função <strong>table</strong> contar o número de ocorrências de cada
+valor (nível):</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="introdução.html#cb36-1" tabindex="-1"></a><span class="fu">table</span>(gt)</span></code></pre></div>
+<pre><code>## gt
+## CC CT TT 
+##  3  5  2</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="introdução.html#cb38-1" tabindex="-1"></a><span class="fu">table</span>(gt2)</span></code></pre></div>
+<pre><code>## gt2
+## CC CT TT 
+##  1  3  0</code></pre>
+<ul>
+<li>Para fatores do mesmo tamanho usamos a função table() para fazer
+tabulações cruzadas de dois fatores.</li>
+<li>Usando o fator gt, com os genótipos dos indivíduos, e um novo fator
+com os grupos (caso x controle), podemos fazer uma tabulação cruzada
+entre genótipos e e grupo:</li>
+</ul>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="introdução.html#cb40-1" tabindex="-1"></a>grupo <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;caso&quot;</span>, <span class="st">&quot;caso&quot;</span>, <span class="st">&quot;controle&quot;</span>, <span class="st">&quot;controle&quot;</span>, <span class="st">&quot;caso&quot;</span>, <span class="st">&quot;caso&quot;</span>, <span class="st">&quot;caso&quot;</span>, <span class="st">&quot;controle&quot;</span>, <span class="st">&quot;caso&quot;</span>, <span class="st">&quot;controle&quot;</span>))</span>
+<span id="cb40-2"><a href="introdução.html#cb40-2" tabindex="-1"></a><span class="fu">table</span>(gt, grupo)</span></code></pre></div>
+<pre><code>##     grupo
+## gt   caso controle
+##   CC    1        2
+##   CT    3        2
+##   TT    2        0</code></pre>
+<ul>
+<li>Também é possível obter frequências marginais e relativas:</li>
+</ul>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="introdução.html#cb42-1" tabindex="-1"></a>tabela <span class="ot">&lt;-</span> <span class="fu">table</span>(gt, grupo)</span>
+<span id="cb42-2"><a href="introdução.html#cb42-2" tabindex="-1"></a><span class="fu">margin.table</span>(tabela, <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## gt
+## CC CT TT 
+##  3  5  2</code></pre>
+<p>Frequências relativas com a função prop.table():</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="introdução.html#cb44-1" tabindex="-1"></a><span class="fu">prop.table</span>(tabela, <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>##     grupo
+## gt        caso  controle
+##   CC 0.3333333 0.6666667
+##   CT 0.6000000 0.4000000
+##   TT 1.0000000 0.0000000</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="introdução.html#cb46-1" tabindex="-1"></a><span class="fu">prop.table</span>(tabela, <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>##     grupo
+## gt        caso  controle
+##   CC 0.1666667 0.5000000
+##   CT 0.5000000 0.5000000
+##   TT 0.3333333 0.0000000</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="introdução.html#cb48-1" tabindex="-1"></a><span class="fu">prop.table</span>(tabela)</span></code></pre></div>
+<pre><code>##     grupo
+## gt   caso controle
+##   CC  0.1      0.2
+##   CT  0.3      0.2
+##   TT  0.2      0.0</code></pre>
+</div>
+<div id="matrizes" class="section level2 hasAnchor" number="1.9">
+<h2><span class="header-section-number">1.9</span> Matrizes<a href="introdução.html#matrizes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>Para armazenar os dados em estruturas com mais do que uma dimensão
+usamos as matrizes arranjam a informação em duas dimensões.</p></li>
+<li><p>Para criar uma matriz usamos uma função específica para isso. Se
+quisermos criar uma matriz de 3 linhas e 4 colunas:</p></li>
+</ul>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="introdução.html#cb50-1" tabindex="-1"></a>dados <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">90</span>, <span class="dv">100</span>, <span class="dv">110</span>, <span class="dv">120</span>), <span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb50-2"><a href="introdução.html#cb50-2" tabindex="-1"></a>dados</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]   10   40   70  100
+## [2,]   20   50   80  110
+## [3,]   30   60   90  120</code></pre>
+<ul>
+<li>Os números são colocados na matriz por coluna, mas se quisermos
+preencher a matriz por linhas da seguinte forma:</li>
+</ul>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="introdução.html#cb52-1" tabindex="-1"></a>dados2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">90</span>, <span class="dv">100</span>, <span class="dv">110</span>, <span class="dv">120</span>), <span class="dv">3</span>, <span class="dv">4</span>, <span class="at">byrow =</span> T)</span>
+<span id="cb52-2"><a href="introdução.html#cb52-2" tabindex="-1"></a>dados2</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]   10   20   30   40
+## [2,]   50   60   70   80
+## [3,]   90  100  110  120</code></pre>
+<ul>
+<li>Nas matrizes podemos dar nomes para linhas e colunas. Vejamos como
+fazer isso no exemplo anterior:</li>
+</ul>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="introdução.html#cb54-1" tabindex="-1"></a><span class="fu">rownames</span>(dados) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;caso1&quot;</span>, <span class="st">&quot;caso2&quot;</span>, <span class="st">&quot;caso3&quot;</span>)</span>
+<span id="cb54-2"><a href="introdução.html#cb54-2" tabindex="-1"></a><span class="fu">colnames</span>(dados) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;var1&quot;</span>, <span class="st">&quot;var2&quot;</span>, <span class="st">&quot;var3&quot;</span>, <span class="st">&quot;var4&quot;</span>)</span>
+<span id="cb54-3"><a href="introdução.html#cb54-3" tabindex="-1"></a>dados</span></code></pre></div>
+<pre><code>##       var1 var2 var3 var4
+## caso1   10   40   70  100
+## caso2   20   50   80  110
+## caso3   30   60   90  120</code></pre>
+<ul>
+<li>Podemos acessar elementos individuais das matrizes usando um esquema
+de indexação:</li>
+</ul>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="introdução.html#cb56-1" tabindex="-1"></a>dados[<span class="dv">2</span>, <span class="dv">2</span>]</span></code></pre></div>
+<pre><code>## [1] 50</code></pre>
+<p>Ou então, usando os nomes:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="introdução.html#cb58-1" tabindex="-1"></a>dados[<span class="st">&quot;caso1&quot;</span>, <span class="st">&quot;var2&quot;</span>] </span></code></pre></div>
+<pre><code>## [1] 40</code></pre>
+<ul>
+<li>As funções cbind() e rbind() podem ser usadas para juntar dois ou
+mais vetores ou matrizes, por colunas ou por linhas,
+respectivamente, como podemos ver a seguir:</li>
+</ul>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="introdução.html#cb60-1" tabindex="-1"></a>ex1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">15</span>, <span class="dv">25</span>, <span class="dv">65</span>, <span class="dv">75</span>)</span>
+<span id="cb60-2"><a href="introdução.html#cb60-2" tabindex="-1"></a>ex2<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>)</span>
+<span id="cb60-3"><a href="introdução.html#cb60-3" tabindex="-1"></a></span>
+<span id="cb60-4"><a href="introdução.html#cb60-4" tabindex="-1"></a>m1<span class="ot">&lt;-</span><span class="fu">cbind</span>(ex1, ex2)</span>
+<span id="cb60-5"><a href="introdução.html#cb60-5" tabindex="-1"></a>m1</span></code></pre></div>
+<pre><code>##      ex1 ex2
+## [1,]  15  10
+## [2,]  25  20
+## [3,]  65  30
+## [4,]  75  40</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="introdução.html#cb62-1" tabindex="-1"></a>m2<span class="ot">&lt;-</span><span class="fu">rbind</span>(ex1, ex2)</span>
+<span id="cb62-2"><a href="introdução.html#cb62-2" tabindex="-1"></a>m2</span></code></pre></div>
+<pre><code>##     [,1] [,2] [,3] [,4]
+## ex1   15   25   65   75
+## ex2   10   20   30   40</code></pre>
+<ul>
+<li>As regras aritméticas também se aplicam as matrizes.</li>
+</ul>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="introdução.html#cb64-1" tabindex="-1"></a>m1 <span class="sc">*</span> <span class="dv">3</span></span></code></pre></div>
+<pre><code>##      ex1 ex2
+## [1,]  45  30
+## [2,]  75  60
+## [3,] 195  90
+## [4,] 225 120</code></pre>
+</div>
+<div id="listas" class="section level2 hasAnchor" number="1.10">
+<h2><span class="header-section-number">1.10</span> Listas<a href="introdução.html#listas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Outro objeto que temos é a lista. Na lista podemos colocar coisas
+variadas, que não precisam ser do mesmo tipo, modo ou tamanho.</li>
+<li>Os componentes de uma lista em R são sempre numerados e podem também
+ter um nome associados a eles.<br />
+</li>
+<li>Por exemplo, podemos criar uma lista com vários objetos criados
+anteriormente:</li>
+</ul>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="introdução.html#cb66-1" tabindex="-1"></a>lt <span class="ot">&lt;-</span> <span class="fu">list</span>(idade, gt, dados)</span>
+<span id="cb66-2"><a href="introdução.html#cb66-2" tabindex="-1"></a>lt[[<span class="dv">1</span>]] </span></code></pre></div>
+<pre><code>## [1] 23 45 NA 34</code></pre>
+</div>
+<div id="data-frame" class="section level2 hasAnchor" number="1.11">
+<h2><span class="header-section-number">1.11</span> Data frame<a href="introdução.html#data-frame" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Um data frame é um objeto do R usado para guardar tabelas de dados
+de um problema qualquer.</li>
+<li>É muito semelhante a uma matriz, mas as suas colunas tem nomes e
+podem conter dados de tipo diferente, diferente da matriz.</li>
+<li>Um data frame pode ser visto como uma tabela de uma base de dados,
+em que cada linha corresponde a um registro (linha) da tabela. Cada
+coluna corresponde às propriedades (campos) a serem armazenadas para
+cada registro da tabela.</li>
+</ul>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="introdução.html#cb68-1" tabindex="-1"></a>dados2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">idade =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">45</span>, <span class="dv">30</span>, <span class="dv">20</span>), <span class="at">genotipo =</span> <span class="fu">c</span>(<span class="st">&quot;CC&quot;</span>, <span class="st">&quot;CT&quot;</span>, <span class="st">&quot;CT&quot;</span>, <span class="st">&quot;TT&quot;</span>), <span class="at">sexo =</span> <span class="fu">c</span>(<span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;M&quot;</span>, <span class="st">&quot;F&quot;</span>))</span>
+<span id="cb68-2"><a href="introdução.html#cb68-2" tabindex="-1"></a>dados2</span></code></pre></div>
+<pre><code>##   idade genotipo sexo
+## 1    50       CC    M
+## 2    45       CT    F
+## 3    30       CT    M
+## 4    20       TT    F</code></pre>
+</div>
+<div id="sequências" class="section level2 hasAnchor" number="1.12">
+<h2><span class="header-section-number">1.12</span> Sequências<a href="introdução.html#sequências" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Para gerar dados sequenciais, em vez digitar os valores, podemos
+gerar sequências de várias de formas.</li>
+<li>Por exemplo, para criar um vetor com os números de 1 a 100, em vez
+de os escrevermos todos, podemos usar:</li>
+</ul>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="introdução.html#cb70-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span></span></code></pre></div>
+<ul>
+<li>Exemplos:</li>
+</ul>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="introdução.html#cb71-1" tabindex="-1"></a><span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> <span class="dv">5</span>, <span class="at">length =</span> <span class="dv">4</span>)</span></code></pre></div>
+<pre><code>## [1] 1.000000 2.333333 3.666667 5.000000</code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="introdução.html#cb73-1" tabindex="-1"></a><span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> <span class="dv">5</span>, <span class="at">length =</span> <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## [1] 1 5</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="introdução.html#cb75-1" tabindex="-1"></a><span class="fu">seq</span>(<span class="at">length =</span> <span class="dv">10</span>, <span class="at">from =</span> <span class="sc">-</span><span class="dv">2</span>, <span class="at">by =</span> <span class="fl">0.2</span>)</span></code></pre></div>
+<pre><code>##  [1] -2.0 -1.8 -1.6 -1.4 -1.2 -1.0 -0.8 -0.6 -0.4 -0.2</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="introdução.html#cb77-1" tabindex="-1"></a>letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code></pre></div>
+<pre><code>##  [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot;</code></pre>
+<ul>
+<li>Uma outra função bastante útil para gerar sequências é a função
+rep():</li>
+</ul>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="introdução.html#cb79-1" tabindex="-1"></a><span class="fu">rep</span>(<span class="dv">5</span>, <span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##  [1] 5 5 5 5 5 5 5 5 5 5</code></pre>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="introdução.html#cb81-1" tabindex="-1"></a><span class="fu">rep</span>(<span class="st">&quot;sim&quot;</span>, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;sim&quot; &quot;sim&quot; &quot;sim&quot;</code></pre>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="introdução.html#cb83-1" tabindex="-1"></a><span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## [1] 1 2 3 1 2 3</code></pre>
+<p>Para ler um pouco mais sobre o assunto: <span class="citation">(<a href="#ref-torgo2011introduccao">Torgo 2011</a>)</span></p>
+
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-torgo2011introduccao" class="csl-entry">
+Torgo, Luı́s. 2011. <span>“Introdu<span>ç</span><span>ã</span>o <span class="nocase">à</span> Programa<span>ç</span><span>ã</span>o Em r.”</span>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="carregar-e-manipular-dados.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

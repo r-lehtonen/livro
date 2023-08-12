@@ -1,0 +1,92 @@
+h1:cover-image-path-to-the-social-sharing-image-like-imagescover.jpg cover-image: path to the social sharing image like images/cover.jpg
+h1:prefácio Prefácio
+h1:introdução Introdução
+h2:o-que-é-r O que é R
+h2:instalação Instalação
+h2:rstudio RStudio
+h2:objetos-do-r Objetos do R
+h2:nomes-dos-objetos-do-r Nomes dos objetos do R
+h2:vetores Vetores
+h2:operações-com-vetores Operações com Vetores
+h2:fatores Fatores
+h2:matrizes Matrizes
+h2:listas Listas
+h2:data-frame Data frame
+h2:sequências Sequências
+h2:referências Referências
+h1:carregar-e-manipular-dados Carregar e manipular dados
+h2:ler-arquivos-txt-e-csv Ler arquivos txt e csv
+h2:ler-arquivos-xlsx Ler arquivos xlsx
+h2:gravar-arquivos-txt-e-xlsx Gravar arquivos txt e xlsx
+h2:manipulação-de-dados-r-base Manipulação de dados (R base)
+h2:transformação-de-dados Transformação de dados
+h2:técnicas-de-normalização Técnicas de normalização
+h2:juntar-dados-r-base Juntar dados (R base)
+h1:o-sistema-tidyverse O sistema tidyverse
+h2:manipulação-de-dados-com-tidyverse Manipulação de dados com tidyverse
+h2:função-filter Função filter
+h2:função-arrange Função arrange
+h2:função-select Função select
+h2:função-mutate-e-transmutate Função mutate e transmutate
+h2:funções-group_by-e-summarise Funções group_by e summarise
+h2:funções-pull-e-distinct Funções pull e distinct
+h2:pipes Pipes
+h2:pipe-nativa-do-r Pipe nativa do R
+h2:tibble Tibble
+h2:juntar-dados Juntar dados
+h1:gráficos Gráficos
+h2:gráficos-com-o-pacote-graphics-r-base Gráficos com o pacote graphics (R base)
+h2:o-pacote-ggplot2 O pacote ggplot2
+h2:gráficos-de-pontos-dispersão Gráficos de pontos (dispersão)
+h2:outros-pacotes-gráficos Outros pacotes gráficos
+h3:usando-as-cores Usando as cores
+h3:análise-gráfica-exploratória Análise gráfica exploratória
+h3:diagrama-de-venn Diagrama de Venn
+h3:diagramas Diagramas
+h3:datas-e-séries-temporais Datas e séries temporais
+h2:podemos-usar-filtros Podemos usar filtros
+h1:estatística Estatística
+h2:estatística-descritiva Estatística descritiva
+h2:testes-estatísticos Testes estatísticos
+h3:normalidade Normalidade
+h3:assimetria-e-curtose Assimetria e curtose
+h3:teste-t Teste t
+h3:teste-qui-quadrado Teste qui-quadrado
+h3:correlação Correlação
+h3:regressão Regressão
+h3:anova ANOVA
+h2:visualização-de-resultados-estatísticos Visualização de resultados estatísticos
+h1:funções-e-loops Funções e loops
+h2:funções Funções
+h2:loops Loops
+h3:for for
+h3:while while
+h2:if-e-else if e else
+h2:funções-apply-lapply-sapply-tapply-mapply Funções apply, lapply, sapply, tapply, mapply
+h1:genética Genética
+h2:genética-de-populações Genética de populações
+h2:genotipagem-com-genetics-e-loop Genotipagem com genetics e loop
+h2:heredogramas Heredogramas
+h2:análises-filogenéticas Análises filogenéticas
+h1:network Network
+h2:pacote-igraph Pacote Igraph
+h1:bioconductor Bioconductor
+h2:pacote-msa Pacote msa
+h2:pacote-multimir Pacote multiMiR
+h1:dados-não-estruturados Dados não estruturados
+h2:texto Texto
+h3:análise-de-sentimentos Análise de sentimentos
+h2:imagens Imagens
+h3:edição-de-imagens Edição de imagens
+h2:áudio Áudio
+h1:pesquisa-bibliográfica-e-bibliometria Pesquisa bibliográfica e Bibliometria
+h2:pesquisa-bibliográfica Pesquisa bibliográfica
+h2:pubmed PubMed
+h2:bibliometria Bibliometria
+h1:r-markdown R Markdown
+tab:12- Tabela 1. Arquivo Cortex: análise descritiva
+h2:incluindo-gráficos Incluindo gráficos
+h2:chunk-opções Chunk: opções
+h2:formatação Formatação
+h1:references References
+

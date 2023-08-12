@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 2 Carregar e manipular dados | Análises de Dados com R</title>
+  <meta name="description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 2 Carregar e manipular dados | Análises de Dados com R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bookdown.org/ricardo_lehtonen/analise/capa.png" />
+  <meta property="og:description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 2 Carregar e manipular dados | Análises de Dados com R" />
+  
+  <meta name="twitter:description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  <meta name="twitter:image" content="https://bookdown.org/ricardo_lehtonen/analise/capa.png" />
+
+<meta name="author" content="Ricardo Lehtonen R. de Souza" />
+
+
+<meta name="date" content="2023-07-31" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introdução.html"/>
+<link rel="next" href="o-sistema-tidyverse.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script>
+<link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet" />
+<script src="libs/tabwid-1.1.3/tabwid.js"></script>
+<link href="libs/wordcloud2-0.0.1/wordcloud.css" rel="stylesheet" />
+<script src="libs/wordcloud2-0.0.1/wordcloud2-all.js"></script>
+<script src="libs/wordcloud2-0.0.1/hover.js"></script>
+<script src="libs/wordcloud2-binding-0.2.1/wordcloud2.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Análises de dados com R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefácio</a></li>
+<li class="chapter" data-level="1" data-path="introdução.html"><a href="introdução.html"><i class="fa fa-check"></i><b>1</b> Introdução</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introdução.html"><a href="introdução.html#o-que-é-r"><i class="fa fa-check"></i><b>1.1</b> O que é R</a></li>
+<li class="chapter" data-level="1.2" data-path="introdução.html"><a href="introdução.html#instalação"><i class="fa fa-check"></i><b>1.2</b> Instalação</a></li>
+<li class="chapter" data-level="1.3" data-path="introdução.html"><a href="introdução.html#rstudio"><i class="fa fa-check"></i><b>1.3</b> RStudio</a></li>
+<li class="chapter" data-level="1.4" data-path="introdução.html"><a href="introdução.html#objetos-do-r"><i class="fa fa-check"></i><b>1.4</b> Objetos do R</a></li>
+<li class="chapter" data-level="1.5" data-path="introdução.html"><a href="introdução.html#nomes-dos-objetos-do-r"><i class="fa fa-check"></i><b>1.5</b> Nomes dos objetos do R</a></li>
+<li class="chapter" data-level="1.6" data-path="introdução.html"><a href="introdução.html#vetores"><i class="fa fa-check"></i><b>1.6</b> Vetores</a></li>
+<li class="chapter" data-level="1.7" data-path="introdução.html"><a href="introdução.html#operações-com-vetores"><i class="fa fa-check"></i><b>1.7</b> Operações com Vetores</a></li>
+<li class="chapter" data-level="1.8" data-path="introdução.html"><a href="introdução.html#fatores"><i class="fa fa-check"></i><b>1.8</b> Fatores</a></li>
+<li class="chapter" data-level="1.9" data-path="introdução.html"><a href="introdução.html#matrizes"><i class="fa fa-check"></i><b>1.9</b> Matrizes</a></li>
+<li class="chapter" data-level="1.10" data-path="introdução.html"><a href="introdução.html#listas"><i class="fa fa-check"></i><b>1.10</b> Listas</a></li>
+<li class="chapter" data-level="1.11" data-path="introdução.html"><a href="introdução.html#data-frame"><i class="fa fa-check"></i><b>1.11</b> Data frame</a></li>
+<li class="chapter" data-level="1.12" data-path="introdução.html"><a href="introdução.html#sequências"><i class="fa fa-check"></i><b>1.12</b> Sequências</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html"><i class="fa fa-check"></i><b>2</b> Carregar e manipular dados</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#ler-arquivos-txt-e-csv"><i class="fa fa-check"></i><b>2.1</b> Ler arquivos txt e csv</a></li>
+<li class="chapter" data-level="2.2" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#ler-arquivos-xlsx"><i class="fa fa-check"></i><b>2.2</b> Ler arquivos xlsx</a></li>
+<li class="chapter" data-level="2.3" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#gravar-arquivos-txt-e-xlsx"><i class="fa fa-check"></i><b>2.3</b> Gravar arquivos txt e xlsx</a></li>
+<li class="chapter" data-level="2.4" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#manipulação-de-dados-r-base"><i class="fa fa-check"></i><b>2.4</b> Manipulação de dados (R base)</a></li>
+<li class="chapter" data-level="2.5" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#transformação-de-dados"><i class="fa fa-check"></i><b>2.5</b> Transformação de dados</a></li>
+<li class="chapter" data-level="2.6" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#técnicas-de-normalização"><i class="fa fa-check"></i><b>2.6</b> Técnicas de normalização</a></li>
+<li class="chapter" data-level="2.7" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#juntar-dados-r-base"><i class="fa fa-check"></i><b>2.7</b> Juntar dados (R base)</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html"><i class="fa fa-check"></i><b>3</b> O sistema tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#manipulação-de-dados-com-tidyverse"><i class="fa fa-check"></i><b>3.1</b> Manipulação de dados com tidyverse</a></li>
+<li class="chapter" data-level="3.2" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-filter"><i class="fa fa-check"></i><b>3.2</b> Função filter</a></li>
+<li class="chapter" data-level="3.3" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-arrange"><i class="fa fa-check"></i><b>3.3</b> Função arrange</a></li>
+<li class="chapter" data-level="3.4" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-select"><i class="fa fa-check"></i><b>3.4</b> Função select</a></li>
+<li class="chapter" data-level="3.5" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-mutate-e-transmutate"><i class="fa fa-check"></i><b>3.5</b> Função mutate e transmutate</a></li>
+<li class="chapter" data-level="3.6" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#funções-group_by-e-summarise"><i class="fa fa-check"></i><b>3.6</b> Funções group_by e summarise</a></li>
+<li class="chapter" data-level="3.7" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#funções-pull-e-distinct"><i class="fa fa-check"></i><b>3.7</b> Funções pull e distinct</a></li>
+<li class="chapter" data-level="3.8" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#pipes"><i class="fa fa-check"></i><b>3.8</b> Pipes</a></li>
+<li class="chapter" data-level="3.9" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#pipe-nativa-do-r"><i class="fa fa-check"></i><b>3.9</b> Pipe nativa do R</a></li>
+<li class="chapter" data-level="3.10" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#tibble"><i class="fa fa-check"></i><b>3.10</b> Tibble</a></li>
+<li class="chapter" data-level="3.11" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#juntar-dados"><i class="fa fa-check"></i><b>3.11</b> Juntar dados</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="gráficos.html"><a href="gráficos.html"><i class="fa fa-check"></i><b>4</b> Gráficos</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="gráficos.html"><a href="gráficos.html#gráficos-com-o-pacote-graphics-r-base"><i class="fa fa-check"></i><b>4.1</b> Gráficos com o pacote graphics (R base)</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="gráficos.html"><a href="gráficos.html#introdução-aos-gráficos-do-r"><i class="fa fa-check"></i><b>4.1.1</b> Introdução aos gráficos do R</a></li>
+<li class="chapter" data-level="4.1.2" data-path="gráficos.html"><a href="gráficos.html#salvar"><i class="fa fa-check"></i><b>4.1.2</b> Salvar</a></li>
+<li class="chapter" data-level="4.1.3" data-path="gráficos.html"><a href="gráficos.html#histogramas"><i class="fa fa-check"></i><b>4.1.3</b> Histogramas</a></li>
+<li class="chapter" data-level="4.1.4" data-path="gráficos.html"><a href="gráficos.html#boxplot"><i class="fa fa-check"></i><b>4.1.4</b> Boxplot</a></li>
+<li class="chapter" data-level="4.1.5" data-path="gráficos.html"><a href="gráficos.html#barplot"><i class="fa fa-check"></i><b>4.1.5</b> Barplot</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="gráficos.html"><a href="gráficos.html#o-pacote-ggplot2"><i class="fa fa-check"></i><b>4.2</b> O pacote ggplot2</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="gráficos.html"><a href="gráficos.html#gráficos-de-pontos-dispersão"><i class="fa fa-check"></i><b>4.2.1</b> Gráficos de pontos (dispersão)</a></li>
+<li class="chapter" data-level="4.2.2" data-path="gráficos.html"><a href="gráficos.html#salvar-1"><i class="fa fa-check"></i><b>4.2.2</b> Salvar</a></li>
+<li class="chapter" data-level="4.2.3" data-path="gráficos.html"><a href="gráficos.html#histogramas-1"><i class="fa fa-check"></i><b>4.2.3</b> Histogramas</a></li>
+<li class="chapter" data-level="4.2.4" data-path="gráficos.html"><a href="gráficos.html#density-plot"><i class="fa fa-check"></i><b>4.2.4</b> Density plot</a></li>
+<li class="chapter" data-level="4.2.5" data-path="gráficos.html"><a href="gráficos.html#boxplot-1"><i class="fa fa-check"></i><b>4.2.5</b> Boxplot</a></li>
+<li class="chapter" data-level="4.2.6" data-path="gráficos.html"><a href="gráficos.html#gráfico-q-q"><i class="fa fa-check"></i><b>4.2.6</b> Gráfico Q-Q</a></li>
+<li class="chapter" data-level="4.2.7" data-path="gráficos.html"><a href="gráficos.html#figura-com-vários-gráficos"><i class="fa fa-check"></i><b>4.2.7</b> Figura com vários gráficos</a></li>
+<li class="chapter" data-level="4.2.8" data-path="gráficos.html"><a href="gráficos.html#ajustes-de-posição"><i class="fa fa-check"></i><b>4.2.8</b> Ajustes de Posição</a></li>
+<li class="chapter" data-level="4.2.9" data-path="gráficos.html"><a href="gráficos.html#geom-smooth"><i class="fa fa-check"></i><b>4.2.9</b> Geom Smooth</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="gráficos.html"><a href="gráficos.html#outros-pacotes-gráficos"><i class="fa fa-check"></i><b>4.3</b> Outros pacotes gráficos</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="gráficos.html"><a href="gráficos.html#usando-as-cores"><i class="fa fa-check"></i><b>4.3.1</b> Usando as cores</a></li>
+<li class="chapter" data-level="4.3.2" data-path="gráficos.html"><a href="gráficos.html#análise-gráfica-exploratória"><i class="fa fa-check"></i><b>4.3.2</b> Análise gráfica exploratória</a></li>
+<li class="chapter" data-level="4.3.3" data-path="gráficos.html"><a href="gráficos.html#ggplot2-mais-parâmetros"><i class="fa fa-check"></i><b>4.3.3</b> GGPLOT2: mais parâmetros</a></li>
+<li class="chapter" data-level="4.3.4" data-path="gráficos.html"><a href="gráficos.html#diagrama-de-venn"><i class="fa fa-check"></i><b>4.3.4</b> Diagrama de Venn</a></li>
+<li class="chapter" data-level="4.3.5" data-path="gráficos.html"><a href="gráficos.html#diagramas"><i class="fa fa-check"></i><b>4.3.5</b> Diagramas</a></li>
+<li class="chapter" data-level="4.3.6" data-path="gráficos.html"><a href="gráficos.html#outra-opção-é-o-pacote-ggflowchart"><i class="fa fa-check"></i><b>4.3.6</b> Outra opção é o pacote ggflowchart</a></li>
+<li class="chapter" data-level="4.3.7" data-path="gráficos.html"><a href="gráficos.html#datas-e-séries-temporais"><i class="fa fa-check"></i><b>4.3.7</b> Datas e séries temporais</a></li>
+<li class="chapter" data-level="4.3.8" data-path="gráficos.html"><a href="gráficos.html#time-series---dados-de-casos-de-covid-no-paraná"><i class="fa fa-check"></i><b>4.3.8</b> Time series - Dados de casos de COVID no Paraná</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="estatística.html"><a href="estatística.html"><i class="fa fa-check"></i><b>5</b> Estatística</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="estatística.html"><a href="estatística.html#estatística-descritiva"><i class="fa fa-check"></i><b>5.1</b> Estatística descritiva</a></li>
+<li class="chapter" data-level="5.2" data-path="estatística.html"><a href="estatística.html#testes-estatísticos"><i class="fa fa-check"></i><b>5.2</b> Testes estatísticos</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="estatística.html"><a href="estatística.html#normalidade"><i class="fa fa-check"></i><b>5.2.1</b> Normalidade</a></li>
+<li class="chapter" data-level="5.2.2" data-path="estatística.html"><a href="estatística.html#assimetria-e-curtose"><i class="fa fa-check"></i><b>5.2.2</b> Assimetria e curtose</a></li>
+<li class="chapter" data-level="5.2.3" data-path="estatística.html"><a href="estatística.html#teste-t"><i class="fa fa-check"></i><b>5.2.3</b> Teste t</a></li>
+<li class="chapter" data-level="5.2.4" data-path="estatística.html"><a href="estatística.html#teste-qui-quadrado"><i class="fa fa-check"></i><b>5.2.4</b> Teste qui-quadrado</a></li>
+<li class="chapter" data-level="5.2.5" data-path="estatística.html"><a href="estatística.html#correlação"><i class="fa fa-check"></i><b>5.2.5</b> Correlação</a></li>
+<li class="chapter" data-level="5.2.6" data-path="estatística.html"><a href="estatística.html#regressão"><i class="fa fa-check"></i><b>5.2.6</b> Regressão</a></li>
+<li class="chapter" data-level="5.2.7" data-path="estatística.html"><a href="estatística.html#anova"><i class="fa fa-check"></i><b>5.2.7</b> ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="estatística.html"><a href="estatística.html#visualização-de-resultados-estatísticos"><i class="fa fa-check"></i><b>5.3</b> Visualização de resultados estatísticos</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="funções-e-loops.html"><a href="funções-e-loops.html"><i class="fa fa-check"></i><b>6</b> Funções e loops</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="funções-e-loops.html"><a href="funções-e-loops.html#funções"><i class="fa fa-check"></i><b>6.1</b> Funções</a></li>
+<li class="chapter" data-level="6.2" data-path="funções-e-loops.html"><a href="funções-e-loops.html#loops"><i class="fa fa-check"></i><b>6.2</b> Loops</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="funções-e-loops.html"><a href="funções-e-loops.html#for"><i class="fa fa-check"></i><b>6.2.1</b> for</a></li>
+<li class="chapter" data-level="6.2.2" data-path="funções-e-loops.html"><a href="funções-e-loops.html#while"><i class="fa fa-check"></i><b>6.2.2</b> while</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="funções-e-loops.html"><a href="funções-e-loops.html#if-e-else"><i class="fa fa-check"></i><b>6.3</b> if e else</a></li>
+<li class="chapter" data-level="6.4" data-path="funções-e-loops.html"><a href="funções-e-loops.html#funções-apply-lapply-sapply-tapply-mapply"><i class="fa fa-check"></i><b>6.4</b> Funções apply, lapply, sapply, tapply, mapply</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="genética.html"><a href="genética.html"><i class="fa fa-check"></i><b>7</b> Genética</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="genética.html"><a href="genética.html#genética-de-populações"><i class="fa fa-check"></i><b>7.1</b> Genética de populações</a></li>
+<li class="chapter" data-level="7.2" data-path="genética.html"><a href="genética.html#genotipagem-com-genetics-e-loop"><i class="fa fa-check"></i><b>7.2</b> Genotipagem com genetics e loop</a></li>
+<li class="chapter" data-level="7.3" data-path="genética.html"><a href="genética.html#heredogramas"><i class="fa fa-check"></i><b>7.3</b> Heredogramas</a></li>
+<li class="chapter" data-level="7.4" data-path="genética.html"><a href="genética.html#análises-filogenéticas"><i class="fa fa-check"></i><b>7.4</b> Análises filogenéticas</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>8</b> Network</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="network.html"><a href="network.html#pacote-igraph"><i class="fa fa-check"></i><b>8.1</b> Pacote Igraph</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="bioconductor.html"><a href="bioconductor.html"><i class="fa fa-check"></i><b>9</b> Bioconductor</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="bioconductor.html"><a href="bioconductor.html#pacote-msa"><i class="fa fa-check"></i><b>9.1</b> Pacote msa</a></li>
+<li class="chapter" data-level="9.2" data-path="bioconductor.html"><a href="bioconductor.html#pacote-multimir"><i class="fa fa-check"></i><b>9.2</b> Pacote multiMiR</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html"><i class="fa fa-check"></i><b>10</b> Dados não estruturados</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#texto"><i class="fa fa-check"></i><b>10.1</b> Texto</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#análise-de-sentimentos"><i class="fa fa-check"></i><b>10.1.1</b> Análise de sentimentos</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#imagens"><i class="fa fa-check"></i><b>10.2</b> Imagens</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#edição-de-imagens"><i class="fa fa-check"></i><b>10.2.1</b> Edição de imagens</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#áudio"><i class="fa fa-check"></i><b>10.3</b> Áudio</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html"><i class="fa fa-check"></i><b>11</b> Pesquisa bibliográfica e Bibliometria</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#pesquisa-bibliográfica"><i class="fa fa-check"></i><b>11.1</b> Pesquisa bibliográfica</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#termos-da-busca"><i class="fa fa-check"></i><b>11.1.1</b> Termos da busca</a></li>
+<li class="chapter" data-level="11.1.2" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#bases-de-dados"><i class="fa fa-check"></i><b>11.1.2</b> Bases de dados</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#pubmed"><i class="fa fa-check"></i><b>11.2</b> PubMed</a></li>
+<li class="chapter" data-level="11.3" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#bibliometria"><i class="fa fa-check"></i><b>11.3</b> Bibliometria</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>12</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="r-markdown.html"><a href="r-markdown.html#incluindo-gráficos"><i class="fa fa-check"></i><b>12.1</b> Incluindo gráficos</a></li>
+<li class="chapter" data-level="12.2" data-path="r-markdown.html"><a href="r-markdown.html#chunk-opções"><i class="fa fa-check"></i><b>12.2</b> Chunk: opções</a></li>
+<li class="chapter" data-level="12.3" data-path="r-markdown.html"><a href="r-markdown.html#formatação"><i class="fa fa-check"></i><b>12.3</b> Formatação</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://docs.ufpr.br/~lehtonen/" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análises de Dados com R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="carregar-e-manipular-dados" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Capítulo 2</span> Carregar e manipular dados<a href="carregar-e-manipular-dados.html#carregar-e-manipular-dados" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Dados<br />
+Uma etapa muito importante é planejar as planilhas de dados. Se os dados estiverem bem organizados, isso vai poupar muito tempo.</p>
+<p>Como os dados devem estar organizados: os casos nas linhas e as variáveis nas colunas.</p>
+<p>Os dados podem estar em planilhas do excel ou em arquivos de texto. Vamos ver como carregar esses dados.</p>
+<div id="ler-arquivos-txt-e-csv" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Ler arquivos txt e csv<a href="carregar-e-manipular-dados.html#ler-arquivos-txt-e-csv" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Para ler um arquivo txt usamos a função read.table. No exemplo abaixo, o arquivo iris.txt está dentro pasta dados:</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="carregar-e-manipular-dados.html#cb85-1" tabindex="-1"></a>dados<span class="ot">&lt;-</span><span class="fu">read.table</span>(<span class="st">&quot;dados/iris.txt&quot;</span>, <span class="at">head=</span>T, <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>)</span>
+<span id="cb85-2"><a href="carregar-e-manipular-dados.html#cb85-2" tabindex="-1"></a></span>
+<span id="cb85-3"><a href="carregar-e-manipular-dados.html#cb85-3" tabindex="-1"></a><span class="fu">head</span>(dados)</span></code></pre></div>
+<pre><code>##   sepal_l sepal_w petal_l petal_w       class
+## 1     5.1     3.5     1.4     0.2 Iris-setosa
+## 2     4.9     3.0     1.4     0.2 Iris-setosa
+## 3     4.7     3.2     1.3     0.2 Iris-setosa
+## 4     4.6     3.1     1.5     0.2 Iris-setosa
+## 5     5.0     3.6     1.4     0.2 Iris-setosa
+## 6     5.4     3.9     1.7     0.4 Iris-setosa</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="carregar-e-manipular-dados.html#cb87-1" tabindex="-1"></a><span class="fu">tail</span>(dados)</span></code></pre></div>
+<pre><code>##     sepal_l sepal_w petal_l petal_w          class
+## 145     6.7     3.3     5.7     2.5 Iris-virginica
+## 146     6.7     3.0     5.2     2.3 Iris-virginica
+## 147     6.3     2.5     5.0     1.9 Iris-virginica
+## 148     6.5     3.0     5.2     2.0 Iris-virginica
+## 149     6.2     3.4     5.4     2.3 Iris-virginica
+## 150     5.9     3.0     5.1     1.8 Iris-virginica</code></pre>
+<p>Onde <strong>head=T</strong> indica que os dados tem uma linha de cabeçalho e <strong>sep</strong> define o separador das variáveis, nesse caso é a vírgula.<br />
+Use <strong>help(“read.table”)</strong> para ver outros parâmetros.</p>
+<p>Podemos ver as primeiras linhas do objeto <strong>head</strong> e as últimas linhas com <strong>tail</strong>.</p>
+</div>
+<div id="ler-arquivos-xlsx" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Ler arquivos xlsx<a href="carregar-e-manipular-dados.html#ler-arquivos-xlsx" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Instale e ative o pacote openxlsx. Temos duas maneiras de instalar um pacote. No RStudio, podemos clicar em <strong>Install</strong> na aba <strong>Packages</strong> e então digitar o nome do pacote a ser instalado. Ou podemos usar a função install.packages(), especificando o nome do pacote dentro do parêntesis.<br />
+Sempre que formos utilizar um pacote, precisamos ativá-lo. Também temos duas maneiras de fazer isso. A primeira, usando o RStudio, na aba <strong>Packages</strong> procuramos o pacote e clicamos na caixa de seleção. A segunda maneira, a qual recomendo usar, é com a função <strong>library()</strong>. Dessa forma, a ativação já estará no script e não corremos o risco de esquecer de ativar o pacote.
+O pacote openxlsx permite ler e gravar arquivo xlsx, como no exemplo abaixo:</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="carregar-e-manipular-dados.html#cb89-1" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
+<span id="cb89-2"><a href="carregar-e-manipular-dados.html#cb89-2" tabindex="-1"></a>dados2<span class="ot">&lt;-</span><span class="fu">read.xlsx</span>(<span class="st">&quot;dados/pinguim.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">1</span>, <span class="at">colNames =</span> T)</span>
+<span id="cb89-3"><a href="carregar-e-manipular-dados.html#cb89-3" tabindex="-1"></a><span class="fu">head</span>(dados2)</span></code></pre></div>
+<pre><code>##   species    island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+## 1  Adelie Torgersen           39.1          18.7               181        3750
+## 2  Adelie Torgersen           39.5          17.4               186        3800
+## 3  Adelie Torgersen           40.3          18.0               195        3250
+## 4  Adelie Torgersen             NA            NA                NA          NA
+## 5  Adelie Torgersen           36.7          19.3               193        3450
+## 6  Adelie Torgersen           39.3          20.6               190        3650
+##      sex year
+## 1   male 2007
+## 2 female 2007
+## 3 female 2007
+## 4   &lt;NA&gt; 2007
+## 5 female 2007
+## 6   male 2007</code></pre>
+<p>Onde sheet especifica qual planilha do arquivo xlsx deve ser lida e colNames = T indica que na primeira linha estão os títulos das colunas.
+Podemos definir outros parâmetros também, como por exemplo, especificar em qual linha começar a ler os dados com startRow =, ou definir quais colunas pegar com cols =.</p>
+<p>Também é possível usar a opção do RStudio para importar dados para isso, na aba environment, clique em import Dataset tem opções de importar dados do texto, do excel, do SPSS e outros formatos.</p>
+</div>
+<div id="gravar-arquivos-txt-e-xlsx" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Gravar arquivos txt e xlsx<a href="carregar-e-manipular-dados.html#gravar-arquivos-txt-e-xlsx" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Gravar arquivos</p>
+<p>Podemos gravar um arquivo txt ou xlsx</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="carregar-e-manipular-dados.html#cb91-1" tabindex="-1"></a><span class="fu">write.table</span>(dados, <span class="at">file=</span><span class="st">&quot;dados/flor.txt&quot;</span>, <span class="at">quote=</span>F, <span class="at">row.names =</span> F,<span class="at">append=</span>F)</span>
+<span id="cb91-2"><a href="carregar-e-manipular-dados.html#cb91-2" tabindex="-1"></a></span>
+<span id="cb91-3"><a href="carregar-e-manipular-dados.html#cb91-3" tabindex="-1"></a><span class="fu">write.xlsx</span>(dados, <span class="st">&quot;dados/flor.xlsx&quot;</span>, <span class="at">sheetName=</span><span class="st">&quot;Plan1&quot;</span>, <span class="at">colNames=</span>T, <span class="at">rowNames=</span>F,<span class="at">append=</span>F)</span></code></pre></div>
+</div>
+<div id="manipulação-de-dados-r-base" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Manipulação de dados (R base)<a href="carregar-e-manipular-dados.html#manipulação-de-dados-r-base" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Com a função <strong>summary</strong> podemos ver um resumo sobre uma variável:</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="carregar-e-manipular-dados.html#cb92-1" tabindex="-1"></a><span class="fu">summary</span>(dados<span class="sc">$</span>sepal_l)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   4.300   5.100   5.800   5.843   6.400   7.900</code></pre>
+<p>Para especificar a variável, usamos o nome do objeto seguido de $ e o nome da coluna</p>
+<p>Podemos ver um resumo de todas as variáveis:</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="carregar-e-manipular-dados.html#cb94-1" tabindex="-1"></a><span class="fu">summary</span>(dados)</span></code></pre></div>
+<pre><code>##     sepal_l         sepal_w         petal_l         petal_w     
+##  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
+##  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+##  Median :5.800   Median :3.000   Median :4.350   Median :1.300  
+##  Mean   :5.843   Mean   :3.054   Mean   :3.759   Mean   :1.199  
+##  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+##  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
+##     class          
+##  Length:150        
+##  Class :character  
+##  Mode  :character  
+##                    
+##                    
+## </code></pre>
+<p>Podemos ver as características das variáveis usando a função <strong>str</strong>:</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="carregar-e-manipular-dados.html#cb96-1" tabindex="-1"></a><span class="fu">str</span>(dados)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    150 obs. of  5 variables:
+##  $ sepal_l: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+##  $ sepal_w: num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+##  $ petal_l: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
+##  $ petal_w: num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
+##  $ class  : chr  &quot;Iris-setosa&quot; &quot;Iris-setosa&quot; &quot;Iris-setosa&quot; &quot;Iris-setosa&quot; ...</code></pre>
+<p>Indexação</p>
+<p>Podemos usar indexação para acessar dados específicos.</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="carregar-e-manipular-dados.html#cb98-1" tabindex="-1"></a>dados[<span class="dv">2</span>,<span class="dv">3</span>] <span class="co"># [linha, coluna]</span></span></code></pre></div>
+<pre><code>## [1] 1.4</code></pre>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="carregar-e-manipular-dados.html#cb100-1" tabindex="-1"></a>dados[,<span class="dv">3</span>] <span class="co"># todos os dados da coluna 3</span></span></code></pre></div>
+<pre><code>##   [1] 1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 1.5 1.6 1.4 1.1 1.2 1.5 1.3 1.4
+##  [19] 1.7 1.5 1.7 1.5 1.0 1.7 1.9 1.6 1.6 1.5 1.4 1.6 1.6 1.5 1.5 1.4 1.5 1.2
+##  [37] 1.3 1.5 1.3 1.5 1.3 1.3 1.3 1.6 1.9 1.4 1.6 1.4 1.5 1.4 4.7 4.5 4.9 4.0
+##  [55] 4.6 4.5 4.7 3.3 4.6 3.9 3.5 4.2 4.0 4.7 3.6 4.4 4.5 4.1 4.5 3.9 4.8 4.0
+##  [73] 4.9 4.7 4.3 4.4 4.8 5.0 4.5 3.5 3.8 3.7 3.9 5.1 4.5 4.5 4.7 4.4 4.1 4.0
+##  [91] 4.4 4.6 4.0 3.3 4.2 4.2 4.2 4.3 3.0 4.1 6.0 5.1 5.9 5.6 5.8 6.6 4.5 6.3
+## [109] 5.8 6.1 5.1 5.3 5.5 5.0 5.1 5.3 5.5 6.7 6.9 5.0 5.7 4.9 6.7 4.9 5.7 6.0
+## [127] 4.8 4.9 5.6 5.8 6.1 6.4 5.6 5.1 5.6 6.1 5.6 5.5 4.8 5.4 5.6 5.1 5.1 5.9
+## [145] 5.7 5.2 5.0 5.2 5.4 5.1</code></pre>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="carregar-e-manipular-dados.html#cb102-1" tabindex="-1"></a>dados[<span class="dv">2</span>,] <span class="co"># todos os dados da linha 2</span></span></code></pre></div>
+<pre><code>##   sepal_l sepal_w petal_l petal_w       class
+## 2     4.9       3     1.4     0.2 Iris-setosa</code></pre>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="carregar-e-manipular-dados.html#cb104-1" tabindex="-1"></a>dados<span class="sc">$</span>sepal_w <span class="co"># todos os dados da coluna sepal_w</span></span></code></pre></div>
+<pre><code>##   [1] 3.5 3.0 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 3.7 3.4 3.0 3.0 4.0 4.4 3.9 3.5
+##  [19] 3.8 3.8 3.4 3.7 3.6 3.3 3.4 3.0 3.4 3.5 3.4 3.2 3.1 3.4 4.1 4.2 3.1 3.2
+##  [37] 3.5 3.1 3.0 3.4 3.5 2.3 3.2 3.5 3.8 3.0 3.8 3.2 3.7 3.3 3.2 3.2 3.1 2.3
+##  [55] 2.8 2.8 3.3 2.4 2.9 2.7 2.0 3.0 2.2 2.9 2.9 3.1 3.0 2.7 2.2 2.5 3.2 2.8
+##  [73] 2.5 2.8 2.9 3.0 2.8 3.0 2.9 2.6 2.4 2.4 2.7 2.7 3.0 3.4 3.1 2.3 3.0 2.5
+##  [91] 2.6 3.0 2.6 2.3 2.7 3.0 2.9 2.9 2.5 2.8 3.3 2.7 3.0 2.9 3.0 3.0 2.5 2.9
+## [109] 2.5 3.6 3.2 2.7 3.0 2.5 2.8 3.2 3.0 3.8 2.6 2.2 3.2 2.8 2.8 2.7 3.3 3.2
+## [127] 2.8 3.0 2.8 3.0 2.8 3.8 2.8 2.8 2.6 3.0 3.4 3.1 3.0 3.1 3.1 3.1 2.7 3.2
+## [145] 3.3 3.0 2.5 3.0 3.4 3.0</code></pre>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="carregar-e-manipular-dados.html#cb106-1" tabindex="-1"></a><span class="fu">colnames</span>(dados) <span class="co"># nomes das colunas</span></span></code></pre></div>
+<pre><code>## [1] &quot;sepal_l&quot; &quot;sepal_w&quot; &quot;petal_l&quot; &quot;petal_w&quot; &quot;class&quot;</code></pre>
+<p>Selecionando dados.<br />
+Como exemplo, vamos selecionar apenas as linhas que
+correspondem à espécie <em>Iris virginica</em>. Os dados referentes à espécie estão na variável <strong>class</strong>.</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="carregar-e-manipular-dados.html#cb108-1" tabindex="-1"></a>virginica<span class="ot">&lt;-</span> dados[dados<span class="sc">$</span>class<span class="sc">==</span><span class="st">&quot;Iris-virginica&quot;</span>,]</span></code></pre></div>
+<p>A indexação é linha, coluna. A vírgula no final sem nada depois significa que é para pegar todos as colunas.</p>
+<p>Se quisermos pegar só a coluna 3 usamos assim:</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="carregar-e-manipular-dados.html#cb109-1" tabindex="-1"></a>petal_virginica<span class="ot">&lt;-</span>dados[dados<span class="sc">$</span>class<span class="sc">==</span><span class="st">&quot;Iris-virginica&quot;</span>, <span class="dv">3</span>]</span></code></pre></div>
+<p>Podemos selecionar algumas colunas. No exemplo abaixo selecionamos as colunas 3 a 5:</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="carregar-e-manipular-dados.html#cb110-1" tabindex="-1"></a>dados3<span class="ot">&lt;-</span>dados2[, <span class="fu">c</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>)]</span></code></pre></div>
+<p>Como a indexação é linha, coluna, dentro dos [] tem uma vírgula e nada antes da vírgula, isso significa pegar todas as linhas, depois da vírgula está especificado para pegar as colunas de 3 a 5.</p>
+<p>Criando uma coluna</p>
+<p>Criando uma coluna chamada índice com NA:</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="carregar-e-manipular-dados.html#cb111-1" tabindex="-1"></a>dados<span class="sc">$</span>indice<span class="ot">&lt;-</span><span class="cn">NA</span> </span>
+<span id="cb111-2"><a href="carregar-e-manipular-dados.html#cb111-2" tabindex="-1"></a>dados<span class="sc">$</span>indice</span></code></pre></div>
+<pre><code>##   [1] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
+##  [26] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
+##  [51] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
+##  [76] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
+## [101] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
+## [126] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA</code></pre>
+<p>Adicionando dados:</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="carregar-e-manipular-dados.html#cb113-1" tabindex="-1"></a>dados<span class="sc">$</span>indice<span class="ot">&lt;-</span>(dados<span class="sc">$</span>sepal_l<span class="sc">*</span>dados<span class="sc">$</span>sepal_w)</span>
+<span id="cb113-2"><a href="carregar-e-manipular-dados.html#cb113-2" tabindex="-1"></a><span class="fu">head</span>(dados)</span></code></pre></div>
+<pre><code>##   sepal_l sepal_w petal_l petal_w       class indice
+## 1     5.1     3.5     1.4     0.2 Iris-setosa  17.85
+## 2     4.9     3.0     1.4     0.2 Iris-setosa  14.70
+## 3     4.7     3.2     1.3     0.2 Iris-setosa  15.04
+## 4     4.6     3.1     1.5     0.2 Iris-setosa  14.26
+## 5     5.0     3.6     1.4     0.2 Iris-setosa  18.00
+## 6     5.4     3.9     1.7     0.4 Iris-setosa  21.06</code></pre>
+<p>Operadores</p>
+<p>Podemos usar operadores:</p>
+<p>igual ==<br />
+diferente !=<br />
+x ou y =&gt; x | y<br />
+x e y =&gt; x &amp; y</p>
+<p>Então, além de selecionar um parâmetro da variável class, aqui também selecionamos por outro parâmetro da variável sepal_l, usando o operador &amp;.</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="carregar-e-manipular-dados.html#cb115-1" tabindex="-1"></a>virginica2<span class="ot">&lt;-</span> dados[dados<span class="sc">$</span>class<span class="sc">==</span><span class="st">&quot;Iris-virginica&quot;</span> <span class="sc">&amp;</span> dados<span class="sc">$</span>sepal_l<span class="sc">&gt;</span><span class="fl">6.5</span>,]</span>
+<span id="cb115-2"><a href="carregar-e-manipular-dados.html#cb115-2" tabindex="-1"></a>virginica2<span class="sc">$</span>sepal_l</span></code></pre></div>
+<pre><code>##  [1] 7.1 7.6 7.3 6.7 7.2 6.8 7.7 7.7 6.9 7.7 6.7 7.2 7.2 7.4 7.9 7.7 6.9 6.7 6.9
+## [20] 6.8 6.7 6.7</code></pre>
+</div>
+<div id="transformação-de-dados" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Transformação de dados<a href="carregar-e-manipular-dados.html#transformação-de-dados" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Muitos valores das características tem escalas muito diferentes. Isso pode gerar dificuldades para algoritmos que usam todos esses valores para compor um valor único de comparação. Para resolver isso pode ser utilizada a normalização ou conversão de dados.</p>
+</div>
+<div id="técnicas-de-normalização" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> Técnicas de normalização<a href="carregar-e-manipular-dados.html#técnicas-de-normalização" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Min-max: altera valores extremos e organiza os internos dentro de um novo intervalo.</p>
+<p>v’=((v-min(v))/(max(v) - min(v)))*(maxnovo - minnovo) +
+minnovo</p>
+<p>Para exemplificar, vamos transformar a variável body_mass_g em uma escala de 0 a 1 e armazenar o resultado em uma nova variável chamada body_norm:</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="carregar-e-manipular-dados.html#cb117-1" tabindex="-1"></a>maxnovo<span class="ot">&lt;-</span><span class="dv">1</span></span>
+<span id="cb117-2"><a href="carregar-e-manipular-dados.html#cb117-2" tabindex="-1"></a>minnovo<span class="ot">&lt;-</span><span class="dv">0</span></span>
+<span id="cb117-3"><a href="carregar-e-manipular-dados.html#cb117-3" tabindex="-1"></a>dados2<span class="sc">$</span>body_norm<span class="ot">&lt;-</span><span class="cn">NA</span></span>
+<span id="cb117-4"><a href="carregar-e-manipular-dados.html#cb117-4" tabindex="-1"></a>dados2<span class="sc">$</span>body_norm<span class="ot">&lt;-</span>((dados2<span class="sc">$</span>body_mass_g<span class="sc">-</span>(<span class="fu">min</span>(dados2<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> T)))<span class="sc">/</span>(<span class="fu">max</span>(dados2<span class="sc">$</span>body_mass_g,<span class="at">na.rm =</span> T) <span class="sc">-</span> (<span class="fu">min</span>(dados2<span class="sc">$</span>body_mass_g,<span class="at">na.rm =</span> T)))<span class="sc">*</span>(maxnovo <span class="sc">-</span> minnovo) <span class="sc">+</span> minnovo)</span>
+<span id="cb117-5"><a href="carregar-e-manipular-dados.html#cb117-5" tabindex="-1"></a>dados2<span class="sc">$</span>body_norm</span></code></pre></div>
+<pre><code>##   [1] 0.29166667 0.30555556 0.15277778         NA 0.20833333 0.26388889
+##   [7] 0.25694444 0.54861111 0.21527778 0.43055556 0.16666667 0.27777778
+##  [13] 0.13888889 0.30555556 0.47222222 0.27777778 0.20833333 0.50000000
+##  [19] 0.17361111 0.41666667 0.19444444 0.25000000 0.30555556 0.34722222
+##  [25] 0.30555556 0.30555556 0.23611111 0.13888889 0.12500000 0.34722222
+##  [31] 0.15277778 0.33333333 0.16666667 0.33333333 0.17361111 0.40277778
+##  [37] 0.34722222 0.23611111 0.16666667 0.54166667 0.12500000 0.33333333
+##  [43] 0.11111111 0.47222222 0.08333333 0.52777778 0.20138889 0.07638889
+##  [49] 0.20833333 0.40277778 0.22222222 0.44444444 0.20833333 0.37500000
+##  [55] 0.05555556 0.27777778 0.23611111 0.30555556 0.04166667 0.29166667
+##  [61] 0.12500000 0.47222222 0.25000000 0.37500000 0.04166667 0.34722222
+##  [67] 0.18055556 0.38888889 0.09722222 0.48611111 0.25000000 0.33333333
+##  [73] 0.23611111 0.40277778 0.27777778 0.43055556 0.27777778 0.33333333
+##  [79] 0.23611111 0.36111111 0.13888889 0.55555556 0.30555556 0.41666667
+##  [85] 0.18055556 0.23611111 0.30555556 0.22222222 0.34722222 0.25000000
+##  [91] 0.23611111 0.44444444 0.19444444 0.48611111 0.16666667 0.44444444
+##  [97] 0.27777778 0.45833333 0.05555556 0.38888889 0.28472222 0.56250000
+## [103] 0.10416667 0.43055556 0.06250000 0.23611111 0.29166667 0.33333333
+## [109] 0.13194444 0.57638889 0.31250000 0.52777778 0.13888889 0.43750000
+## [115] 0.33333333 0.38194444 0.05555556 0.29861111 0.18055556 0.17361111
+## [121] 0.12500000 0.22222222 0.20833333 0.32638889 0.09722222 0.36111111
+## [127] 0.15972222 0.44444444 0.09722222 0.36111111 0.17361111 0.22222222
+## [133] 0.22222222 0.49305556 0.20138889 0.33333333 0.13194444 0.35416667
+## [139] 0.19444444 0.43055556 0.19444444 0.21527778 0.09722222 0.28472222
+## [145] 0.08333333 0.26388889 0.43055556 0.21527778 0.20833333 0.29166667
+## [151] 0.27777778 0.36111111 0.50000000 0.83333333 0.48611111 0.83333333
+## [157] 0.75000000 0.51388889 0.58333333 0.69444444 0.47222222 0.68055556
+## [163] 0.54166667 0.79166667 0.54166667 0.87500000 0.41666667 0.87500000
+## [169] 0.40277778 1.00000000 0.58333333 0.73611111 0.83333333 0.63888889
+## [175] 0.47222222 0.65277778 0.63888889 0.66666667 0.38888889 0.81944444
+## [181] 0.52777778 0.79166667 0.70833333 0.55555556 0.65277778 0.93055556
+## [187] 0.68055556 0.75000000 0.62500000 0.70833333 0.45833333 0.73611111
+## [193] 0.34722222 0.83333333 0.44444444 0.56944444 0.79166667 0.61111111
+## [199] 0.41666667 0.75000000 0.66666667 0.72222222 0.59722222 0.72222222
+## [205] 0.47222222 0.63888889 0.61111111 0.65277778 0.44444444 0.63888889
+## [211] 0.48611111 0.79166667 0.41666667 0.72222222 0.47222222 0.81944444
+## [217] 0.55555556 0.83333333 0.54166667 0.86111111 0.55555556 0.79166667
+## [223] 0.56944444 0.63888889 0.66666667 0.69444444 0.55555556 0.86111111
+## [229] 0.52777778 0.91666667 0.56944444 0.90277778 0.53472222 0.76388889
+## [235] 0.56250000 0.73611111 0.56944444 0.80555556 0.52777778 0.72222222
+## [241] 0.60416667 0.79166667 0.62500000 0.75000000 0.56944444 0.81944444
+## [247] 0.59722222 0.69444444 0.61805556 0.60416667 0.53472222 0.70833333
+## [253] 0.59722222 0.80555556 0.63194444 0.77777778 0.56250000 0.77777778
+## [259] 0.55555556 0.77777778 0.52083333 0.77777778 0.63888889 0.90277778
+## [265] 0.54166667 0.77777778 0.46527778 0.87500000 0.60416667 0.91666667
+## [271] 0.61805556         NA 0.59722222 0.84722222 0.69444444 0.75000000
+## [277] 0.22222222 0.33333333 0.26388889 0.22916667 0.28472222 0.34722222
+## [283] 0.15277778 0.29166667 0.40277778 0.27777778 0.30555556 0.29861111
+## [289] 0.27777778 0.37500000 0.24305556 0.37500000 0.16666667 0.27777778
+## [295] 0.20833333 0.47222222 0.25000000 0.19444444 0.05555556 0.30555556
+## [301] 0.16666667 0.40277778 0.19444444 0.30555556 0.27777778 0.51388889
+## [307] 0.13888889 0.44444444 0.18055556 0.38888889 0.25000000 0.33333333
+## [313] 0.31944444 0.58333333 0.00000000 0.50000000 0.34722222 0.26388889
+## [319] 0.23611111 0.22222222 0.27083333 0.48611111 0.19444444 0.44444444
+## [325] 0.15277778 0.27083333 0.17361111 0.34722222 0.25000000 0.37500000
+## [331] 0.18055556 0.20833333 0.15277778 0.37500000 0.30555556 0.22916667
+## [337] 0.34722222 0.26388889 0.26388889 0.36111111 0.19444444 0.29861111
+## [343] 0.38888889 0.29861111</code></pre>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="carregar-e-manipular-dados.html#cb119-1" tabindex="-1"></a><span class="fu">hist</span>(dados2<span class="sc">$</span>body_norm)</span></code></pre></div>
+<p><img src="_main_files/figure-html/02-%20transformacao-1.png" width="672" /></p>
+<p>Outra opção é o Z-score, no qual os valores são reorganizados pela média e desvio-padrão do conjunto original:<br />
+v1=(v - média(v))/desvio padrão (v)</p>
+<p>Vamos usar a mesma variável e transformar para Z-score:</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="carregar-e-manipular-dados.html#cb120-1" tabindex="-1"></a>dados2<span class="sc">$</span>body_norm2<span class="ot">&lt;-</span><span class="cn">NA</span></span>
+<span id="cb120-2"><a href="carregar-e-manipular-dados.html#cb120-2" tabindex="-1"></a>dados2<span class="sc">$</span>body_norm2<span class="ot">&lt;-</span>(dados2<span class="sc">$</span>body_mass_g <span class="sc">-</span> <span class="fu">mean</span>(dados2<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> T))<span class="sc">/</span><span class="fu">sd</span>(dados2<span class="sc">$</span>body_mass_g, <span class="at">na.rm=</span>T)</span>
+<span id="cb120-3"><a href="carregar-e-manipular-dados.html#cb120-3" tabindex="-1"></a>dados2<span class="sc">$</span>body_norm2</span></code></pre></div>
+<pre><code>##   [1] -0.563316704 -0.500969030 -1.186793445           NA -0.937402749
+##   [6] -0.688012052 -0.719185889  0.590115266 -0.906228912  0.060160036
+##  [11] -1.124445771 -0.625664378 -1.249141119 -0.500969030  0.247203059
+##  [16] -0.625664378 -0.937402749  0.371898407 -1.093271934 -0.002187638
+##  [21] -0.999750423 -0.750359726 -0.500969030 -0.313926008 -0.500969030
+##  [26] -0.500969030 -0.812707400 -1.249141119 -1.311488793 -0.313926008
+##  [31] -1.186793445 -0.376273682 -1.124445771 -0.376273682 -1.093271934
+##  [36] -0.064535312 -0.313926008 -0.812707400 -1.124445771  0.558941429
+##  [41] -1.311488793 -0.376273682 -1.373836467  0.247203059 -1.498531815
+##  [46]  0.496593755 -0.968576586 -1.529705652 -0.937402749 -0.064535312
+##  [51] -0.875055074  0.122507710 -0.937402749 -0.189230660 -1.623227163
+##  [56] -0.625664378 -0.812707400 -0.500969030 -1.685574837 -0.563316704
+##  [61] -1.311488793  0.247203059 -0.750359726 -0.189230660 -1.685574837
+##  [66] -0.313926008 -1.062098097 -0.126882986 -1.436184141  0.309550733
+##  [71] -0.750359726 -0.376273682 -0.812707400 -0.064535312 -0.625664378
+##  [76]  0.060160036 -0.625664378 -0.376273682 -0.812707400 -0.251578334
+##  [81] -1.249141119  0.621289103 -0.500969030 -0.002187638 -1.062098097
+##  [86] -0.812707400 -0.500969030 -0.875055074 -0.313926008 -0.750359726
+##  [91] -0.812707400  0.122507710 -0.999750423  0.309550733 -1.124445771
+##  [96]  0.122507710 -0.625664378  0.184855384 -1.623227163 -0.126882986
+## [101] -0.594490541  0.652462940 -1.405010304  0.060160036 -1.592053326
+## [106] -0.812707400 -0.563316704 -0.376273682 -1.280314956  0.714810614
+## [111] -0.469795193  0.496593755 -1.249141119  0.091333873 -0.376273682
+## [116] -0.158056823 -1.623227163 -0.532142867 -1.062098097 -1.093271934
+## [121] -1.311488793 -0.875055074 -0.937402749 -0.407447519 -1.436184141
+## [126] -0.251578334 -1.155619608  0.122507710 -1.436184141 -0.251578334
+## [131] -1.093271934 -0.875055074 -0.875055074  0.340724570 -0.968576586
+## [136] -0.376273682 -1.280314956 -0.282752171 -0.999750423  0.060160036
+## [141] -0.999750423 -0.906228912 -1.436184141 -0.594490541 -1.498531815
+## [146] -0.688012052  0.060160036 -0.906228912 -0.937402749 -0.563316704
+## [151] -0.625664378 -0.251578334  0.371898407  1.868242584  0.309550733
+## [156]  1.868242584  1.494156540  0.434246081  0.745984451  1.244765843
+## [161]  0.247203059  1.182418169  0.558941429  1.681199562  0.558941429
+## [166]  2.055285606 -0.002187638  2.055285606 -0.064535312  2.616414673
+## [171]  0.745984451  1.431808866  1.868242584  0.995375147  0.247203059
+## [176]  1.057722821  0.995375147  1.120070495 -0.126882986  1.805894910
+## [181]  0.496593755  1.681199562  1.307113518  0.621289103  1.057722821
+## [186]  2.304676302  1.182418169  1.494156540  0.933027473  1.307113518
+## [191]  0.184855384  1.431808866 -0.313926008  1.868242584  0.122507710
+## [196]  0.683636777  1.681199562  0.870679799 -0.002187638  1.494156540
+## [201]  1.120070495  1.369461192  0.808332125  1.369461192  0.247203059
+## [206]  0.995375147  0.870679799  1.057722821  0.122507710  0.995375147
+## [211]  0.309550733  1.681199562 -0.002187638  1.369461192  0.247203059
+## [216]  1.805894910  0.621289103  1.868242584  0.558941429  1.992937932
+## [221]  0.621289103  1.681199562  0.683636777  0.995375147  1.120070495
+## [226]  1.244765843  0.621289103  1.992937932  0.496593755  2.242328628
+## [231]  0.683636777  2.179980954  0.527767592  1.556504214  0.652462940
+## [236]  1.431808866  0.683636777  1.743547236  0.496593755  1.369461192
+## [241]  0.839505962  1.681199562  0.933027473  1.494156540  0.683636777
+## [246]  1.805894910  0.808332125  1.244765843  0.901853636  0.839505962
+## [251]  0.527767592  1.307113518  0.808332125  1.743547236  0.964201310
+## [256]  1.618851888  0.652462940  1.618851888  0.621289103  1.618851888
+## [261]  0.465419918  1.618851888  0.995375147  2.179980954  0.558941429
+## [266]  1.618851888  0.216029222  2.055285606  0.839505962  2.242328628
+## [271]  0.901853636           NA  0.808332125  1.930590258  1.244765843
+## [276]  1.494156540 -0.875055074 -0.376273682 -0.688012052 -0.843881237
+## [281] -0.594490541 -0.313926008 -1.186793445 -0.563316704 -0.064535312
+## [286] -0.625664378 -0.500969030 -0.532142867 -0.625664378 -0.189230660
+## [291] -0.781533563 -0.189230660 -1.124445771 -0.625664378 -0.937402749
+## [296]  0.247203059 -0.750359726 -0.999750423 -1.623227163 -0.500969030
+## [301] -1.124445771 -0.064535312 -0.999750423 -0.500969030 -0.625664378
+## [306]  0.434246081 -1.249141119  0.122507710 -1.062098097 -0.126882986
+## [311] -0.750359726 -0.376273682 -0.438621356  0.745984451 -1.872617859
+## [316]  0.371898407 -0.313926008 -0.688012052 -0.812707400 -0.875055074
+## [321] -0.656838215  0.309550733 -0.999750423  0.122507710 -1.186793445
+## [326] -0.656838215 -1.093271934 -0.313926008 -0.750359726 -0.189230660
+## [331] -1.062098097 -0.937402749 -1.186793445 -0.189230660 -0.500969030
+## [336] -0.843881237 -0.313926008 -0.688012052 -0.688012052 -0.251578334
+## [341] -0.999750423 -0.532142867 -0.126882986 -0.532142867</code></pre>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="carregar-e-manipular-dados.html#cb122-1" tabindex="-1"></a><span class="fu">hist</span>(dados2<span class="sc">$</span>body_norm2)</span></code></pre></div>
+<p><img src="_main_files/figure-html/02-%20transformacao%202-1.png" width="672" /></p>
+<p>Para identificando o tipo de variável, podemos usar algumas funções:</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="carregar-e-manipular-dados.html#cb123-1" tabindex="-1"></a><span class="fu">is.numeric</span>(dados2<span class="sc">$</span>bill_length_mm)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="carregar-e-manipular-dados.html#cb125-1" tabindex="-1"></a><span class="fu">is.numeric</span>(dados2<span class="sc">$</span>species)</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="carregar-e-manipular-dados.html#cb127-1" tabindex="-1"></a><span class="fu">is.factor</span>(dados2<span class="sc">$</span>species)</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="carregar-e-manipular-dados.html#cb129-1" tabindex="-1"></a><span class="fu">is.character</span>(dados2<span class="sc">$</span>species)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>Transformando tipos de variáveis</p>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="carregar-e-manipular-dados.html#cb131-1" tabindex="-1"></a>dados2<span class="sc">$</span>species<span class="ot">&lt;-</span><span class="fu">as.factor</span>(dados2<span class="sc">$</span>species)</span></code></pre></div>
+<p>Tem outras opções como as.numeric() e as.matrix()</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="carregar-e-manipular-dados.html#cb132-1" tabindex="-1"></a><span class="fu">head</span>(dados3)</span></code></pre></div>
+<pre><code>##   bill_length_mm bill_depth_mm flipper_length_mm
+## 1           39.1          18.7               181
+## 2           39.5          17.4               186
+## 3           40.3          18.0               195
+## 4             NA            NA                NA
+## 5           36.7          19.3               193
+## 6           39.3          20.6               190</code></pre>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="carregar-e-manipular-dados.html#cb134-1" tabindex="-1"></a>dados3<span class="ot">&lt;-</span><span class="fu">as.matrix</span>(dados3)</span>
+<span id="cb134-2"><a href="carregar-e-manipular-dados.html#cb134-2" tabindex="-1"></a><span class="fu">is.matrix</span>(dados3)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="juntar-dados-r-base" class="section level2 hasAnchor" number="2.7">
+<h2><span class="header-section-number">2.7</span> Juntar dados (R base)<a href="carregar-e-manipular-dados.html#juntar-dados-r-base" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Podemos usar o R para juntar dados de diferentes arquivos.</p>
+<p>Primeiro vamos carregar alguns dados:</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="carregar-e-manipular-dados.html#cb136-1" tabindex="-1"></a>dados3<span class="ot">&lt;-</span><span class="fu">read.xlsx</span>(<span class="st">&quot;dados/dados_bioq.xlsx&quot;</span>, <span class="at">sheet=</span><span class="dv">1</span>, <span class="at">colNames=</span>T)</span>
+<span id="cb136-2"><a href="carregar-e-manipular-dados.html#cb136-2" tabindex="-1"></a>dados4<span class="ot">&lt;-</span><span class="fu">read.xlsx</span>(<span class="st">&quot;dados/dados_bioq.xlsx&quot;</span>, <span class="at">sheet=</span><span class="dv">2</span>, <span class="at">colNames=</span>T)</span>
+<span id="cb136-3"><a href="carregar-e-manipular-dados.html#cb136-3" tabindex="-1"></a>dados5<span class="ot">&lt;-</span><span class="fu">read.xlsx</span>(<span class="st">&quot;dados/dados_bioq.xlsx&quot;</span>, <span class="at">sheet=</span><span class="dv">3</span>, <span class="at">colNames=</span>T)</span></code></pre></div>
+<p>Esses dados tem diferentes informações da mesma amostra:</p>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="carregar-e-manipular-dados.html#cb137-1" tabindex="-1"></a><span class="fu">head</span>(dados3)</span></code></pre></div>
+<pre><code>##   ID    PN   RON
+## 1  1 71.14    NA
+## 2  2 71.54    NA
+## 3  3 68.63 86.55
+## 4  4 68.79 86.52
+## 5  5 68.83 86.61
+## 6  6 70.17    NA</code></pre>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="carregar-e-manipular-dados.html#cb139-1" tabindex="-1"></a><span class="fu">head</span>(dados4)</span></code></pre></div>
+<pre><code>##   ID atividade
+## 1  1      2.47
+## 2  4      3.35
+## 3  5      3.99
+## 4  6      3.24
+## 5  7      3.75
+## 6  9      3.46</code></pre>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="carregar-e-manipular-dados.html#cb141-1" tabindex="-1"></a><span class="fu">head</span>(dados5)</span></code></pre></div>
+<pre><code>##   ID    K
+## 1  1   GA
+## 2  2 &lt;NA&gt;
+## 3  3 &lt;NA&gt;
+## 4  4   GG
+## 5  5   GA
+## 6  6   AA</code></pre>
+<p>Juntando os dados3 e dados4:</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="carregar-e-manipular-dados.html#cb143-1" tabindex="-1"></a>dados6<span class="ot">&lt;-</span><span class="fu">merge.data.frame</span>(dados3, dados4, <span class="at">by.x =</span> <span class="st">&quot;ID&quot;</span>, <span class="at">by.y =</span> <span class="st">&quot;ID&quot;</span>)</span>
+<span id="cb143-2"><a href="carregar-e-manipular-dados.html#cb143-2" tabindex="-1"></a><span class="fu">head</span>(dados6)</span></code></pre></div>
+<pre><code>##   ID    PN   RON atividade
+## 1  1 71.14    NA      2.47
+## 2  4 68.79 86.52      3.35
+## 3  5 68.83 86.61      3.99
+## 4  6 70.17    NA      3.24
+## 5  7 74.75    NA      3.75
+## 6  9 71.07 88.07      3.46</code></pre>
+<p>Em dados6 tem as amostras que estão presentes em dados3 e também em dados4.</p>
+<p>Juntando o objeto resultante com dados5:</p>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="carregar-e-manipular-dados.html#cb145-1" tabindex="-1"></a>dados7<span class="ot">&lt;-</span><span class="fu">merge.data.frame</span>(dados6, dados5, <span class="at">by.x =</span> <span class="st">&quot;ID&quot;</span>, <span class="at">by.y =</span> <span class="st">&quot;ID&quot;</span>)</span>
+<span id="cb145-2"><a href="carregar-e-manipular-dados.html#cb145-2" tabindex="-1"></a><span class="fu">head</span>(dados7)</span></code></pre></div>
+<pre><code>##   ID    PN   RON atividade    K
+## 1  1 71.14    NA      2.47   GA
+## 2  4 68.79 86.52      3.35   GG
+## 3  5 68.83 86.61      3.99   GA
+## 4  6 70.17    NA      3.24   AA
+## 5  7 74.75    NA      3.75 &lt;NA&gt;
+## 6  9 71.07 88.07      3.46   GA</code></pre>
+<p>Mas também podemos manter apenas os dados de um ou outro objeto:</p>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="carregar-e-manipular-dados.html#cb147-1" tabindex="-1"></a>dados8<span class="ot">&lt;-</span><span class="fu">merge.data.frame</span>(dados6, dados5, <span class="at">by.x =</span> <span class="st">&quot;ID&quot;</span>, <span class="at">by.y =</span> <span class="st">&quot;ID&quot;</span>, <span class="at">all.x =</span> T)</span>
+<span id="cb147-2"><a href="carregar-e-manipular-dados.html#cb147-2" tabindex="-1"></a><span class="fu">head</span>(dados8)</span></code></pre></div>
+<pre><code>##   ID    PN   RON atividade    K
+## 1  1 71.14    NA      2.47   GA
+## 2  4 68.79 86.52      3.35   GG
+## 3  5 68.83 86.61      3.99   GA
+## 4  6 70.17    NA      3.24   AA
+## 5  7 74.75    NA      3.75 &lt;NA&gt;
+## 6  9 71.07 88.07      3.46   GA</code></pre>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="carregar-e-manipular-dados.html#cb149-1" tabindex="-1"></a>dados9<span class="ot">&lt;-</span><span class="fu">merge.data.frame</span>(dados6, dados5, <span class="at">by.x =</span> <span class="st">&quot;ID&quot;</span>, <span class="at">by.y =</span> <span class="st">&quot;ID&quot;</span>, <span class="at">all.y =</span> T)</span>
+<span id="cb149-2"><a href="carregar-e-manipular-dados.html#cb149-2" tabindex="-1"></a><span class="fu">head</span>(dados9)</span></code></pre></div>
+<pre><code>##   ID    PN   RON atividade    K
+## 1  1 71.14    NA      2.47   GA
+## 2  2    NA    NA        NA &lt;NA&gt;
+## 3  3    NA    NA        NA &lt;NA&gt;
+## 4  4 68.79 86.52      3.35   GG
+## 5  5 68.83 86.61      3.99   GA
+## 6  6 70.17    NA      3.24   AA</code></pre>
+<p>Ou ainda manter todas as amostras dos 2 objetos</p>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="carregar-e-manipular-dados.html#cb151-1" tabindex="-1"></a>dados10<span class="ot">&lt;-</span><span class="fu">merge.data.frame</span>(dados6, dados5, <span class="at">by.x =</span> <span class="st">&quot;ID&quot;</span>, <span class="at">by.y =</span> <span class="st">&quot;ID&quot;</span>, <span class="at">all.x =</span> T, <span class="at">all.y =</span> T)</span>
+<span id="cb151-2"><a href="carregar-e-manipular-dados.html#cb151-2" tabindex="-1"></a><span class="fu">head</span>(dados10)</span></code></pre></div>
+<pre><code>##   ID    PN   RON atividade    K
+## 1  1 71.14    NA      2.47   GA
+## 2  2    NA    NA        NA &lt;NA&gt;
+## 3  3    NA    NA        NA &lt;NA&gt;
+## 4  4 68.79 86.52      3.35   GG
+## 5  5 68.83 86.61      3.99   GA
+## 6  6 70.17    NA      3.24   AA</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introdução.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="o-sistema-tidyverse.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

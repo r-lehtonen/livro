@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 7 Genética | Análises de Dados com R</title>
+  <meta name="description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 7 Genética | Análises de Dados com R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bookdown.org/ricardo_lehtonen/analise/capa.png" />
+  <meta property="og:description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 7 Genética | Análises de Dados com R" />
+  
+  <meta name="twitter:description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  <meta name="twitter:image" content="https://bookdown.org/ricardo_lehtonen/analise/capa.png" />
+
+<meta name="author" content="Ricardo Lehtonen R. de Souza" />
+
+
+<meta name="date" content="2023-07-31" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="funções-e-loops.html"/>
+<link rel="next" href="network.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script>
+<link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet" />
+<script src="libs/tabwid-1.1.3/tabwid.js"></script>
+<link href="libs/wordcloud2-0.0.1/wordcloud.css" rel="stylesheet" />
+<script src="libs/wordcloud2-0.0.1/wordcloud2-all.js"></script>
+<script src="libs/wordcloud2-0.0.1/hover.js"></script>
+<script src="libs/wordcloud2-binding-0.2.1/wordcloud2.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Análises de dados com R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefácio</a></li>
+<li class="chapter" data-level="1" data-path="introdução.html"><a href="introdução.html"><i class="fa fa-check"></i><b>1</b> Introdução</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introdução.html"><a href="introdução.html#o-que-é-r"><i class="fa fa-check"></i><b>1.1</b> O que é R</a></li>
+<li class="chapter" data-level="1.2" data-path="introdução.html"><a href="introdução.html#instalação"><i class="fa fa-check"></i><b>1.2</b> Instalação</a></li>
+<li class="chapter" data-level="1.3" data-path="introdução.html"><a href="introdução.html#rstudio"><i class="fa fa-check"></i><b>1.3</b> RStudio</a></li>
+<li class="chapter" data-level="1.4" data-path="introdução.html"><a href="introdução.html#objetos-do-r"><i class="fa fa-check"></i><b>1.4</b> Objetos do R</a></li>
+<li class="chapter" data-level="1.5" data-path="introdução.html"><a href="introdução.html#nomes-dos-objetos-do-r"><i class="fa fa-check"></i><b>1.5</b> Nomes dos objetos do R</a></li>
+<li class="chapter" data-level="1.6" data-path="introdução.html"><a href="introdução.html#vetores"><i class="fa fa-check"></i><b>1.6</b> Vetores</a></li>
+<li class="chapter" data-level="1.7" data-path="introdução.html"><a href="introdução.html#operações-com-vetores"><i class="fa fa-check"></i><b>1.7</b> Operações com Vetores</a></li>
+<li class="chapter" data-level="1.8" data-path="introdução.html"><a href="introdução.html#fatores"><i class="fa fa-check"></i><b>1.8</b> Fatores</a></li>
+<li class="chapter" data-level="1.9" data-path="introdução.html"><a href="introdução.html#matrizes"><i class="fa fa-check"></i><b>1.9</b> Matrizes</a></li>
+<li class="chapter" data-level="1.10" data-path="introdução.html"><a href="introdução.html#listas"><i class="fa fa-check"></i><b>1.10</b> Listas</a></li>
+<li class="chapter" data-level="1.11" data-path="introdução.html"><a href="introdução.html#data-frame"><i class="fa fa-check"></i><b>1.11</b> Data frame</a></li>
+<li class="chapter" data-level="1.12" data-path="introdução.html"><a href="introdução.html#sequências"><i class="fa fa-check"></i><b>1.12</b> Sequências</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html"><i class="fa fa-check"></i><b>2</b> Carregar e manipular dados</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#ler-arquivos-txt-e-csv"><i class="fa fa-check"></i><b>2.1</b> Ler arquivos txt e csv</a></li>
+<li class="chapter" data-level="2.2" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#ler-arquivos-xlsx"><i class="fa fa-check"></i><b>2.2</b> Ler arquivos xlsx</a></li>
+<li class="chapter" data-level="2.3" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#gravar-arquivos-txt-e-xlsx"><i class="fa fa-check"></i><b>2.3</b> Gravar arquivos txt e xlsx</a></li>
+<li class="chapter" data-level="2.4" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#manipulação-de-dados-r-base"><i class="fa fa-check"></i><b>2.4</b> Manipulação de dados (R base)</a></li>
+<li class="chapter" data-level="2.5" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#transformação-de-dados"><i class="fa fa-check"></i><b>2.5</b> Transformação de dados</a></li>
+<li class="chapter" data-level="2.6" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#técnicas-de-normalização"><i class="fa fa-check"></i><b>2.6</b> Técnicas de normalização</a></li>
+<li class="chapter" data-level="2.7" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#juntar-dados-r-base"><i class="fa fa-check"></i><b>2.7</b> Juntar dados (R base)</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html"><i class="fa fa-check"></i><b>3</b> O sistema tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#manipulação-de-dados-com-tidyverse"><i class="fa fa-check"></i><b>3.1</b> Manipulação de dados com tidyverse</a></li>
+<li class="chapter" data-level="3.2" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-filter"><i class="fa fa-check"></i><b>3.2</b> Função filter</a></li>
+<li class="chapter" data-level="3.3" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-arrange"><i class="fa fa-check"></i><b>3.3</b> Função arrange</a></li>
+<li class="chapter" data-level="3.4" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-select"><i class="fa fa-check"></i><b>3.4</b> Função select</a></li>
+<li class="chapter" data-level="3.5" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-mutate-e-transmutate"><i class="fa fa-check"></i><b>3.5</b> Função mutate e transmutate</a></li>
+<li class="chapter" data-level="3.6" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#funções-group_by-e-summarise"><i class="fa fa-check"></i><b>3.6</b> Funções group_by e summarise</a></li>
+<li class="chapter" data-level="3.7" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#funções-pull-e-distinct"><i class="fa fa-check"></i><b>3.7</b> Funções pull e distinct</a></li>
+<li class="chapter" data-level="3.8" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#pipes"><i class="fa fa-check"></i><b>3.8</b> Pipes</a></li>
+<li class="chapter" data-level="3.9" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#pipe-nativa-do-r"><i class="fa fa-check"></i><b>3.9</b> Pipe nativa do R</a></li>
+<li class="chapter" data-level="3.10" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#tibble"><i class="fa fa-check"></i><b>3.10</b> Tibble</a></li>
+<li class="chapter" data-level="3.11" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#juntar-dados"><i class="fa fa-check"></i><b>3.11</b> Juntar dados</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="gráficos.html"><a href="gráficos.html"><i class="fa fa-check"></i><b>4</b> Gráficos</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="gráficos.html"><a href="gráficos.html#gráficos-com-o-pacote-graphics-r-base"><i class="fa fa-check"></i><b>4.1</b> Gráficos com o pacote graphics (R base)</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="gráficos.html"><a href="gráficos.html#introdução-aos-gráficos-do-r"><i class="fa fa-check"></i><b>4.1.1</b> Introdução aos gráficos do R</a></li>
+<li class="chapter" data-level="4.1.2" data-path="gráficos.html"><a href="gráficos.html#salvar"><i class="fa fa-check"></i><b>4.1.2</b> Salvar</a></li>
+<li class="chapter" data-level="4.1.3" data-path="gráficos.html"><a href="gráficos.html#histogramas"><i class="fa fa-check"></i><b>4.1.3</b> Histogramas</a></li>
+<li class="chapter" data-level="4.1.4" data-path="gráficos.html"><a href="gráficos.html#boxplot"><i class="fa fa-check"></i><b>4.1.4</b> Boxplot</a></li>
+<li class="chapter" data-level="4.1.5" data-path="gráficos.html"><a href="gráficos.html#barplot"><i class="fa fa-check"></i><b>4.1.5</b> Barplot</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="gráficos.html"><a href="gráficos.html#o-pacote-ggplot2"><i class="fa fa-check"></i><b>4.2</b> O pacote ggplot2</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="gráficos.html"><a href="gráficos.html#gráficos-de-pontos-dispersão"><i class="fa fa-check"></i><b>4.2.1</b> Gráficos de pontos (dispersão)</a></li>
+<li class="chapter" data-level="4.2.2" data-path="gráficos.html"><a href="gráficos.html#salvar-1"><i class="fa fa-check"></i><b>4.2.2</b> Salvar</a></li>
+<li class="chapter" data-level="4.2.3" data-path="gráficos.html"><a href="gráficos.html#histogramas-1"><i class="fa fa-check"></i><b>4.2.3</b> Histogramas</a></li>
+<li class="chapter" data-level="4.2.4" data-path="gráficos.html"><a href="gráficos.html#density-plot"><i class="fa fa-check"></i><b>4.2.4</b> Density plot</a></li>
+<li class="chapter" data-level="4.2.5" data-path="gráficos.html"><a href="gráficos.html#boxplot-1"><i class="fa fa-check"></i><b>4.2.5</b> Boxplot</a></li>
+<li class="chapter" data-level="4.2.6" data-path="gráficos.html"><a href="gráficos.html#gráfico-q-q"><i class="fa fa-check"></i><b>4.2.6</b> Gráfico Q-Q</a></li>
+<li class="chapter" data-level="4.2.7" data-path="gráficos.html"><a href="gráficos.html#figura-com-vários-gráficos"><i class="fa fa-check"></i><b>4.2.7</b> Figura com vários gráficos</a></li>
+<li class="chapter" data-level="4.2.8" data-path="gráficos.html"><a href="gráficos.html#ajustes-de-posição"><i class="fa fa-check"></i><b>4.2.8</b> Ajustes de Posição</a></li>
+<li class="chapter" data-level="4.2.9" data-path="gráficos.html"><a href="gráficos.html#geom-smooth"><i class="fa fa-check"></i><b>4.2.9</b> Geom Smooth</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="gráficos.html"><a href="gráficos.html#outros-pacotes-gráficos"><i class="fa fa-check"></i><b>4.3</b> Outros pacotes gráficos</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="gráficos.html"><a href="gráficos.html#usando-as-cores"><i class="fa fa-check"></i><b>4.3.1</b> Usando as cores</a></li>
+<li class="chapter" data-level="4.3.2" data-path="gráficos.html"><a href="gráficos.html#análise-gráfica-exploratória"><i class="fa fa-check"></i><b>4.3.2</b> Análise gráfica exploratória</a></li>
+<li class="chapter" data-level="4.3.3" data-path="gráficos.html"><a href="gráficos.html#ggplot2-mais-parâmetros"><i class="fa fa-check"></i><b>4.3.3</b> GGPLOT2: mais parâmetros</a></li>
+<li class="chapter" data-level="4.3.4" data-path="gráficos.html"><a href="gráficos.html#diagrama-de-venn"><i class="fa fa-check"></i><b>4.3.4</b> Diagrama de Venn</a></li>
+<li class="chapter" data-level="4.3.5" data-path="gráficos.html"><a href="gráficos.html#diagramas"><i class="fa fa-check"></i><b>4.3.5</b> Diagramas</a></li>
+<li class="chapter" data-level="4.3.6" data-path="gráficos.html"><a href="gráficos.html#outra-opção-é-o-pacote-ggflowchart"><i class="fa fa-check"></i><b>4.3.6</b> Outra opção é o pacote ggflowchart</a></li>
+<li class="chapter" data-level="4.3.7" data-path="gráficos.html"><a href="gráficos.html#datas-e-séries-temporais"><i class="fa fa-check"></i><b>4.3.7</b> Datas e séries temporais</a></li>
+<li class="chapter" data-level="4.3.8" data-path="gráficos.html"><a href="gráficos.html#time-series---dados-de-casos-de-covid-no-paraná"><i class="fa fa-check"></i><b>4.3.8</b> Time series - Dados de casos de COVID no Paraná</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="estatística.html"><a href="estatística.html"><i class="fa fa-check"></i><b>5</b> Estatística</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="estatística.html"><a href="estatística.html#estatística-descritiva"><i class="fa fa-check"></i><b>5.1</b> Estatística descritiva</a></li>
+<li class="chapter" data-level="5.2" data-path="estatística.html"><a href="estatística.html#testes-estatísticos"><i class="fa fa-check"></i><b>5.2</b> Testes estatísticos</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="estatística.html"><a href="estatística.html#normalidade"><i class="fa fa-check"></i><b>5.2.1</b> Normalidade</a></li>
+<li class="chapter" data-level="5.2.2" data-path="estatística.html"><a href="estatística.html#assimetria-e-curtose"><i class="fa fa-check"></i><b>5.2.2</b> Assimetria e curtose</a></li>
+<li class="chapter" data-level="5.2.3" data-path="estatística.html"><a href="estatística.html#teste-t"><i class="fa fa-check"></i><b>5.2.3</b> Teste t</a></li>
+<li class="chapter" data-level="5.2.4" data-path="estatística.html"><a href="estatística.html#teste-qui-quadrado"><i class="fa fa-check"></i><b>5.2.4</b> Teste qui-quadrado</a></li>
+<li class="chapter" data-level="5.2.5" data-path="estatística.html"><a href="estatística.html#correlação"><i class="fa fa-check"></i><b>5.2.5</b> Correlação</a></li>
+<li class="chapter" data-level="5.2.6" data-path="estatística.html"><a href="estatística.html#regressão"><i class="fa fa-check"></i><b>5.2.6</b> Regressão</a></li>
+<li class="chapter" data-level="5.2.7" data-path="estatística.html"><a href="estatística.html#anova"><i class="fa fa-check"></i><b>5.2.7</b> ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="estatística.html"><a href="estatística.html#visualização-de-resultados-estatísticos"><i class="fa fa-check"></i><b>5.3</b> Visualização de resultados estatísticos</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="funções-e-loops.html"><a href="funções-e-loops.html"><i class="fa fa-check"></i><b>6</b> Funções e loops</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="funções-e-loops.html"><a href="funções-e-loops.html#funções"><i class="fa fa-check"></i><b>6.1</b> Funções</a></li>
+<li class="chapter" data-level="6.2" data-path="funções-e-loops.html"><a href="funções-e-loops.html#loops"><i class="fa fa-check"></i><b>6.2</b> Loops</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="funções-e-loops.html"><a href="funções-e-loops.html#for"><i class="fa fa-check"></i><b>6.2.1</b> for</a></li>
+<li class="chapter" data-level="6.2.2" data-path="funções-e-loops.html"><a href="funções-e-loops.html#while"><i class="fa fa-check"></i><b>6.2.2</b> while</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="funções-e-loops.html"><a href="funções-e-loops.html#if-e-else"><i class="fa fa-check"></i><b>6.3</b> if e else</a></li>
+<li class="chapter" data-level="6.4" data-path="funções-e-loops.html"><a href="funções-e-loops.html#funções-apply-lapply-sapply-tapply-mapply"><i class="fa fa-check"></i><b>6.4</b> Funções apply, lapply, sapply, tapply, mapply</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="genética.html"><a href="genética.html"><i class="fa fa-check"></i><b>7</b> Genética</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="genética.html"><a href="genética.html#genética-de-populações"><i class="fa fa-check"></i><b>7.1</b> Genética de populações</a></li>
+<li class="chapter" data-level="7.2" data-path="genética.html"><a href="genética.html#genotipagem-com-genetics-e-loop"><i class="fa fa-check"></i><b>7.2</b> Genotipagem com genetics e loop</a></li>
+<li class="chapter" data-level="7.3" data-path="genética.html"><a href="genética.html#heredogramas"><i class="fa fa-check"></i><b>7.3</b> Heredogramas</a></li>
+<li class="chapter" data-level="7.4" data-path="genética.html"><a href="genética.html#análises-filogenéticas"><i class="fa fa-check"></i><b>7.4</b> Análises filogenéticas</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>8</b> Network</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="network.html"><a href="network.html#pacote-igraph"><i class="fa fa-check"></i><b>8.1</b> Pacote Igraph</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="bioconductor.html"><a href="bioconductor.html"><i class="fa fa-check"></i><b>9</b> Bioconductor</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="bioconductor.html"><a href="bioconductor.html#pacote-msa"><i class="fa fa-check"></i><b>9.1</b> Pacote msa</a></li>
+<li class="chapter" data-level="9.2" data-path="bioconductor.html"><a href="bioconductor.html#pacote-multimir"><i class="fa fa-check"></i><b>9.2</b> Pacote multiMiR</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html"><i class="fa fa-check"></i><b>10</b> Dados não estruturados</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#texto"><i class="fa fa-check"></i><b>10.1</b> Texto</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#análise-de-sentimentos"><i class="fa fa-check"></i><b>10.1.1</b> Análise de sentimentos</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#imagens"><i class="fa fa-check"></i><b>10.2</b> Imagens</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#edição-de-imagens"><i class="fa fa-check"></i><b>10.2.1</b> Edição de imagens</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#áudio"><i class="fa fa-check"></i><b>10.3</b> Áudio</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html"><i class="fa fa-check"></i><b>11</b> Pesquisa bibliográfica e Bibliometria</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#pesquisa-bibliográfica"><i class="fa fa-check"></i><b>11.1</b> Pesquisa bibliográfica</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#termos-da-busca"><i class="fa fa-check"></i><b>11.1.1</b> Termos da busca</a></li>
+<li class="chapter" data-level="11.1.2" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#bases-de-dados"><i class="fa fa-check"></i><b>11.1.2</b> Bases de dados</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#pubmed"><i class="fa fa-check"></i><b>11.2</b> PubMed</a></li>
+<li class="chapter" data-level="11.3" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#bibliometria"><i class="fa fa-check"></i><b>11.3</b> Bibliometria</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>12</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="r-markdown.html"><a href="r-markdown.html#incluindo-gráficos"><i class="fa fa-check"></i><b>12.1</b> Incluindo gráficos</a></li>
+<li class="chapter" data-level="12.2" data-path="r-markdown.html"><a href="r-markdown.html#chunk-opções"><i class="fa fa-check"></i><b>12.2</b> Chunk: opções</a></li>
+<li class="chapter" data-level="12.3" data-path="r-markdown.html"><a href="r-markdown.html#formatação"><i class="fa fa-check"></i><b>12.3</b> Formatação</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://docs.ufpr.br/~lehtonen/" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análises de Dados com R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="genética" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Capítulo 7</span> Genética<a href="genética.html#genética" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="genética-de-populações" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Genética de populações<a href="genética.html#genética-de-populações" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>No estudo de genética de populações, alguns cálculos básicos são as frequências alélicas e genotípicas, verificar se está em equilíbrio de Hardy-Weinberg e também verificar o desequilíbrio de ligação.</p>
+<p>Esses cálculos podem ser feitos com o pacote genetics.</p>
+<p>Vamos carregar alguns dados de exemplo:</p>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="genética.html#cb394-1" tabindex="-1"></a>dados<span class="ot">&lt;-</span><span class="fu">read.table</span>(<span class="st">&quot;dados/genotipagem.txt&quot;</span>, <span class="at">head=</span>T)</span>
+<span id="cb394-2"><a href="genética.html#cb394-2" tabindex="-1"></a><span class="fu">head</span>(dados)</span></code></pre></div>
+<pre><code>##   AMOSTRAS rs1800977 rs2230806 rs3764650 rs2279796 rs692383 rs3827225 grupo
+## 1    AHC01       G/G       C/C       G/T       A/G      A/G       G/G     1
+## 2    AHC02       G/G       C/T       G/T       G/G      A/A       A/G     1
+## 3    AHC03       G/G       T/T       T/T       A/G      A/A       G/G     1
+## 4    AHC04       A/A       C/C       T/T       G/G      A/G       A/G     1
+## 5    AHC06       A/G       C/C       T/T       A/A      A/A       A/A     1
+## 6    AHC07       A/G       C/C       T/T       A/G      A/G       A/A     1</code></pre>
+<p>Vamos carregar o pacote genetics:</p>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="genética.html#cb396-1" tabindex="-1"></a><span class="fu">library</span>(genetics)</span>
+<span id="cb396-2"><a href="genética.html#cb396-2" tabindex="-1"></a>snp<span class="ot">&lt;-</span><span class="st">&quot;rs1800977&quot;</span>  <span class="co">#substituir  pelo gene/SNP de interesse</span></span></code></pre></div>
+<p>Agora vamos usar a função genotype, onde em sep informamos o separador de alelos nos dados.</p>
+<div class="sourceCode" id="cb397"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb397-1"><a href="genética.html#cb397-1" tabindex="-1"></a>genotipos1<span class="ot">&lt;-</span><span class="fu">na.omit</span>(<span class="fu">genotype</span>(dados<span class="sc">$</span>rs1800977, <span class="at">sep=</span><span class="st">&quot;/&quot;</span>)) </span>
+<span id="cb397-2"><a href="genética.html#cb397-2" tabindex="-1"></a>genotipos1</span></code></pre></div>
+<pre><code>##   [1] &quot;G/G&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;A/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot;
+##  [13] &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;A/A&quot; &quot;G/G&quot; &quot;G/G&quot;
+##  [25] &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot;
+##  [37] &quot;G/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;A/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;A/A&quot;
+##  [49] &quot;G/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;A/A&quot; &quot;A/A&quot; &quot;G/G&quot; &quot;A/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot;
+##  [61] &quot;A/A&quot; &quot;A/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot;
+##  [73] &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/G&quot;
+##  [85] &quot;G/G&quot; &quot;G/A&quot; &quot;A/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot;
+##  [97] &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/G&quot;
+## [109] &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;A/A&quot; &quot;A/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/G&quot;
+## [121] &quot;A/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;A/A&quot; &quot;A/A&quot; &quot;G/G&quot; &quot;G/A&quot;
+## [133] &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;A/A&quot;
+## [145] &quot;G/G&quot; &quot;G/A&quot; &quot;A/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot;
+## [157] &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot;
+## [169] &quot;G/G&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;A/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot;
+## [181] &quot;G/G&quot; &quot;A/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;A/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot;
+## [193] &quot;G/G&quot; &quot;G/A&quot; &quot;A/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;A/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot;
+## [205] &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot;
+## [217] &quot;G/G&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;A/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/A&quot;
+## [229] &quot;G/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot;
+## [241] &quot;G/G&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot;
+## [253] &quot;G/A&quot; &quot;A/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot;
+## [265] &quot;G/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;A/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/G&quot;
+## [277] &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;A/A&quot; &quot;G/A&quot; &quot;A/A&quot; &quot;G/A&quot;
+## [289] &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;A/A&quot; &quot;A/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot;
+## [301] &quot;G/G&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/A&quot;
+## [313] &quot;G/G&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/A&quot; &quot;G/G&quot; &quot;G/G&quot; &quot;G/A&quot; &quot;G/A&quot;
+## [325] &quot;A/A&quot;
+## Alleles: G A</code></pre>
+<p>Podemos ver os resultados de frequências usando summary:</p>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="genética.html#cb399-1" tabindex="-1"></a>resultado1<span class="ot">&lt;-</span><span class="fu">summary</span>(genotipos1)</span>
+<span id="cb399-2"><a href="genética.html#cb399-2" tabindex="-1"></a>resultado1</span></code></pre></div>
+<pre><code>## 
+## Number of samples typed: 325 (100%)
+## 
+## Allele Frequency: (2 alleles)
+##   Count Proportion
+## G   430       0.66
+## A   220       0.34
+## 
+## 
+## Genotype Frequency:
+##     Count Proportion
+## G/G   135       0.42
+## G/A   160       0.49
+## A/A    30       0.09
+## 
+## Heterozygosity (Hu)  = 0.4485007
+## Poly. Inf. Content   = 0.3475435</code></pre>
+<p>Para verificar o equilíbrio de Hardy-Weinberg usamos a função HWE.chisq:</p>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="genética.html#cb401-1" tabindex="-1"></a>eqhw1<span class="ot">&lt;-</span><span class="fu">HWE.chisq</span>(genotipos1)</span>
+<span id="cb401-2"><a href="genética.html#cb401-2" tabindex="-1"></a>eqhw1</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test with simulated p-value (based on 10000
+##  replicates)
+## 
+## data:  tab
+## X-squared = 3.2089, df = NA, p-value = 0.08419</code></pre>
+<p>Podemos salvar os resultados em um arquivo txt, onde vamos usar o objeto snp para especificar de qual SNP são os resultados:</p>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="genética.html#cb403-1" tabindex="-1"></a><span class="fu">write</span>(<span class="st">&quot;Frequencias alelicas e genotipicas.&quot;</span>, <span class="at">file=</span><span class="st">&quot;res.genes.txt&quot;</span>,<span class="at">append=</span>T)</span>
+<span id="cb403-2"><a href="genética.html#cb403-2" tabindex="-1"></a><span class="fu">write</span>(snp, <span class="at">file=</span><span class="st">&quot;res.genes.txt&quot;</span>, <span class="at">append=</span>T)</span>
+<span id="cb403-3"><a href="genética.html#cb403-3" tabindex="-1"></a><span class="fu">capture.output</span>(resultado1, <span class="at">file=</span><span class="st">&quot;res.genes.txt&quot;</span>,<span class="at">append =</span> T)</span>
+<span id="cb403-4"><a href="genética.html#cb403-4" tabindex="-1"></a><span class="fu">capture.output</span>(eqhw1, <span class="at">file=</span><span class="st">&quot;res.genes.txt&quot;</span>, <span class="at">append =</span> T)</span></code></pre></div>
+<p>Também podemos gerar figuras com as frequências:</p>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="genética.html#cb404-1" tabindex="-1"></a><span class="fu">plot</span>(genotipos1, <span class="at">type=</span><span class="st">&quot;allele&quot;</span>, <span class="at">what=</span><span class="st">&quot;percentage&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/07-genetics%207-1.png" width="672" /></p>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="genética.html#cb405-1" tabindex="-1"></a><span class="fu">plot</span>(genotipos1, <span class="at">type=</span><span class="st">&quot;genotype&quot;</span>, <span class="at">what=</span><span class="st">&quot;percentage&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/07-genetics%207-2.png" width="672" /></p>
+<p>Para salvar as figuras com as frequências, onde filename=paste(snp,“alelo.jpg”, sep=““: serve para criar o nome do arquivo juntando o conteúdo de snp + alelo.jpg, sem espaço, definido por sep sem nada:</p>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="genética.html#cb406-1" tabindex="-1"></a><span class="fu">jpeg</span>(<span class="at">filename=</span><span class="fu">paste</span>(snp,<span class="st">&quot;alelo.jpg&quot;</span>, <span class="at">sep=</span><span class="st">&quot;&quot;</span>))</span>
+<span id="cb406-2"><a href="genética.html#cb406-2" tabindex="-1"></a><span class="fu">plot</span>(genotipos1, <span class="at">type=</span><span class="st">&quot;allele&quot;</span>, <span class="at">what=</span><span class="st">&quot;percentage&quot;</span>)</span>
+<span id="cb406-3"><a href="genética.html#cb406-3" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
+<pre><code>## png 
+##   2</code></pre>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="genética.html#cb408-1" tabindex="-1"></a><span class="fu">jpeg</span>(<span class="at">filename=</span><span class="fu">paste</span>(snp,<span class="st">&quot;genotipo.jpg&quot;</span>, <span class="at">sep=</span><span class="st">&quot;&quot;</span>))</span>
+<span id="cb408-2"><a href="genética.html#cb408-2" tabindex="-1"></a><span class="fu">plot</span>(genotipos1, <span class="at">type=</span><span class="st">&quot;genotype&quot;</span>, <span class="at">what=</span><span class="st">&quot;percentage&quot;</span>)</span>
+<span id="cb408-3"><a href="genética.html#cb408-3" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
+<pre><code>## png 
+##   2</code></pre>
+<p>Desequilíbrio de ligação</p>
+<p>Também podemos calcular o desequilíbrio de ligação entre 2 SNPs com a função LD, mas primeiro criamos os objetos com os dados dos SNPs com a função genotype:</p>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="genética.html#cb410-1" tabindex="-1"></a>rs1800977<span class="ot">&lt;-</span><span class="fu">na.omit</span>(<span class="fu">genotype</span>(dados<span class="sc">$</span>rs1800977, <span class="at">sep=</span><span class="st">&quot;/&quot;</span>))</span>
+<span id="cb410-2"><a href="genética.html#cb410-2" tabindex="-1"></a>rs2230806<span class="ot">&lt;-</span><span class="fu">na.omit</span>(<span class="fu">genotype</span>(dados<span class="sc">$</span>rs2230806, <span class="at">sep=</span><span class="st">&quot;/&quot;</span>))</span>
+<span id="cb410-3"><a href="genética.html#cb410-3" tabindex="-1"></a>ld<span class="ot">&lt;-</span><span class="fu">LD</span>(rs1800977,rs2230806)</span>
+<span id="cb410-4"><a href="genética.html#cb410-4" tabindex="-1"></a>ld</span></code></pre></div>
+<pre><code>## 
+## Pairwise LD
+## -----------
+##                      D       D&#39;        Corr
+## Estimates: -0.01494381 0.146423 -0.06881552
+## 
+##               X^2    P-value   N
+## LD Test: 3.078125 0.07935198 325</code></pre>
+</div>
+<div id="genotipagem-com-genetics-e-loop" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Genotipagem com genetics e loop<a href="genética.html#genotipagem-com-genetics-e-loop" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Vamos juntar os conhecimentos de loops, que já aprendemos, para genotipar vários SNPs e criar um arquivo de saída mais elaborado:</p>
+<p>No arquivo que estamos usando, tem uma coluna grupo (caso e controle). Usaremos essa coluna para criar 2 objetos:</p>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="genética.html#cb412-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb412-2"><a href="genética.html#cb412-2" tabindex="-1"></a>caso<span class="ot">&lt;-</span><span class="fu">filter</span>(dados, grupo<span class="sc">==</span><span class="dv">1</span>)   </span>
+<span id="cb412-3"><a href="genética.html#cb412-3" tabindex="-1"></a>controle<span class="ot">&lt;-</span><span class="fu">filter</span>(dados, grupo<span class="sc">==</span><span class="dv">2</span>) </span></code></pre></div>
+<p>Precisamos detalhar o que tem em resultados1:</p>
+<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="genética.html#cb413-1" tabindex="-1"></a><span class="fu">names</span>(resultado1)</span></code></pre></div>
+<pre><code>## [1] &quot;allele.names&quot;  &quot;allele.freq&quot;   &quot;genotype.freq&quot; &quot;Hu&quot;           
+## [5] &quot;pic&quot;           &quot;n.typed&quot;       &quot;n.total&quot;       &quot;nallele&quot;</code></pre>
+<p>Em allele.fre e genotype.freq temos uma matriz com os resultados:</p>
+<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="genética.html#cb415-1" tabindex="-1"></a>resultado1<span class="sc">$</span>allele.freq</span></code></pre></div>
+<pre><code>##   Count Proportion
+## G   430  0.6615385
+## A   220  0.3384615</code></pre>
+<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="genética.html#cb417-1" tabindex="-1"></a>resultado1<span class="sc">$</span>genotype.freq</span></code></pre></div>
+<pre><code>##     Count Proportion
+## G/G   135 0.41538462
+## G/A   160 0.49230769
+## A/A    30 0.09230769</code></pre>
+<p>Com base nisso, precisamos definir quais dados queremos salvar e criar uma tabela com as variáveis.
+Aqui criamos o objeto tabela.saida, que é um data.frame e especificamos as colunas:</p>
+<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="genética.html#cb419-1" tabindex="-1"></a>tabela.saida<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">grupo=</span><span class="fu">as.character</span>(<span class="cn">NA</span>),<span class="at">SNP=</span><span class="fu">as.character</span>(<span class="cn">NA</span>),<span class="at">genot1=</span><span class="fu">as.character</span>(<span class="cn">NA</span>), <span class="at">N1=</span><span class="cn">NA</span>, <span class="at">F1=</span><span class="cn">NA</span>,<span class="at">genot2=</span><span class="fu">as.character</span>(<span class="cn">NA</span>), <span class="at">N2=</span><span class="cn">NA</span>, <span class="at">F2=</span><span class="cn">NA</span>,<span class="at">genot3=</span><span class="fu">as.character</span>(<span class="cn">NA</span>),<span class="at">N3=</span><span class="cn">NA</span>,<span class="at">F3=</span><span class="cn">NA</span>,<span class="at">alelo1=</span><span class="fu">as.character</span>(<span class="cn">NA</span>),<span class="at">N4=</span><span class="cn">NA</span>,<span class="at">F4=</span><span class="cn">NA</span>,<span class="at">alelo2=</span><span class="fu">as.character</span>(<span class="cn">NA</span>),<span class="at">N5=</span><span class="cn">NA</span>,<span class="at">F5=</span><span class="cn">NA</span>,<span class="at">hw=</span><span class="cn">NA</span>,<span class="at">qui_genot=</span><span class="cn">NA</span>,<span class="at">qui_alel=</span><span class="cn">NA</span>,<span class="at">stringsAsFactors =</span> F)</span></code></pre></div>
+<p>Agora vamos criar o loop, usando for, para fazer a genotipagem e equilíbrio de HW, de cada SNP, no grupo caso e no grupo controle, depois compare por qui-quadrado as frequências alélicas e genotípica entre casos e controles.</p>
+<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="genética.html#cb420-1" tabindex="-1"></a>nomes<span class="ot">&lt;-</span><span class="fu">colnames</span>(dados) <span class="co">#nomes dos SNPs</span></span>
+<span id="cb420-2"><a href="genética.html#cb420-2" tabindex="-1"></a>i<span class="ot">&lt;-</span><span class="dv">2</span> <span class="co">#número da coluna inicial para genotipar</span></span>
+<span id="cb420-3"><a href="genética.html#cb420-3" tabindex="-1"></a>snp<span class="ot">&lt;-</span><span class="dv">7</span> <span class="co"># número da coluna final para genotipar</span></span>
+<span id="cb420-4"><a href="genética.html#cb420-4" tabindex="-1"></a>j<span class="ot">&lt;-</span><span class="dv">1</span></span>
+<span id="cb420-5"><a href="genética.html#cb420-5" tabindex="-1"></a></span>
+<span id="cb420-6"><a href="genética.html#cb420-6" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> i<span class="sc">:</span>snp) {</span>
+<span id="cb420-7"><a href="genética.html#cb420-7" tabindex="-1"></a>  nome_snp<span class="ot">&lt;-</span>nomes[i]</span>
+<span id="cb420-8"><a href="genética.html#cb420-8" tabindex="-1"></a>  genotipos1<span class="ot">&lt;-</span><span class="fu">na.omit</span>(<span class="fu">genotype</span>(caso[,i], <span class="at">sep=</span><span class="st">&quot;/&quot;</span>))<span class="co">#genotipagem</span></span>
+<span id="cb420-9"><a href="genética.html#cb420-9" tabindex="-1"></a>  resultado1<span class="ot">&lt;-</span><span class="fu">summary</span>(genotipos1)<span class="co">#sumariza resultados</span></span>
+<span id="cb420-10"><a href="genética.html#cb420-10" tabindex="-1"></a>  eqhw1<span class="ot">&lt;-</span><span class="fu">HWE.chisq</span>(genotipos1)<span class="co">#equilíbrio de HW</span></span>
+<span id="cb420-11"><a href="genética.html#cb420-11" tabindex="-1"></a>  nome_genot<span class="ot">&lt;-</span><span class="fu">rownames</span>(resultado1<span class="sc">$</span>genotype.freq)</span>
+<span id="cb420-12"><a href="genética.html#cb420-12" tabindex="-1"></a>  nome_alelos<span class="ot">&lt;-</span><span class="fu">rownames</span>(resultado1<span class="sc">$</span>allele.freq)</span>
+<span id="cb420-13"><a href="genética.html#cb420-13" tabindex="-1"></a>  </span>
+<span id="cb420-14"><a href="genética.html#cb420-14" tabindex="-1"></a>  </span>
+<span id="cb420-15"><a href="genética.html#cb420-15" tabindex="-1"></a>  tabela.saida[j,]<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">grupo=</span><span class="fu">as.character</span>(<span class="st">&quot;caso&quot;</span>),<span class="at">SNP=</span><span class="fu">as.character</span>(nome_snp),<span class="at">genot1=</span><span class="fu">as.character</span>(nome_genot[<span class="dv">1</span>]), <span class="at">N1=</span>resultado1<span class="sc">$</span>genotype.freq[<span class="dv">1</span>,<span class="dv">1</span>], <span class="at">F1=</span>resultado1<span class="sc">$</span>genotype.freq[<span class="dv">1</span>,<span class="dv">2</span>],<span class="at">genot2=</span><span class="fu">as.character</span>(nome_genot[<span class="dv">2</span>]), <span class="at">N2=</span>resultado1<span class="sc">$</span>genotype.freq[<span class="dv">2</span>,<span class="dv">1</span>],<span class="at">F2=</span>resultado1<span class="sc">$</span>genotype.freq[<span class="dv">2</span>,<span class="dv">2</span>], <span class="at">genot3=</span><span class="fu">as.character</span>(nome_genot[<span class="dv">3</span>]),<span class="at">N3=</span>resultado1<span class="sc">$</span>genotype.freq[<span class="dv">3</span>,<span class="dv">1</span>],<span class="at">F3=</span>resultado1<span class="sc">$</span>genotype.freq[<span class="dv">3</span>,<span class="dv">2</span>],<span class="at">alelo1=</span><span class="fu">as.character</span>(nome_alelos[<span class="dv">1</span>]),<span class="at">N4=</span>resultado1<span class="sc">$</span>allele.freq[<span class="dv">1</span>,<span class="dv">1</span>],<span class="at">F4=</span>resultado1<span class="sc">$</span>allele.freq[<span class="dv">1</span>,<span class="dv">2</span>],<span class="at">alelo2=</span><span class="fu">as.character</span>(nome_alelos[<span class="dv">2</span>]),<span class="at">N5=</span>resultado1<span class="sc">$</span>allele.freq[<span class="dv">2</span>,<span class="dv">1</span>],<span class="at">F5=</span>resultado1<span class="sc">$</span>allele.freq[<span class="dv">2</span>,<span class="dv">2</span>],<span class="at">hw=</span>eqhw1<span class="sc">$</span>p.value,<span class="at">qui_genot=</span><span class="cn">NA</span>,<span class="at">qui_alel=</span><span class="cn">NA</span>,<span class="at">stringsAsFactors =</span> F)</span>
+<span id="cb420-16"><a href="genética.html#cb420-16" tabindex="-1"></a>  j<span class="ot">&lt;-</span>j<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb420-17"><a href="genética.html#cb420-17" tabindex="-1"></a>  </span>
+<span id="cb420-18"><a href="genética.html#cb420-18" tabindex="-1"></a>  genotipos2<span class="ot">&lt;-</span><span class="fu">na.omit</span>(<span class="fu">genotype</span>(controle[,i], <span class="at">sep=</span><span class="st">&quot;/&quot;</span>))<span class="co">#genotipagem</span></span>
+<span id="cb420-19"><a href="genética.html#cb420-19" tabindex="-1"></a>  resultado2<span class="ot">&lt;-</span><span class="fu">summary</span>(genotipos2)<span class="co">#sumariza resultados</span></span>
+<span id="cb420-20"><a href="genética.html#cb420-20" tabindex="-1"></a>  eqhw2<span class="ot">&lt;-</span><span class="fu">HWE.chisq</span>(genotipos2)<span class="co">#equilíbrio de HW</span></span>
+<span id="cb420-21"><a href="genética.html#cb420-21" tabindex="-1"></a>  </span>
+<span id="cb420-22"><a href="genética.html#cb420-22" tabindex="-1"></a>  <span class="co">#qui-quadrado alelo</span></span>
+<span id="cb420-23"><a href="genética.html#cb420-23" tabindex="-1"></a>  a<span class="ot">&lt;-</span>resultado1<span class="sc">$</span>allele.freq[<span class="dv">1</span>,<span class="dv">1</span>]</span>
+<span id="cb420-24"><a href="genética.html#cb420-24" tabindex="-1"></a>  b<span class="ot">&lt;-</span>resultado1<span class="sc">$</span>allele.freq[<span class="dv">2</span>,<span class="dv">1</span>]</span>
+<span id="cb420-25"><a href="genética.html#cb420-25" tabindex="-1"></a>  c<span class="ot">&lt;-</span>resultado2<span class="sc">$</span>allele.freq[<span class="dv">1</span>,<span class="dv">1</span>]</span>
+<span id="cb420-26"><a href="genética.html#cb420-26" tabindex="-1"></a>  d<span class="ot">&lt;-</span>resultado2<span class="sc">$</span>allele.freq[<span class="dv">2</span>,<span class="dv">1</span>]</span>
+<span id="cb420-27"><a href="genética.html#cb420-27" tabindex="-1"></a>  quadrado<span class="ot">&lt;-</span><span class="fu">rbind</span>(<span class="fu">c</span>(a,c),<span class="fu">c</span>(b,d))</span>
+<span id="cb420-28"><a href="genética.html#cb420-28" tabindex="-1"></a>  quadrado</span>
+<span id="cb420-29"><a href="genética.html#cb420-29" tabindex="-1"></a>  res_qui<span class="ot">&lt;-</span><span class="fu">chisq.test</span>(quadrado,<span class="at">correct=</span>F)</span>
+<span id="cb420-30"><a href="genética.html#cb420-30" tabindex="-1"></a>  </span>
+<span id="cb420-31"><a href="genética.html#cb420-31" tabindex="-1"></a>  <span class="co">#qui-quadrado genotipo</span></span>
+<span id="cb420-32"><a href="genética.html#cb420-32" tabindex="-1"></a>  g<span class="ot">&lt;-</span>resultado1<span class="sc">$</span>genotype.freq[<span class="dv">1</span>,<span class="dv">1</span>]</span>
+<span id="cb420-33"><a href="genética.html#cb420-33" tabindex="-1"></a>  h<span class="ot">&lt;-</span>resultado1<span class="sc">$</span>genotype.freq[<span class="dv">2</span>,<span class="dv">1</span>]</span>
+<span id="cb420-34"><a href="genética.html#cb420-34" tabindex="-1"></a>  l<span class="ot">&lt;-</span>resultado1<span class="sc">$</span>genotype.freq[<span class="dv">3</span>,<span class="dv">1</span>]</span>
+<span id="cb420-35"><a href="genética.html#cb420-35" tabindex="-1"></a>  k<span class="ot">&lt;-</span>resultado2<span class="sc">$</span>genotype.freq[<span class="dv">1</span>,<span class="dv">1</span>]</span>
+<span id="cb420-36"><a href="genética.html#cb420-36" tabindex="-1"></a>  m<span class="ot">&lt;-</span>resultado2<span class="sc">$</span>genotype.freq[<span class="dv">2</span>,<span class="dv">1</span>]</span>
+<span id="cb420-37"><a href="genética.html#cb420-37" tabindex="-1"></a>  o<span class="ot">&lt;-</span>resultado2<span class="sc">$</span>genotype.freq[<span class="dv">3</span>,<span class="dv">1</span>]</span>
+<span id="cb420-38"><a href="genética.html#cb420-38" tabindex="-1"></a>  quadrado2<span class="ot">&lt;-</span><span class="fu">rbind</span>(<span class="fu">c</span>(g,k),<span class="fu">c</span>(h,m),<span class="fu">c</span>(l,o))</span>
+<span id="cb420-39"><a href="genética.html#cb420-39" tabindex="-1"></a>  res_qui2<span class="ot">&lt;-</span><span class="fu">chisq.test</span>(quadrado2,<span class="at">correct=</span>F)</span>
+<span id="cb420-40"><a href="genética.html#cb420-40" tabindex="-1"></a>  </span>
+<span id="cb420-41"><a href="genética.html#cb420-41" tabindex="-1"></a>  tabela.saida[j,]<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">grupo=</span><span class="fu">as.character</span>(<span class="st">&quot;controle&quot;</span>),<span class="at">SNP=</span><span class="fu">as.character</span>(nome_snp),<span class="at">genot1=</span><span class="fu">as.character</span>(nome_genot[<span class="dv">1</span>]), <span class="at">N1=</span>resultado2<span class="sc">$</span>genotype.freq[<span class="dv">1</span>,<span class="dv">1</span>], <span class="at">F1=</span>resultado2<span class="sc">$</span>genotype.freq[<span class="dv">1</span>,<span class="dv">2</span>],<span class="at">genot2=</span><span class="fu">as.character</span>(nome_genot[<span class="dv">2</span>]), <span class="at">N2=</span>resultado2<span class="sc">$</span>genotype.freq[<span class="dv">2</span>,<span class="dv">1</span>],<span class="at">F2=</span>resultado2<span class="sc">$</span>genotype.freq[<span class="dv">2</span>,<span class="dv">2</span>], <span class="at">genot3=</span><span class="fu">as.character</span>(nome_genot[<span class="dv">3</span>]),<span class="at">N3=</span>resultado2<span class="sc">$</span>genotype.freq[<span class="dv">3</span>,<span class="dv">1</span>],<span class="at">F3=</span>resultado2<span class="sc">$</span>genotype.freq[<span class="dv">3</span>,<span class="dv">2</span>],<span class="at">alelo1=</span><span class="fu">as.character</span>(nome_alelos[<span class="dv">1</span>]),<span class="at">N4=</span>resultado2<span class="sc">$</span>allele.freq[<span class="dv">1</span>,<span class="dv">1</span>],<span class="at">F4=</span>resultado2<span class="sc">$</span>allele.freq[<span class="dv">1</span>,<span class="dv">2</span>],<span class="at">alelo2=</span><span class="fu">as.character</span>(nome_alelos[<span class="dv">2</span>]),<span class="at">N5=</span>resultado2<span class="sc">$</span>allele.freq[<span class="dv">2</span>,<span class="dv">1</span>],<span class="at">F5=</span>resultado2<span class="sc">$</span>allele.freq[<span class="dv">2</span>,<span class="dv">2</span>],<span class="at">hw=</span>eqhw2<span class="sc">$</span>p.value,<span class="at">qui_genot=</span>res_qui2<span class="sc">$</span>p.value,<span class="at">qui_alel=</span>res_qui<span class="sc">$</span>p.value,<span class="at">stringsAsFactors =</span> F)</span>
+<span id="cb420-42"><a href="genética.html#cb420-42" tabindex="-1"></a>  </span>
+<span id="cb420-43"><a href="genética.html#cb420-43" tabindex="-1"></a>  </span>
+<span id="cb420-44"><a href="genética.html#cb420-44" tabindex="-1"></a>  </span>
+<span id="cb420-45"><a href="genética.html#cb420-45" tabindex="-1"></a>  i<span class="ot">&lt;-</span>(i<span class="sc">+</span><span class="dv">1</span>)</span>
+<span id="cb420-46"><a href="genética.html#cb420-46" tabindex="-1"></a>  j<span class="ot">&lt;-</span>j<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb420-47"><a href="genética.html#cb420-47" tabindex="-1"></a>}</span></code></pre></div>
+<p>Verificando os resultados:</p>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="genética.html#cb421-1" tabindex="-1"></a><span class="fu">library</span>(flextable)</span>
+<span id="cb421-2"><a href="genética.html#cb421-2" tabindex="-1"></a><span class="fu">flextable</span>(tabela.saida)</span></code></pre></div>
+<div class="tabwid"><style>.cl-84dbebe0{}.cl-84cd83ac{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-84d2d5e6{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-84d2d5fa{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-84d2fc38{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-84d2fc4c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-84d2fc4d{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-84d2fc56{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-84d2fc60{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-84d2fc6a{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing='true' class='cl-84dbebe0'><thead><tr style="overflow-wrap:break-word;"><th class="cl-84d2fc38"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">grupo</span></p></th><th class="cl-84d2fc38"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">SNP</span></p></th><th class="cl-84d2fc38"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">genot1</span></p></th><th class="cl-84d2fc4c"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">N1</span></p></th><th class="cl-84d2fc4c"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">F1</span></p></th><th class="cl-84d2fc38"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">genot2</span></p></th><th class="cl-84d2fc4c"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">N2</span></p></th><th class="cl-84d2fc4c"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">F2</span></p></th><th class="cl-84d2fc38"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">genot3</span></p></th><th class="cl-84d2fc4c"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">N3</span></p></th><th class="cl-84d2fc4c"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">F3</span></p></th><th class="cl-84d2fc38"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">alelo1</span></p></th><th class="cl-84d2fc4c"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">N4</span></p></th><th class="cl-84d2fc4c"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">F4</span></p></th><th class="cl-84d2fc38"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">alelo2</span></p></th><th class="cl-84d2fc4c"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">N5</span></p></th><th class="cl-84d2fc4c"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">F5</span></p></th><th class="cl-84d2fc4c"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">hw</span></p></th><th class="cl-84d2fc4c"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">qui_genot</span></p></th><th class="cl-84d2fc4c"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">qui_alel</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">caso</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">rs1800977</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G/G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">79</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.4030612</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G/A</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">96</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.4897959</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">A/A</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">21</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.10714286</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">254</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.6479592</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">A</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">138</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.3520408</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.3501650</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac"></span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">controle</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">rs1800977</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G/G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">56</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.4341085</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G/A</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">64</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.4961240</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">A/A</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">9</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.06976744</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">176</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.6821705</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">A</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">82</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.3178295</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.1065893</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.5055572</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.3671365</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">caso</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">rs2230806</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">C/C</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">91</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.4642857</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">C/T</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">90</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.4591837</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">T/T</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">15</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.07653061</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">C</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">272</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.6938776</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">T</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">120</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.3061224</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.3173683</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac"></span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">controle</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">rs2230806</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">C/C</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">67</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.5193798</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">C/T</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">48</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.3720930</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">T/T</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">14</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.10852713</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">C</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">182</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.7054264</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">T</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">76</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.2945736</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.2920708</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.2505753</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.7535973</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">caso</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">rs3764650</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">T/T</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">135</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.7758621</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">T/G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">36</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.2068966</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G/G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">3</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.01724138</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">T</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">306</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.8793103</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">42</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.1206897</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">1.0000000</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac"></span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">controle</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">rs3764650</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">T/T</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">79</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.8061224</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">T/G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">16</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.1632653</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G/G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">3</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.03061224</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">T</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">174</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.8877551</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">22</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.1122449</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.1042896</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.5473538</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.7691475</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">caso</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">rs2279796</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">A/A</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">55</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.2777778</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">A/G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">91</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.4595960</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G/G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">52</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.26262626</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">A</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">201</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.5075758</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">195</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.4924242</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.2571743</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac"></span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">controle</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">rs2279796</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">A/A</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">31</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.2460317</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">A/G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">69</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.5476190</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G/G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">26</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.20634921</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">A</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">131</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.5198413</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">121</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.4801587</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.2820718</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.2845827</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.7607357</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">caso</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">rs692383</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">A/A</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">83</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.4234694</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">A/G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">85</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.4336735</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G/G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">28</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.14285714</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">A</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">251</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.6403061</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">141</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.3596939</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.4345565</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac"></span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">controle</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">rs692383</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">A/A</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">53</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.4140625</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">A/G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">59</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.4609375</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G/G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">16</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.12500000</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">A</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">165</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.6445312</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">91</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.3554688</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">1.0000000</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.8488922</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.9126687</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">caso</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">rs3827225</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G/G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">103</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.5282051</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G/A</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">76</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.3897436</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">A/A</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">16</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.08205128</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">282</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.7230769</span></p></td><td class="cl-84d2fc4d"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">A</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">108</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.2769231</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.7174283</span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac"></span></p></td><td class="cl-84d2fc56"><p class="cl-84d2d5fa"><span class="cl-84cd83ac"></span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-84d2fc60"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">controle</span></p></td><td class="cl-84d2fc60"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">rs3827225</span></p></td><td class="cl-84d2fc60"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G/G</span></p></td><td class="cl-84d2fc6a"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">74</span></p></td><td class="cl-84d2fc6a"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.5692308</span></p></td><td class="cl-84d2fc60"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G/A</span></p></td><td class="cl-84d2fc6a"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">49</span></p></td><td class="cl-84d2fc6a"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.3769231</span></p></td><td class="cl-84d2fc60"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">A/A</span></p></td><td class="cl-84d2fc6a"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">7</span></p></td><td class="cl-84d2fc6a"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.05384615</span></p></td><td class="cl-84d2fc60"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">G</span></p></td><td class="cl-84d2fc6a"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">197</span></p></td><td class="cl-84d2fc6a"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.7576923</span></p></td><td class="cl-84d2fc60"><p class="cl-84d2d5e6"><span class="cl-84cd83ac">A</span></p></td><td class="cl-84d2fc6a"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">63</span></p></td><td class="cl-84d2fc6a"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.2423077</span></p></td><td class="cl-84d2fc6a"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.6277372</span></p></td><td class="cl-84d2fc6a"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.5623675</span></p></td><td class="cl-84d2fc6a"><p class="cl-84d2d5fa"><span class="cl-84cd83ac">0.3261360</span></p></td></tr></tbody></table></div>
+<p>Para terminar vamos salvar os resultados em um arquivo xlsx:</p>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="genética.html#cb422-1" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
+<span id="cb422-2"><a href="genética.html#cb422-2" tabindex="-1"></a><span class="fu">write.xlsx</span>(tabela.saida, <span class="at">file=</span><span class="st">&quot;genotipagem.xlsx&quot;</span>)</span></code></pre></div>
+</div>
+<div id="heredogramas" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Heredogramas<a href="genética.html#heredogramas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Também podemos gerar heredogramas usando o R, para isso usamos o pacote
+kinship2 e carregar o arquivo de exemplo:</p>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="genética.html#cb423-1" tabindex="-1"></a><span class="fu">library</span>(kinship2)</span>
+<span id="cb423-2"><a href="genética.html#cb423-2" tabindex="-1"></a>familia<span class="ot">&lt;-</span><span class="fu">read.xlsx</span>(<span class="st">&quot;dados/familia.xlsx&quot;</span>, <span class="at">sheet=</span><span class="dv">1</span>, <span class="at">colNames =</span> T)</span>
+<span id="cb423-3"><a href="genética.html#cb423-3" tabindex="-1"></a><span class="fu">head</span>(familia)</span></code></pre></div>
+<pre><code>##   ids dad mom sex dead caract
+## 1   1  NA  NA   1    0      0
+## 2   2  NA  NA   2    1      0
+## 3   3  NA  NA   1    0      0
+## 4   4   1   2   2    0      0
+## 5   5   1   2   1    0      0
+## 6   6  NA  NA   2    0      0</code></pre>
+<p>Nessa planilha temos uma coluna com a identificação única de de cada indivíduo (ids), duas colunas identificando os pais (dad e mom), uma coluna para o sexo, uma coluna com a informação se o indivíduo está vivo ou não (dead) e uma última coluna (caract) que indica se o indivíduo tem a característica de interesse.</p>
+<p>Usando a função pedigree:</p>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="genética.html#cb425-1" tabindex="-1"></a>family <span class="ot">&lt;-</span> <span class="fu">pedigree</span>(<span class="at">id=</span>familia<span class="sc">$</span>ids, <span class="at">dadid=</span>familia<span class="sc">$</span>dad, <span class="at">momid=</span>familia<span class="sc">$</span>mom, <span class="at">affected=</span>familia<span class="sc">$</span>caract, <span class="at">sex=</span>familia<span class="sc">$</span>sex, <span class="at">status=</span>familia<span class="sc">$</span>dead)</span></code></pre></div>
+<p>E plotando o heredograma:</p>
+<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="genética.html#cb426-1" tabindex="-1"></a><span class="fu">plot.pedigree</span>(family,<span class="at">cex =</span> <span class="fl">0.8</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;green&quot;</span>,<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;green&quot;</span>,<span class="st">&quot;red&quot;</span>,<span class="st">&quot;blue&quot;</span>,<span class="st">&quot;green&quot;</span>,<span class="st">&quot;black&quot;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/07-%20heredogramas%203-1.png" width="672" /></p>
+</div>
+<div id="análises-filogenéticas" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Análises filogenéticas<a href="genética.html#análises-filogenéticas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>O pacote APE (Analysis of Phylogenetics and Evolution) permite fazer vários tipos de análises (<a href="http://ape-package.ird.fr/" class="uri">http://ape-package.ird.fr/</a>).</p>
+<p>Podemos pegar sequências de DNA diretamente do Genbank:</p>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="genética.html#cb427-1" tabindex="-1"></a><span class="fu">library</span>(ape)</span>
+<span id="cb427-2"><a href="genética.html#cb427-2" tabindex="-1"></a></span>
+<span id="cb427-3"><a href="genética.html#cb427-3" tabindex="-1"></a>id_seq<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;NM_001081850.1&quot;</span>,<span class="st">&quot;NM_000055.3&quot;</span>,<span class="st">&quot;NM_009738.3&quot;</span>)</span>
+<span id="cb427-4"><a href="genética.html#cb427-4" tabindex="-1"></a>seq_bche<span class="ot">&lt;-</span><span class="fu">read.GenBank</span>(id_seq)</span>
+<span id="cb427-5"><a href="genética.html#cb427-5" tabindex="-1"></a>seq_bche</span></code></pre></div>
+<pre><code>## 3 DNA sequences in binary format stored in a list.
+## 
+## Mean sequence length: 3495.333 
+##    Shortest sequence: 1809 
+##     Longest sequence: 6209 
+## 
+## Labels:
+## NM_001081850.1
+## NM_000055.3
+## NM_009738.3
+## 
+## Base composition:
+##     a     c     g     t 
+## 0.315 0.192 0.194 0.299 
+## (Total: 10.49 kb)</code></pre>
+<p>Também é possível ler um arquivo fasta:</p>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="genética.html#cb429-1" tabindex="-1"></a>pon<span class="ot">&lt;-</span><span class="fu">read.FASTA</span>(<span class="st">&quot;dados/PON123.fas&quot;</span>)</span>
+<span id="cb429-2"><a href="genética.html#cb429-2" tabindex="-1"></a>pon</span></code></pre></div>
+<pre><code>## 13 DNA sequences in binary format stored in a list.
+## 
+## All sequences of same length: 1065 
+## 
+## Labels:
+## PON1Hsapie
+## PON1Ptrogl
+## PON1Mmulat
+## PON1Mmuscu
+## PON2Hsapie
+## PON2Ptrogl
+## ...
+## 
+## Base composition:
+##     a     c     g     t 
+## 0.284 0.215 0.228 0.274 
+## (Total: 13.85 kb)</code></pre>
+<p>E com a função nj podemos fazer uma árvore pelo método neighbor-joining de Saitou and Nei (1987).</p>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="genética.html#cb431-1" tabindex="-1"></a>pon.trw<span class="ot">&lt;-</span><span class="fu">nj</span>(<span class="fu">dist.dna</span>(pon))</span>
+<span id="cb431-2"><a href="genética.html#cb431-2" tabindex="-1"></a><span class="fu">plot</span>(pon.trw)</span></code></pre></div>
+<p><img src="_main_files/figure-html/07-%20ape%203-1.png" width="672" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="funções-e-loops.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="network.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

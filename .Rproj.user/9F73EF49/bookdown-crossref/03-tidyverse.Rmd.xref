@@ -1,0 +1,13 @@
+h1:o-sistema-tidyverse O sistema tidyverse
+h2:manipulação-de-dados-com-tidyverse Manipulação de dados com tidyverse
+h2:função-filter Função filter
+h2:função-arrange Função arrange
+h2:função-select Função select
+h2:função-mutate-e-transmutate Função mutate e transmutate
+h2:funções-group_by-e-summarise Funções group_by e summarise
+h2:funções-pull-e-distinct Funções pull e distinct
+h2:pipes Pipes
+h2:pipe-nativa-do-r Pipe nativa do R
+h2:tibble Tibble
+h2:juntar-dados Juntar dados
+

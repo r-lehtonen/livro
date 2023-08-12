@@ -1,0 +1,175 @@
+{
+    "sources": [
+        {
+            "author": [
+                {
+                    "family": "Torgo",
+                    "given": "Luı́s"
+                }
+            ],
+            "id": "torgo2011introduccao",
+            "issued": {
+                "date-parts": [
+                    [
+                        2011
+                    ]
+                ]
+            },
+            "title": "Introdução à programação em r",
+            "type": "article-journal"
+        },
+        {
+            "author": [
+                {
+                    "family": "Wickham",
+                    "given": "Hadley"
+                },
+                {
+                    "family": "Çetinkaya-Rundel",
+                    "given": "Mine"
+                },
+                {
+                    "family": "Grolemund",
+                    "given": "Garrett"
+                }
+            ],
+            "id": "wickham2023r",
+            "issued": {
+                "date-parts": [
+                    [
+                        2023
+                    ]
+                ]
+            },
+            "note": "https://r4ds.hadley.nz/",
+            "publisher": "\" O’Reilly Media, Inc.\"",
+            "title": "R for data science",
+            "type": "book"
+        },
+        {
+            "author": [
+                {
+                    "family": "Higuera",
+                    "given": "Gardiner",
+                    "suffix": "Clara"
+                },
+                {
+                    "family": "Cios",
+                    "given": "Krzysztof"
+                }
+            ],
+            "id": "misc_mice_protein_expression_342",
+            "issued": {
+                "date-parts": [
+                    [
+                        2015
+                    ]
+                ]
+            },
+            "note": "DOI: https://doi.org/10.24432/C50S3Z",
+            "publisher": "UCI Machine Learning Repository",
+            "title": "Mice Protein Expression",
+            "type": ""
+        },
+        {
+            "author": [
+                {
+                    "family": "Irizarry",
+                    "given": "Rafael A"
+                }
+            ],
+            "id": "irizarry2019introduction",
+            "issued": {
+                "date-parts": [
+                    [
+                        2019
+                    ]
+                ]
+            },
+            "note": "http://rafalab.dfci.harvard.edu/dsbook/",
+            "publisher": "CRC Press",
+            "title": "Introduction to data science: Data analysis and prediction algorithms with r",
+            "title-short": "Introduction to data science",
+            "type": "book"
+        },
+        {
+            "author": [
+                {
+                    "family": "Xie",
+                    "given": "Yihui"
+                },
+                {
+                    "family": "Allaire",
+                    "given": "Joseph J"
+                },
+                {
+                    "family": "Grolemund",
+                    "given": "Garrett"
+                }
+            ],
+            "id": "xie2023r",
+            "issued": {
+                "date-parts": [
+                    [
+                        2023
+                    ]
+                ]
+            },
+            "note": "https://bookdown.org/yihui/rmarkdown/",
+            "publisher": "CRC Press",
+            "title": "R markdown: The definitive guide",
+            "title-short": "R markdown",
+            "type": "book"
+        },
+        {
+            "author": [
+                {
+                    "family": "Aria",
+                    "given": "Massimo"
+                },
+                {
+                    "family": "Cuccurullo",
+                    "given": "Corrado"
+                }
+            ],
+            "container-title": "Journal of informetrics",
+            "id": "aria2017bibliometrix",
+            "issue": "4",
+            "issued": {
+                "date-parts": [
+                    [
+                        2017
+                    ]
+                ]
+            },
+            "page": "959-975",
+            "publisher": "Elsevier",
+            "title": "Bibliometrix: An r-tool for comprehensive science mapping analysis",
+            "title-short": "Bibliometrix",
+            "type": "article-journal",
+            "volume": "11"
+        },
+        {
+            "author": [
+                {
+                    "family": "Gohel",
+                    "given": "David"
+                }
+            ],
+            "id": "gohel2023flextable",
+            "issued": {
+                "date-parts": [
+                    [
+                        2023
+                    ]
+                ]
+            },
+            "note": "https://ardata-fr.github.io/flextable-book/index.html",
+            "title": "Using the flextable r package",
+            "type": "book"
+        }
+    ],
+    "project_biblios": [
+        "book.bib"
+    ]
+}

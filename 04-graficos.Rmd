@@ -1,0 +1,890 @@
+# Gráficos 
+
+O R permite fazer qualquer tipo de gráfico, os quais podem ser personalizados e salvos em diversos formatos e resoluções.  
+Existem muitos pacotes gráficos no R e nesse capítulo vamos ver alguns deles.  
+  
+  
+## Gráficos com o pacote graphics (R base)
+
+
+### Introdução aos gráficos do R
+
+Quando instalamos o R, já temos um pacote para gráficos (graphics) e com ele podemos fazer e personalizar os principais tipos de gráficos.  
+
+Vamos começar carregando os dados. Usaremos o arquivo iris e vamos criar um gráfico de dispersão com as variáveis comprimento e largura das sépalas.
+
+```{r 04- dados, message=FALSE, warning=FALSE}
+
+dados<-read.table("dados/iris.txt", head=T, sep = ",")
+head(dados)
+
+plot(dados$sepal_l,dados$sepal_w)
+```
+
+Podemos usar mais parâmetros, como type.  
+
+- p: Points.  
+- l: Lines.  
+- b: Both.  
+- c: The lines part alone of b  
+- o: Both “overplotted”  
+- h: Histogram like (or high-density) vertical lines.  
+- n: No plotting.  
+
+```{r 04- plot, message=FALSE, warning=FALSE}
+x<-c(1:10)
+y<-c(3,7,15,8,10,21,19,12,6,10)
+plot(x,y,type="l")
+plot(x,y,type="b")
+```
+
+
+Podemos mudar o padrão dos pontos com pch
+Os valores vão de 0 a 25:
+```{r 04- plot 2}
+plot(dados$sepal_l,dados$sepal_w, pch=19)
+```
+
+
+### Salvar
+
+
+Para salvar um gráfico podemos clicar na opção export, na janela Plots do RStudio ou podemos fazer assim: 
+
+```{r 04- salvar, message=FALSE, warning=FALSE}
+png(file="figura1.png", units="in", res = 300, width = 5,height = 5)
+plot(dados$sepal_l,dados$sepal_w)
+dev.off()
+```
+
+As opções de units são: px, in, cm ou mm. Também podemos salvar em outros formatos como jpg ou tif.
+
+Para entender as questões de tamanho e resolução de imagem, consulte: https://pixelcalculator.com/en
+
+É possível fazer vários gráficos na mesma janela usando par() e mfrow().  
+Para um arranjo 2 por 2:
+
+```{r 04- par}
+par(mfrow=c(2,2)) 
+plot(dados$sepal_l,dados$sepal_w)
+plot(dados$petal_l,dados$petal_w)
+plot(dados$sepal_l,dados$petal_w)
+plot(dados$sepal_w,dados$petal_l)
+```
+
+
+
+Para voltar ao normal:
+```{r 04- par 2}
+par(mfrow=c(1,1))
+plot(dados$sepal_l,dados$sepal_w)
+```
+
+
+
+
+Personalizando o gráfico
+
+Podemos usar vários parâmetros para dar nome ao gráficos e aos eixos, especificar as cores, etc.
+```{r 04- plot 3}
+plot(dados$sepal_l,dados$sepal_w,
+     xlab="Nome eixo X", ylab="Nome eixo Y",
+     main="Título do gráfico",
+     xlim=c(3,9),#limites do eixo x
+     ylim=c(1,6),#limites do eixo y
+     col="darkmagenta",#cor dos pontos
+     pch=22,#formato dos pontos
+     bg="darkolivegreen",#cor de preenchimento
+     tcl=0.4,#tamanho dos traços dos eixos
+     las=1,#orientação dos valores nos eixos: 0,1,2,3
+     cex=1.5,#tamanho do ponto
+     bty="n")#altera as bordas: "o" (default), 
+#"l", "7", "c", "u", or "]" .  "n" suppresses the box.
+```
+
+
+O gráfico pode ficar mais informativo:
+
+```{r 04- plot 4}
+dados$class<-as.factor(dados$class)
+plot(dados$sepal_l,dados$sepal_w, col = dados$class)
+```
+
+Colocando legenda das cores:
+
+```{r 04- plot 5}
+dados$class<-as.factor(dados$class)
+plot(dados$sepal_l,dados$sepal_w, col = dados$class)
+
+legend('topright', col=unique(dados$class), legend=levels(dados$class), pch =1)
+```
+
+
+Se quiser especificar as cores:
+
+```{r 04- plot 6}
+plot(dados$sepal_l,dados$sepal_w, col = c('red', 'blue', 'green')[as.numeric(dados$class)])
+```
+
+Brincando com as cores:
+
+```{r 04- plot 7}
+val <- dados$sepal_l + dados$sepal_w
+maxnovo<-1
+minnovo<-0
+
+valcol<-((val-min(val))/(max(val) - min(val)))*(maxnovo - minnovo) + minnovo
+
+plot(dados$sepal_l,dados$sepal_w, pch = 15, col = gray(valcol))
+```
+
+
+
+Podemos explorar os dados:
+```{r 04- pairs}
+pairs(dados)
+```
+
+
+
+Acrescentando cor por espécie:
+```{r 04- pairs 2}
+pairs(dados,col = dados$class)
+```
+
+
+
+
+### Histogramas
+
+Para fazer um histograma usamos a função hist.
+```{r 04- hist}
+hist(dados$sepal_l)
+```
+
+
+
+Também podemos personalizar o histograma:
+```{r 04- hist 2}
+hist(dados$sepal_l,
+     main="Folha",
+     xlab="comprimento sépala",
+     ylab="Frequência",
+     col=c("gold4","darkseagreen4"),
+     border="black",
+     adj=0, #alinhamento do texto
+     col.axis="forestgreen")#cor do texto nos eixos
+```
+
+
+
+### Boxplot
+
+Outro tipo de gráfico bastante usado é o boxplot
+```{r 04- boxplot}
+boxplot(dados$sepal_l ~ dados$class, 
+        main="Sépalas", names= c("Iris-setosa","Iris-versicolor","Iris-virginica"),xlab="espécies",
+        ylab="comprimento")
+```
+
+Podemos personalizar o boxplot:
+```{r 04- boxplot 2}
+boxplot(dados$sepal_l ~ dados$class, 
+        main="Sépalas", names= c("Iris-setosa","Iris-versicolor","Iris-virginica"),xlab="espécies",
+        ylab="comprimento",
+        notch=T,
+        col=c("brown1","khaki1", "blue"))
+```
+
+
+As cores podem ser especificadas pelo nome da cor ou pelo código hex.
+Os nomes e os códigos podem ser encontrados em vários sites como:
+
+http://www.sthda.com/english/wiki/colors-in-r
+http://sape.inf.usi.ch/quick-reference/ggplot2/colour
+
+
+### Barplot
+
+Também temos o gráfico de barras. Embora tenha semelhamças com o histograma, os histogramas são  barras conectadas umas às outras, visualizando a distribuição de uma variável quantitativa contínua e os gráficos de barras usam retângulos de tamanho proporcional para visualizar algum tipo de dados categóricos.
+
+Podemos criar uma tabela de frequência com a função table e usar o resultado para criar um gráfico de barras:
+
+```{r 04- barplot}
+x<-table(dados$class) 
+barplot(x, col = c("brown1","khaki1", "blue"))
+```
+
+
+## O pacote ggplot2
+
+O pacote ggplot2 é um dos principais pacotes gráficos do R.
+
+Os elementos de um gráfico (dados, sistema de coordenadas, rótulos, anotações, entre outros) são as camadas e a construção de um gráfico se dá pela sobreposição dessas camadas.
+
+
+### Gráficos de pontos (dispersão)
+
+```{r 04- geom_point, message=FALSE, warning=FALSE}
+library(ggplot2) 
+ggplot(dados) +
+  geom_point(aes(sepal_l, sepal_w))
+```
+
+- A primeira camada é dada pela função ggplot() e recebe a nossos dados;
+- A segunda camada é dada pela função geom_point(), especificando a forma geométrica utilizada no mapeamento das observações (pontos);
+- As camadas são unidas com um +;
+- O mapeamento na função geom_point() recebe a função aes(), responsável por descrever como as variáveis serão mapeadas nos aspectos visuais dos pontos (a forma geométrica escolhida);
+- Neste caso, os aspectos visuais mapeados são a posição do ponto no eixo x e a posição do ponto no eixo y;
+
+Podemos usar pipes:
+```{r 04- pipes}
+library(dplyr)
+dados%>% ggplot() +
+  geom_point(aes(x = sepal_l, y = sepal_w))
+# obs: não precisamos colocar x e y
+```
+
+         
+
+Podemos criar um objeto ggplot e depois adicionar camadas:
+
+```{r 04- camadas, message=FALSE, warning=FALSE}
+p <- ggplot(dados)
+
+p + geom_point(aes(sepal_l, sepal_w,color= class))+
+  labs(title="Iris", x = "Comprimento das sépalas", y = "Largura das sépalas", color = "Espécies")
+```
+
+
+
+Também podemos alterar o tamanho:
+
+
+```{r 04- geom_point 2, message=FALSE, warning=FALSE}
+p + geom_point(aes(sepal_l, sepal_w, size= class))
+  
+```
+
+
+Podemos adicionar mais camadas:
+
+```{r 04- facet_wrap}
+p + geom_point(aes(sepal_l, sepal_w, color= class))+
+  facet_wrap(~class)
+```
+
+
+### Salvar
+
+Para salvar usamos a função ggsave, que vai salvar o último gráfico gerado:
+
+```{r 04- ggsave}
+ggsave(
+  "figura.jpg",
+  plot = last_plot(),
+  dpi = 300,
+)
+```
+
+
+
+Vamos carregar outra planilha de dados:
+
+```{r 04- dados 3}
+library(openxlsx)
+dados2<-read.xlsx("dados/Data_Cortex_Nuclear.xlsx", sheet = 1, colNames = T)
+head(dados2)
+```
+Esses dados podem ser baixados do seguinte endereço:  
+https://archive.ics.uci.edu/dataset/342/mice+protein+expression  
+[@misc_mice_protein_expression_342]  
+
+Podemos selecionar algumas colunas e criar um objeto ggplot:
+
+```{r 04- select}
+p <- dados2 %>% 
+  select(DYRK1A_N:pAKT_N,Genotype:class)%>%
+  ggplot(aes(DYRK1A_N, ITSN1_N, color = Genotype))
+```
+
+E criar um gráfico de dispersão:
+
+```{r 04- dispersao, message=FALSE, warning=FALSE}
+p + geom_point(size = 0.7)
+```
+
+Podemos mudar as escalas dos eixos x e y. Por exemplo, vamos usar uma escala logarítmica (log na base 10):
+
+```{r 04- scale_x, message=FALSE, warning=FALSE}
+p + geom_point(size = 1) +
+  scale_x_log10() +
+  scale_y_log10()
+```
+
+
+
+### Histogramas
+
+Criando um objeto ggplot:
+```{r 04- geom_histogram}
+p <- dados2 %>% 
+    ggplot(aes(x = DYRK1A_N))
+```
+
+Histograma básico:
+
+```{r 04- geom_histogram 2, message=FALSE, warning=FALSE}
+p + geom_histogram()
+```
+
+Personalizando a cor de preenchimento, cor da linha e legendas:
+
+```{r 04- geom_histogram 3, message=FALSE, warning=FALSE}
+p + geom_histogram(binwidth = 0.1, fill = "blue", col = "black") +
+  xlab("expressão") +
+  ggtitle("Histograma")
+```
+
+
+### Density plot
+
+Um gráfico de densidade é uma representação da distribuição de uma variável numérica. É uma versão suavizada do histograma e é usado no mesmo conceito.
+
+```{r 04- geom_density, message=FALSE, warning=FALSE}
+p + geom_density()
+```
+   
+Podemos usar cores:
+ 
+```{r 04- geom_density 2, message=FALSE, warning=FALSE}
+p + geom_density(fill = "blue")
+```
+
+Transparência  
+
+```{r 04- geom_density 3, message=FALSE, warning=FALSE}
+ggplot(dados2, aes(EGR1_N, fill = class, colour = class)) +
+  geom_density(alpha = 0.2, na.rm = TRUE)
+```
+
+
+### Boxplot
+
+O boxplot é um gráfico onde a parte central contém os valores que estão entre o primeiro quartil e o terceiro quartil. As hastes inferiores e superiores se estendem, respectivamente, do primeiro quartil até o menor valor, limite inferior, e do terceiro quartil até o maior valor.
+
+```{r 04- geom_boxplot}
+p <- dados2 %>% 
+  ggplot(aes(y = ADARB1_N , group=class, color=class))
+
+p + geom_boxplot()
+```
+
+### Gráfico Q-Q
+O gráfico Q-Q é um gráfico de probabilidades, usado para comparar duas distribuições de probabilidade, traçando seus quantis uns contra os outros. 
+
+
+QQ-plot básico no ggplot2:
+
+```{r 04- geom_qq, message=FALSE, warning=FALSE}
+p <- dados2 %>% 
+  select(DYRK1A_N:pAKT_N,Genotype:class)%>%
+  filter(Genotype =="Ts65Dn")%>%
+  ggplot(aes(sample = DYRK1A_N))
+
+p + geom_qq()
+```
+
+Podemos fazer um QQ-plot contra uma distribuição normal com a mesma média e desvio padrão:
+```{r 04- geom_qq 2, message=FALSE, warning=FALSE}
+params <- dados2 %>% 
+  select(DYRK1A_N:pAKT_N,Genotype:class)%>%
+  filter(Genotype =="Ts65Dn")%>%
+  summarize(mean = mean(DYRK1A_N, na.rm = T), sd = sd(DYRK1A_N, na.rm=T))
+p + geom_qq(dparams = params) +
+  geom_abline()
+```
+
+### Figura com vários gráficos
+
+Para juntar vários gráficos do ggplot2 em uma imagem usamos o pacote gridExtra
+
+Vamos primeiro criar os gráficos e armazer em p1, p2, p3:
+
+```{r 04- gridextra}
+p <- dados2 %>% 
+  select(DYRK1A_N:pAKT_N,Genotype:class)%>%
+  ggplot(aes(x = DYRK1A_N))
+
+p1 <- p + geom_histogram(binwidth = 0.1, fill = "blue", col = "black")
+p2 <- p + geom_histogram(binwidth = 0.2, fill = "red", col = "black")
+p3 <- p + geom_histogram(binwidth = 0.3, fill = "green", col = "black")
+```
+
+Então usamos o pacote gridExtra para compor a imagem. Nesse exemplo, vamos dispor as imagens em uma linha e três colunas:
+
+```{r 04- gridextra 2, message=FALSE, warning=FALSE}
+library(gridExtra)
+grid.arrange(p1, p2, p3, ncol = 3)
+```
+
+### Ajustes de Posição
+position = “identity” irá colocar cada objeto na posição exata em que ele cairia no contexto do gráfico
+```{r 04- position}
+p + geom_bar(aes(class, fill=Genotype),
+             position="identity")
+```
+
+
+
+position = “dodge” coloca objetos sobrepostos um ao lado do outro. Isto torna mais fácil a comparação de valores individuais
+
+```{r 04- position 2}
+p + geom_bar(aes(Genotype, fill=class),
+           position="dodge")
+```
+
+
+
+position = “fill” irá empilhar os elementos um sobre o outro, mas normalizando a altura. Isso é muito útil para comparar proporções entre os grupos  
+
+```{r 04- position 3}
+p + geom_bar(aes(Genotype, fill=class),
+             position="fill")
+```
+
+### Geom Smooth
+
+```{r 04- geom_smooth, message=FALSE, warning=FALSE}
+ggplot(dados2, aes(SNCA_N,EGR1_N)) +
+  geom_point() +
+  geom_smooth(method = lm, size = 1)
+```
+
+
+
+Para saber mais:  
+@wickham2023r @irizarry2019introduction]
+
+
+
+
+## Outros pacotes gráficos
+
+Vamos carregar os dados e ativar os pacotes:
+```{r 04- dados 4, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(RColorBrewer)
+library(openxlsx)
+library(dplyr)
+dados<-read.xlsx("dados/pinguim.xlsx", sheet = 1, colNames = T)
+head(dados)
+
+
+```
+
+### Usando as cores
+
+Primeiro vamos fazer um gráfico, sem especificar quais cores usar:
+
+```{r 04- cores, message=FALSE, warning=FALSE}
+p <- dados %>% 
+  ggplot(aes(y = bill_length_mm, group=species, color=species))
+
+p + geom_boxplot()
+```
+
+
+
+No ggplot2, é possível armazenar a paleta de cores em uma variável e usá-la posteriormente.
+
+Por exemplo:
+
+```{r 04- cores 2}
+cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+```
+
+Então podemos usar essas cores no gráfico:
+
+
+```{r 04- cores 3, message=FALSE, warning=FALSE}
+p <- dados %>% 
+  ggplot(aes(y = bill_length_mm, group=species, fill=species))
+
+p + geom_boxplot()+
+  scale_fill_manual(values=cbPalette)
+```
+
+
+Para o preenchimento adicionamos:
+
+scale_fill_manual(values=cbPalette)
+
+Para cor da linha ou pontos adicionamos:
+
+scale_colour_manual(values=cbPalette)
+
+Também podemos usar outras escalas de cores, como as retiradas do pacote RColorBrewer
+
+
+```{r 04- cores 4, message=FALSE, warning=FALSE}
+p + geom_boxplot()+
+  scale_fill_brewer(palette="Set1")
+
+
+p + geom_boxplot()+
+  scale_fill_brewer(palette="Oranges")
+```
+
+
+Podem consultar as opções em: https://r-graph-gallery.com/38-rcolorbrewers-palettes.html
+
+
+
+
+### Análise gráfica exploratória
+
+```{r 04- ggally, message=FALSE, warning=FALSE}
+library(GGally)
+dados2<-select(dados, species, bill_length_mm:body_mass_g)
+```
+
+
+
+ Para isso usaremos o pacote GGally, que é uma extensão para o ggplot2.
+ 
+ 
+Vamos usar a função ggpairs e selecionar uma variável categórica para color:
+
+```{r 04- ggally 2, message=FALSE, warning=FALSE}
+ggpairs(dados2, aes(color = species))
+```
+
+### GGPLOT2: mais parâmetros  
+
+Vamos usar outro geom, o geom_segment:
+
+```{r 04- geom_segment, warning=FALSE}
+ggplot(dados, aes(x=bill_length_mm , y=bill_depth_mm )) +
+  geom_segment( aes(x=bill_length_mm , xend=bill_length_mm , y=10, yend=bill_depth_mm), color="grey") +
+  geom_point(color="orange", size=4) +
+  theme_light() +
+  theme(
+    panel.grid.major.x = element_blank(),
+    panel.border = element_blank(),
+    axis.ticks.x = element_blank()
+  ) +
+  xlab("") +
+  ylab("Value of Y")
+```
+
+### Diagrama de Venn
+
+Vamos criar uma lista com dados aleatórios  
+
+```{r 04- venn}
+set.seed(654925)            
+
+list_venn <- list(A = sort(sample(1:100, 20)),
+                  B = sort(sample(1:100, 20)),
+                  C = sort(sample(1:100, 20)),
+                  D = sort(sample(1:100, 20)))
+head(list_venn)  
+```
+
+Carregar o pacote ggvenn e fazer o diagrama com  A e C:  
+
+```{r 04- venn 2, message=FALSE, warning=FALSE}
+library(ggvenn)
+ggvenn(list_venn, c("A", "C"))   
+```
+
+
+Fazer o diagrama com  A, C e D:  
+
+```{r 04- venn 3, message=FALSE, warning=FALSE}
+ggvenn(list_venn, c("A", "C", "D"))
+```
+
+Com todos os dados:  
+
+```{r 04- venn 4}
+ggvenn(list_venn) 
+```
+
+### Diagramas
+
+Muitas vezes precisamos fazer um diagrama, ou fluxograma, para mostrar as etapas da pesquisa e podemos fazer isso usando o pacote DiagrammeR
+
+```{r 04- diagrama, message=FALSE, warning=FALSE}
+library(DiagrammeR)
+
+
+figura1<-DiagrammeR::grViz("
+digraph a_nice_graph {
+  node [fontname = Helvetica, color = green]
+  a [label = 'Ratos', color =blue, fontname=Impact]
+  b [label = 'caso, n = 20']
+  c [label = 'controle, n = 20']
+  d [label = 'medicamento']
+  e [label = 'salina']
+  f [label = '30 days']
+  g [label = 'córtex', color= blue]
+  h [label = 'hipocampo' , color= blue]
+  i [label = 'fígado', color =blue]
+  j [label = 'atividade enzimática', color =red,fontname=Impact]
+  # edge definitions with the node IDs
+  a -> {b c}
+  b -> d
+  c -> e
+  {d e} -> f
+  f -> {g h i}
+  {g h i} -> j
+}
+")
+figura1
+```
+
+Para salvar esse diagrama é preciso carregar mais 2 pacotes: rsvg e DiagrammeRsvg
+
+
+```{r 04- diagrama 2, message=FALSE, warning=FALSE}
+library(rsvg)
+library(DiagrammeRsvg)
+figura1 = DiagrammeRsvg::export_svg(figura1)
+figura1 = charToRaw(figura1) # flatten
+rsvg_png(figura1, file = "figura1b.png", width = 5961, height = 7016)
+```
+
+### Outra opção é o pacote ggflowchart  
+
+Para usar esse pacote tem um tutorial no endereço abaixo:  
+(https://nrennie.rbind.io/blog/introducing-ggflowchart/)  
+
+```{r 04- diagrama 3, eval=FALSE, include=FALSE}
+remotes::install_github("nrennie/ggflowchart")
+```
+
+  
+```{r 04- diagrama 4, message=FALSE, warning=FALSE}
+
+library(ggflowchart)
+data <- tibble::tibble(from = c("A", "A", "A", "B", "C", "F"),
+                       to = c("B", "C", "D", "E", "F", "G"))
+
+ggflowchart(data)
+```
+  
+Podemos usar os seguintes parâmetros:  
+
+- fill = "white". A cor de preenchimento.
+- colour = "black". A cor da caixa de texto.
+- text_colour = "black". A cor do texto.
+- text_size = 3.88. O tamanho do texto.
+- arrow_colour = "black". A cor das flechas.
+- arrow_size = 0.3. O tamanho das flechas.
+- family = "sans". A fonte do texto.
+- x_nudge = 0.35. A largura da caixa de texto.
+- y_nudge = 0.25. A altura da caica de texto.
+- horizontal = FALSE. A direção do fluxograma.  
+  
+Alguns exemplos:  
+```{r 04- diagrama 5}
+ggflowchart(data,
+            colour = "blue",
+            text_colour = "red",
+            arrow_colour = "green",
+            family = "serif",
+            x_nudge = 0.4,
+            y_nudge = 0.2,
+            arrow_size = 0.3)
+```
+
+Com fluxograma na horizontal:  
+```{r 04- diagrama 6}
+ggflowchart(data,
+            colour = "blue",
+            text_colour = "black",
+            arrow_colour = "orange",
+            family = "serif",
+            x_nudge = 0.4,
+            y_nudge = 0.2,
+            arrow_size = 0.3,
+            horizontal = T)
+```
+
+Utilizando tipos diferentes:  
+
+```{r 04- diagrama 7}
+node_data <- tibble::tibble(
+  name = c("A", "B", "C", "D", "E", "F", "G"),
+  type = c("Type 1", "Type 1", "Type 1", "Type 1", 
+           "Type 2", "Type 2", "Type 2")
+)
+ggflowchart(data, node_data, fill = type)
+
+```
+
+  
+  
+### Datas e séries temporais
+
+Vamos plotar uma variável (peso) ao longo do tempo.
+Primeiro vamos carregar os dados:  
+
+```{r 04- series temporais}
+dados3<-read.xlsx("dados/peso.xlsx", sheet=1,colNames = T)
+head(dados3)
+```
+Nesse arquivo temos a variável grupo (caso e controle), uma variável tempo (t1 a t6) e a variável peso. São 2 grupos de animais, que foram pesados em 6 momentos.  
+Agora ativaremos uma função para organizar os dados para poder fazer o gráfico:
+
+```{r 04- series temporais 2}
+data_summary <- function(data, varname, groupnames){
+  require(plyr)
+  summary_func <- function(x, col){
+    c(mean = mean(x[[col]], na.rm=TRUE),
+      sd = sd(x[[col]], na.rm=TRUE))
+  }
+  data_sum<-ddply(data, groupnames, .fun=summary_func,
+                  varname)
+  data_sum <- rename(data_sum, c("mean" = varname))
+  return(data_sum)
+}
+```
+
+Agora que a função data_summary está ativa, vamos preparar os dados:  
+
+```{r 04- series temporais 3, message=FALSE, warning=FALSE}
+df <- data_summary(dados3, varname="peso", 
+                   groupnames=c("grupo", "tempo"))
+
+df
+```
+
+E finalmente o gráfico:
+```{r 04- series temporais 4}
+p<- ggplot(df, aes(x=tempo, y=peso, group=grupo, color=grupo)) + 
+  geom_line() +
+  geom_point() +
+  geom_errorbar(aes(ymin=peso-sd, ymax=peso+sd), width=.2,
+                position=position_dodge(0.05))
+p
+```
+
+
+Personalizando o gráfico:
+```{r 04- series temporais 5}
+p+labs(title="Weight variation along 30 days", x="Time", y = "Weight")+
+  theme_classic() +
+  scale_color_manual(values=c('#999999','#E69F00'))
+
+```
+
+
+Além da definição das cores, que já vimos, aqui usamos também o theme_classic()  
+Esses temas controlam outros aspectos visuais do gráfico.  
+Tem vários temas:
+
+theme_grey()  
+theme_gray()  
+theme_bw()  
+theme_linedraw()  
+theme_light()  
+theme_dark()  
+theme_minimal()  
+theme_classic()  
+theme_void()  
+theme_test()  
+
+### Time series - Dados de casos de COVID no Paraná
+
+Os dados podem ser baixados de:
+https://www.saude.pr.gov.br/Pagina/Coronavirus-COVID-19
+Como exemplo, vou usar os dados de março de 2022, porque quanto mais recente, maior o arquivo e demora mais para carregar e processar os dados.  
+
+Carregar os dados:
+
+```{r 04- series temporais 6, warning=FALSE}
+dados<-read.csv("dados/informe_epidemiologico_16_03_2022_geral.csv", header = T, sep = ";")
+library(dplyr)
+head(dados)
+dados<-select(dados, SEXO:MUN_RESIDENCIA,DATA_DIAGNOSTICO,DATA_INICIO_SINTOMAS,DATA_OBITO)
+```
+
+Os dados tem colunas com data, no entanto, para o R entender que são datas devemos usar o pacote lubridate.
+Devemos olhar como está o formato da data. Nesse caso estão no formato ano, mês, dia, então usamos função ymd:
+
+```{r 04- series temporais 7, warning=FALSE}
+library(lubridate)
+
+dados$DATA_INICIO_SINTOMAS <-ymd(dados$DATA_INICIO_SINTOMAS)
+dados$DATA_DIAGNOSTICO <-ymd(dados$DATA_DIAGNOSTICO)
+dados$DATA_OBITO <-ymd(dados$DATA_OBITO)
+```
+
+
+Podemos plotar o número de casos por data de diagnóstico:  
+
+```{r 04- series temporais 8, message=FALSE, warning=FALSE}
+library(ggplot2)
+p <- dados %>%
+  ggplot(aes(DATA_DIAGNOSTICO))
+p + geom_bar(fill = "dodgerblue")
+```
+
+
+Podemos ver a idade dos casos positivos:
+
+```{r 04- series temporais 9}
+dados %>%
+  filter(IDADE_ORIGINAL>=0)%>%
+  ggplot(mapping = aes(IDADE_ORIGINAL )) +
+  geom_bar(fill="goldenrod1", col="black")
+```
+
+Ou a idade dos casos de óbito:  
+
+```{r 04- series temporais 10}
+dados %>%
+  filter(!is.na(DATA_OBITO))%>%
+  ggplot(mapping = aes(x =IDADE_ORIGINAL )) +
+  geom_bar(fill="firebrick1", col="black")
+```
+
+
+Podemos separa por sexo:
+
+```{r 04- series temporais 11}
+dados %>%
+  ggplot(aes(DATA_DIAGNOSTICO, color = SEXO, fill=SEXO)) +
+  geom_density(alpha=0.2 )
+```
+
+
+Filtros
+
+Podemos usar filtros, por exemplo, por data:
+
+```{r 04- series temporais 12}
+p <- dados %>%
+  filter(DATA_DIAGNOSTICO>as.Date("2022-02-15"))%>%
+  ggplot(aes(DATA_DIAGNOSTICO))
+p + geom_bar(fill = "dodgerblue")
+```
+
+
+Filtrando por município:
+
+```{r 04- series temporais 13}
+p <- dados %>%
+  filter(MUN_RESIDENCIA=="PONTA GROSSA")%>%
+  ggplot(aes(x = DATA_DIAGNOSTICO))
+p + geom_bar(fill = "blue")
+```
+
+
+Além desses gráficos todos apresentados aqui, existem muitos outros, os quais vocês podem procurar conforme a necessidade.  
+  
+Mais detalhes podem ser obtidos em @wickham2023r
+

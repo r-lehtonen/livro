@@ -1,0 +1,31 @@
+{
+    "id": "769969B4",
+    "path": "C:/Users/Ricardo/OneDrive - ufpr.br/R_livro/livro_introducao_R/02-carregar.Rmd",
+    "project_path": "02-carregar.Rmd",
+    "type": "r_markdown",
+    "hash": "2854252340",
+    "contents": "",
+    "dirty": false,
+    "created": 1671491777065.0,
+    "source_on_save": false,
+    "relative_order": 6,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "231,75",
+        "scrollLine": "0",
+        "rmdVisualMode": "false",
+        "rmdVisualCollapsedChunks": "",
+        "rmdVisualModeLocation": "4873:5051",
+        "rmdVisualWrapConfigured": "true",
+        "docOutlineVisible": "0"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1686340144,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1686340144331,
+    "read_only": false,
+    "read_only_alternatives": []
+}

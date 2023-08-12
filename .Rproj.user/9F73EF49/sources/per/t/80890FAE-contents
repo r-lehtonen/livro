@@ -1,0 +1,410 @@
+# Estatística
+
+## Estatística descritiva
+
+O R permite fazer qualquer teste estatístico.
+No R base já temos o pacote stats que possibilita fazer vários testes estatísticos. Além disso temos muitos outros pacotes estatísticos.
+
+Primeiro vamos fazer uma estatística descritiva, obtendo os valores de média, mediana, desvio padrão, máximo, mínimo.
+
+Os dados que vamos usar estão no pacote palmerpenguins.
+
+```{r 05- dados, message=FALSE, warning=FALSE}
+library(openxlsx)
+dados<-read.xlsx("dados/pinguim.xlsx", sheet = 1, colNames = T)
+head(dados)
+
+# caracterização
+mean(dados$bill_length_mm , na.rm=T) # média
+median(dados$bill_length_mm , na.rm=T) # mediana
+sd(dados$bill_length_mm , na.rm=T) # desvio padrão
+max(dados$bill_length_mm , na.rm=T) # máximo
+min(dados$bill_length_mm , na.rm=T) # mínimo
+
+summary(dados$bill_length_mm )
+```
+  
+## Testes estatísticos
+
+Tipos de testes estatísticos  
+
+Existem testes paramétricos e não paramétricos.
+Primeiro passo: verificar como é a distribuição dos nossos dados.
+Podemos  fazer um gráfico assim:
+
+```{r 05- grafico}
+m<-mean(dados$bill_length_mm ,na.rm=TRUE)
+std<-sd(dados$bill_length_mm ,na.rm=TRUE)
+hist(dados$bill_length_mm , prob=TRUE)
+curve(dnorm(x, mean=m, sd=std), 
+      col="darkblue", lwd=2, add=TRUE, yaxt="n")
+```
+
+Ou podemos fazer um gráfico qq plot:
+
+```{r 05- qqplot, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(dplyr)
+p <- dados %>% 
+    ggplot(aes(sample= bill_length_mm))
+
+params <- dados %>% 
+  summarize(mean = mean(bill_length_mm, na.rm = T), sd = sd(bill_length_mm, na.rm=T))
+p + geom_qq(dparams = params)+
+  geom_abline()
+```
+
+### Normalidade  
+
+Através dos gráficos podemos ter uma ideia da distribuição dos dados, mas isso não é um teste estatístico. Para testar a normalidade
+podemos usar o teste Kolmogorov-Smirnov com correção de Lilliefors,
+para isso precisamos instalar ativar o pacote nortest:  
+
+```{r 05- nortest, message=FALSE, warning=FALSE}
+library(nortest)
+
+
+lillie.test(dados$bill_length_mm )
+```
+
+Esses dados são de diferentes espécies, então devemos testar a normalidade em cada grupo:
+
+```{r 05- nortest 2, message=FALSE, warning=FALSE}
+library(dplyr)
+
+adelie<-filter(dados, species=="Adelie")
+gentoo<-filter(dados, species=="Gentoo")
+chinstrap<-filter(dados, species=="Chinstrap")
+
+
+lillie.test(adelie$bill_length_mm)
+lillie.test(gentoo$bill_length_mm)
+lillie.test(chinstrap$bill_length_mm)
+```
+
+Também podemos usar o teste de Shapiro-Wilk para testar a normalidade:
+
+```{r 05- shapiro}
+shapiro.test(adelie$bill_length_mm)
+shapiro.test(gentoo$bill_length_mm)
+shapiro.test(chinstrap$bill_length_mm)
+```
+
+### Assimetria e curtose  
+
+Em estatística, assimetria (skewness) e curtose (kurtosis) são duas maneiras de medir a forma de uma distribuição.
+
+A assimetria é uma medida da assimetria de uma distribuição. Este valor pode ser positivo ou negativo.
+
+Um valor de zero indica que não há assimetria na distribuição, o que significa que a distribuição é perfeitamente simétrica.
+
+Curtose mede a concentração ou dispersão dos valores de um conjunto de valores em relação às medidas de tendência central.
+
+A curtose de uma distribuição normal é 3.
+Se uma dada distribuição tem uma curtose menor que 3, ela tende a produzir menos outliers e menos extremos do que a distribuição normal.
+Se uma dada distribuição tem uma curtose maior que 3, ela tende a produzir mais outliers do que a distribuição normal.
+
+
+```{r 05- moments, message=FALSE, warning=FALSE}
+library(moments)
+skewness(adelie$bill_length_mm, na.rm = T)
+# zero não tem skewnwss
+# para valor de p:
+agostino.test(adelie$bill_length_mm)
+
+# para kurtosis, o valor sem kurtosis é 3
+kurtosis(adelie$bill_length_mm, na.rm = T)
+
+# para valor de p:
+anscombe.test(adelie$bill_length_mm)
+```
+
+
+
+Se os dados tem distribuição normal podemos comparar as médias usando o teste t, mas precisamos saber se as variâncias são iguais:
+
+```{r 05- var.test}
+var.test(adelie$bill_length_mm, gentoo$bill_length_mm)
+```
+
+### Teste t
+```{r 05- teste-t}
+t.test(adelie$bill_length_mm, gentoo$bill_length_mm, var.equal=T)
+```
+
+Se o teste de variância não foi significativo, usamos var.equal=T, caso contrário, usamos var.equal=F
+
+Para dados não paramétricos temos o teste Mann-Whitney (para duas amostras) ou Wilcoxon (para uma amostra pareada: paired = T):
+
+```{r 05- manwhitney}
+wilcox.test(adelie$bill_length_mm, gentoo$bill_length_mm)
+```
+
+
+
+### Teste qui-quadrado
+
+chisq.test(x, correct = TRUE,
+            simulate.p.value = FALSE, B = 2000)
+
+correct: one half is subtracted from all |O - E| differences
+simulate.p.value: a logical indicating whether to compute p-values by Monte Carlo simulation
+B:  an integer specifying the number of replicates used  in the Monte Carlo test
+
+Exemplos:  
+
+```{r 05- quiquadrado}
+x<-rbind(c(163,147),c(109,125)) # criar tabela com os dados
+
+x
+chisq.test(x,correct=F)
+
+x<-rbind(c(163,147,130),c(109,125,125))
+x
+chisq.test(x,correct=F)
+
+chisq.test(x,simulate.p.value = T, B = 10000)
+```
+
+
+### Correlação
+
+cor(x, use=, method= ) 
+
+use:	como tratar dados faltantes. 
+       Options are all.obs (sem NA), 
+       complete.obs (listwise deletion), 
+       pairwise.complete.obs (pairwise deletion)
+method	tipo de  correlação. 
+       Options are pearson, spearman or kendall.
+
+Pearson (entre duas variáveis contínuas), que é um 
+      teste paramétrico.
+Spearman (ou rho) ? uma correlação de "rankings" ou 
+     "postos", # e por isso é um teste não-paramétrico
+Kendall (ou tau) vai na mesma linha não-paramétrica 
+     da correlação de Spearman
+     
+```{r 05- correlacao}
+cor(adelie$bill_length_mm , adelie$body_mass_g, use="pairwise.complete.obs", 
+    method = "pearson")
+```
+     
+```{r 05- correlacao 2}
+# plot the data
+library(PerformanceAnalytics)
+mydata<-select(adelie, bill_length_mm :body_mass_g)
+chart.Correlation(mydata,  method = "pearson")
+```
+
+
+
+
+### Regressão
+
+Vamos transformar as variáveis species e island em uma variável numérica, utilizando mutate e ifelse:
+
+```{r 05- regressao}
+dados<-mutate(dados, especie= ifelse(grepl("Adelie",species), 0, 
+                                     ifelse(grepl("Gentoo", species),1,2)))
+
+dados<-mutate(dados, ilha= ifelse(grepl("Torgersen",island), 0, 
+                                     ifelse(grepl("Biscoe", island),1,2)))
+
+head(dados)
+```
+
+O grepl é uma função que procura correspondências de uma string ou vetor de string. O método grepl() pega um padrão e retorna TRUE se uma string contiver o padrão, caso contrário, FALSE.
+
+Fazendo a regressão com a função glm, como variável dependente body_mass_g e como variáveis independentes especie e ilha:
+
+```{r 05- regressao 2}
+regressao<-glm(body_mass_g ~  especie + ilha, data=dados, family=gaussian)
+
+summary(regressao)
+```
+
+### ANOVA
+
+Análise de variância (ANOVA)
+
+A análise da variância (ou ANOVA, de "ANalysis Of VAriance") é uma poderosa técnica estatística desenvolvida por R.A. Fisher. Ela consiste em um procedimento que decompõe, em vários componentes identificáveis, a variação total entre os valores obtidos no experimento. Cada componente atribui a variação a uma causa ou fonte de variação diferente: o número de causas de variação ou "fatores" depende do delineamento da investigação.
+
+Um dos modelos mais simples de ANOVA é o que analisa os dados de um delineamento completamente casualizado ou ANOVA a um critério de classificação (One way ANOVA). Neste modelo, a variação global é subdividida em duas frações. A primeira é a variação entre as médias dos vários grupos, quando comparadas com a média geral de todos os indivíduos do experimento e representa o efeito dos diferentes tratamentos. A outra é a variação observada entre as unidades experimentais de um mesmo grupo ou tratamento, com relação à média desse grupo: tratam-se das diferenças individuais, ou aleatórias, nas respostas. 
+
+Resumidamente:
+
+Variação total = Variação entre tratamentos + Variação dentro dos tratamentos.
+
+A variação entre grupos experimentais ou tratamentos é estimada pela variância entre tratamentos ou simplesmente Variância Entre. A variação dentro do mesmo tratamento é estimada pela média das variâncias de cada grupo: é por isso chamada variancia média dentro dos grupos ou Variância Dentro. Como ela representa também a fração da variabilidade que não é explicada pelo efeito dos tratamentos, é também chamada Variância Residual ou, ainda, Variância do Erro Experimental.
+
+O teste de comparação entre os efeitos dos tratamentos baseia-se na pressuposição de que os k tratamentos A,B,... podem originar médias diferentes, mas a entre os indivíduos (o) é igual em todas as populações que estão sendo comparadas. Em outras palavras, deseja-se testar a hipótese de igualdade estre médias.
+
+Antes de fazer a ANOVA, vamos fazer o teste de Bartlett para verificar a variância:
+
+```{r 05- anova, message=FALSE, warning=FALSE}
+library(car) 
+
+bartlett.test(bill_length_mm ~species,data=dados)
+
+```
+
+Como não foi significativo, vamos fazer a ANOVA com a função aov:
+
+```{r 05- anova 2}
+res_anova<-aov(bill_length_mm~species,data=dados)
+summary(res_anova)
+```
+
+O resultado foi significativo, mas com a ANOVA sabemos que tem diferença, mas não sabemos entre quais grupos,então podemos usar o teste de Duncan:
+
+```{r 05- anova 3, message=FALSE, warning=FALSE}
+library(agricolae)
+duncan.test(res_anova,"species",console = T)
+
+```
+
+Para vizualizar essas diferenças podemos fazer gráficos:
+
+```{r 05- anova 4, message=FALSE, warning=FALSE}
+library("ggpubr")
+ggline(dados, x = "species", y = "bill_length_mm", 
+       add = c("mean_se", "jitter"), 
+       ylab = "bill_length_mm", xlab = "espécies",color = "species")
+       
+
+ggboxplot(dados, x = "species", y = "bill_length_mm", 
+          color = "species", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
+          ylab = "bill_length_mm", xlab = "species")
+```
+
+Para dados não paramétricos, podemos usar o teste de Kruskal-Wallis
+
+```{r 05- kruskal}
+kruskal.test(bill_length_mm ~ species, data = dados)
+```
+
+Para esse caso, podemos o usar o teste de Dunn para identificar as diferenças:
+
+```{r 05- kruskal 2}
+library(FSA)
+
+dunnTest(bill_length_mm ~ species, data = dados,
+              method="bh") 
+```
+
+
+
+## Visualização de resultados estatísticos
+
+Vamos usar alguns pacotes que vão ajudar na análise de dados e também gerar um relatório com tabelas e gráficos em um documento html ou doc. 
+
+
+
+O pacote DataExplorer permite fazer diversas análises. Podemos ter uma visão inicial dos dados com a função introduce
+
+```{r 05- dataexplorer}
+library(DataExplorer)
+introduce(dados)
+```
+
+Também podemos ver na forma de gráficos:  
+
+```{r 05- dataexplorer 2}
+plot_intro(dados)
+```
+
+Os dados categóricos podem ser plotados:  
+
+```{r 05- dataexplorer 3}
+plot_bar(dados, by="species")
+
+dados%>%
+  select(species, bill_length_mm:body_mass_g)%>%
+  plot_boxplot(by="species")
+
+```
+
+Outro pacote muito útil é o ggstatsplot, com o qual podemos unir gráficos e análises estatísticas. Por exemplo, para dados categóricos:  
+
+
+```{r 05- ggstatsplot}
+library(ggstatsplot)
+
+ggbarstats(data = dados, x = species , y= island, label = "both")
+
+```
+
+Ou para dados numéricos:  
+
+```{r 05- ggstatsplot 2}
+ggbetweenstats(data= dados, x=species, y=bill_length_mm, type = "p")
+
+```
+  
+  Onde em type temos as seguintes opções: p (parametric), np (non parametric), r (robust), bf (bayes).  
+  
+  
+  
+
+O pacote dlookr descreve cada variável e o pacote flextable permite criar tabelas com os resultados. Podemos fazer diversas análises usando a função describe.  
+
+```{r 05- dlookr}
+library(dlookr)
+library(flextable)
+
+dlookr::describe(dados)%>%
+  flextable()
+# obs, usar dlookr:: porque describe tem em outros 2 pacotes
+
+```
+  
+Também podemos usar a função diagnose_numeric:  
+
+```{r 05- dlookr 2}
+dados%>%
+  diagnose_numeric()%>%
+  flextable()
+```
+
+  
+O pacote SmartEDA também faz um resumo descritivo das variáveis numéricas  
+
+```{r 05- smarteda}
+library(SmartEDA)
+ExpNumStat(dados, by="A", round = 2)%>%
+  flextable()
+```
+
+Em by temos as opções A: All, G: by group e GA: by group e Overall:  
+
+```{r 05- smarteda 2}
+ExpNumStat(dados, by="G", gp="species", round = 2)%>%
+  flextable()
+
+ExpNumStat(dados, by="GA", gp="species", round = 2)%>%
+  flextable()
+```
+
+Podemos ter os dados de saída de diversas análises estatísticas organizados com o pacote report.  
+
+
+```{r 05- report}
+library(report)
+dados2<-na.omit(dados)
+flextable(report_table(wilcox.test(dados2$bill_length_mm~dados2$sex))) 
+```
+
+Também podemos personalizar as tabelas geradas pelo pacote flextable.  
+
+```{r 05- flextable}
+flextable(report_table(wilcox.test(dados2$bill_length_mm~dados2$sex)))%>%
+  colformat_double(digits = 2)%>%
+  style(i = 1, j = 4, pr_t = fp_text_default(bold = T))
+```
+
+
+Referências  
+  
+[@irizarry2019introduction]  
+[@gohel2023flextable]

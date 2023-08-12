@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 4 Gráficos | Análises de Dados com R</title>
+  <meta name="description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 4 Gráficos | Análises de Dados com R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bookdown.org/ricardo_lehtonen/analise/capa.png" />
+  <meta property="og:description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 4 Gráficos | Análises de Dados com R" />
+  
+  <meta name="twitter:description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  <meta name="twitter:image" content="https://bookdown.org/ricardo_lehtonen/analise/capa.png" />
+
+<meta name="author" content="Ricardo Lehtonen R. de Souza" />
+
+
+<meta name="date" content="2023-07-31" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="o-sistema-tidyverse.html"/>
+<link rel="next" href="estatística.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script>
+<link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet" />
+<script src="libs/tabwid-1.1.3/tabwid.js"></script>
+<link href="libs/wordcloud2-0.0.1/wordcloud.css" rel="stylesheet" />
+<script src="libs/wordcloud2-0.0.1/wordcloud2-all.js"></script>
+<script src="libs/wordcloud2-0.0.1/hover.js"></script>
+<script src="libs/wordcloud2-binding-0.2.1/wordcloud2.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Análises de dados com R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefácio</a></li>
+<li class="chapter" data-level="1" data-path="introdução.html"><a href="introdução.html"><i class="fa fa-check"></i><b>1</b> Introdução</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introdução.html"><a href="introdução.html#o-que-é-r"><i class="fa fa-check"></i><b>1.1</b> O que é R</a></li>
+<li class="chapter" data-level="1.2" data-path="introdução.html"><a href="introdução.html#instalação"><i class="fa fa-check"></i><b>1.2</b> Instalação</a></li>
+<li class="chapter" data-level="1.3" data-path="introdução.html"><a href="introdução.html#rstudio"><i class="fa fa-check"></i><b>1.3</b> RStudio</a></li>
+<li class="chapter" data-level="1.4" data-path="introdução.html"><a href="introdução.html#objetos-do-r"><i class="fa fa-check"></i><b>1.4</b> Objetos do R</a></li>
+<li class="chapter" data-level="1.5" data-path="introdução.html"><a href="introdução.html#nomes-dos-objetos-do-r"><i class="fa fa-check"></i><b>1.5</b> Nomes dos objetos do R</a></li>
+<li class="chapter" data-level="1.6" data-path="introdução.html"><a href="introdução.html#vetores"><i class="fa fa-check"></i><b>1.6</b> Vetores</a></li>
+<li class="chapter" data-level="1.7" data-path="introdução.html"><a href="introdução.html#operações-com-vetores"><i class="fa fa-check"></i><b>1.7</b> Operações com Vetores</a></li>
+<li class="chapter" data-level="1.8" data-path="introdução.html"><a href="introdução.html#fatores"><i class="fa fa-check"></i><b>1.8</b> Fatores</a></li>
+<li class="chapter" data-level="1.9" data-path="introdução.html"><a href="introdução.html#matrizes"><i class="fa fa-check"></i><b>1.9</b> Matrizes</a></li>
+<li class="chapter" data-level="1.10" data-path="introdução.html"><a href="introdução.html#listas"><i class="fa fa-check"></i><b>1.10</b> Listas</a></li>
+<li class="chapter" data-level="1.11" data-path="introdução.html"><a href="introdução.html#data-frame"><i class="fa fa-check"></i><b>1.11</b> Data frame</a></li>
+<li class="chapter" data-level="1.12" data-path="introdução.html"><a href="introdução.html#sequências"><i class="fa fa-check"></i><b>1.12</b> Sequências</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html"><i class="fa fa-check"></i><b>2</b> Carregar e manipular dados</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#ler-arquivos-txt-e-csv"><i class="fa fa-check"></i><b>2.1</b> Ler arquivos txt e csv</a></li>
+<li class="chapter" data-level="2.2" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#ler-arquivos-xlsx"><i class="fa fa-check"></i><b>2.2</b> Ler arquivos xlsx</a></li>
+<li class="chapter" data-level="2.3" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#gravar-arquivos-txt-e-xlsx"><i class="fa fa-check"></i><b>2.3</b> Gravar arquivos txt e xlsx</a></li>
+<li class="chapter" data-level="2.4" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#manipulação-de-dados-r-base"><i class="fa fa-check"></i><b>2.4</b> Manipulação de dados (R base)</a></li>
+<li class="chapter" data-level="2.5" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#transformação-de-dados"><i class="fa fa-check"></i><b>2.5</b> Transformação de dados</a></li>
+<li class="chapter" data-level="2.6" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#técnicas-de-normalização"><i class="fa fa-check"></i><b>2.6</b> Técnicas de normalização</a></li>
+<li class="chapter" data-level="2.7" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#juntar-dados-r-base"><i class="fa fa-check"></i><b>2.7</b> Juntar dados (R base)</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html"><i class="fa fa-check"></i><b>3</b> O sistema tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#manipulação-de-dados-com-tidyverse"><i class="fa fa-check"></i><b>3.1</b> Manipulação de dados com tidyverse</a></li>
+<li class="chapter" data-level="3.2" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-filter"><i class="fa fa-check"></i><b>3.2</b> Função filter</a></li>
+<li class="chapter" data-level="3.3" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-arrange"><i class="fa fa-check"></i><b>3.3</b> Função arrange</a></li>
+<li class="chapter" data-level="3.4" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-select"><i class="fa fa-check"></i><b>3.4</b> Função select</a></li>
+<li class="chapter" data-level="3.5" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-mutate-e-transmutate"><i class="fa fa-check"></i><b>3.5</b> Função mutate e transmutate</a></li>
+<li class="chapter" data-level="3.6" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#funções-group_by-e-summarise"><i class="fa fa-check"></i><b>3.6</b> Funções group_by e summarise</a></li>
+<li class="chapter" data-level="3.7" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#funções-pull-e-distinct"><i class="fa fa-check"></i><b>3.7</b> Funções pull e distinct</a></li>
+<li class="chapter" data-level="3.8" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#pipes"><i class="fa fa-check"></i><b>3.8</b> Pipes</a></li>
+<li class="chapter" data-level="3.9" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#pipe-nativa-do-r"><i class="fa fa-check"></i><b>3.9</b> Pipe nativa do R</a></li>
+<li class="chapter" data-level="3.10" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#tibble"><i class="fa fa-check"></i><b>3.10</b> Tibble</a></li>
+<li class="chapter" data-level="3.11" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#juntar-dados"><i class="fa fa-check"></i><b>3.11</b> Juntar dados</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="gráficos.html"><a href="gráficos.html"><i class="fa fa-check"></i><b>4</b> Gráficos</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="gráficos.html"><a href="gráficos.html#gráficos-com-o-pacote-graphics-r-base"><i class="fa fa-check"></i><b>4.1</b> Gráficos com o pacote graphics (R base)</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="gráficos.html"><a href="gráficos.html#introdução-aos-gráficos-do-r"><i class="fa fa-check"></i><b>4.1.1</b> Introdução aos gráficos do R</a></li>
+<li class="chapter" data-level="4.1.2" data-path="gráficos.html"><a href="gráficos.html#salvar"><i class="fa fa-check"></i><b>4.1.2</b> Salvar</a></li>
+<li class="chapter" data-level="4.1.3" data-path="gráficos.html"><a href="gráficos.html#histogramas"><i class="fa fa-check"></i><b>4.1.3</b> Histogramas</a></li>
+<li class="chapter" data-level="4.1.4" data-path="gráficos.html"><a href="gráficos.html#boxplot"><i class="fa fa-check"></i><b>4.1.4</b> Boxplot</a></li>
+<li class="chapter" data-level="4.1.5" data-path="gráficos.html"><a href="gráficos.html#barplot"><i class="fa fa-check"></i><b>4.1.5</b> Barplot</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="gráficos.html"><a href="gráficos.html#o-pacote-ggplot2"><i class="fa fa-check"></i><b>4.2</b> O pacote ggplot2</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="gráficos.html"><a href="gráficos.html#gráficos-de-pontos-dispersão"><i class="fa fa-check"></i><b>4.2.1</b> Gráficos de pontos (dispersão)</a></li>
+<li class="chapter" data-level="4.2.2" data-path="gráficos.html"><a href="gráficos.html#salvar-1"><i class="fa fa-check"></i><b>4.2.2</b> Salvar</a></li>
+<li class="chapter" data-level="4.2.3" data-path="gráficos.html"><a href="gráficos.html#histogramas-1"><i class="fa fa-check"></i><b>4.2.3</b> Histogramas</a></li>
+<li class="chapter" data-level="4.2.4" data-path="gráficos.html"><a href="gráficos.html#density-plot"><i class="fa fa-check"></i><b>4.2.4</b> Density plot</a></li>
+<li class="chapter" data-level="4.2.5" data-path="gráficos.html"><a href="gráficos.html#boxplot-1"><i class="fa fa-check"></i><b>4.2.5</b> Boxplot</a></li>
+<li class="chapter" data-level="4.2.6" data-path="gráficos.html"><a href="gráficos.html#gráfico-q-q"><i class="fa fa-check"></i><b>4.2.6</b> Gráfico Q-Q</a></li>
+<li class="chapter" data-level="4.2.7" data-path="gráficos.html"><a href="gráficos.html#figura-com-vários-gráficos"><i class="fa fa-check"></i><b>4.2.7</b> Figura com vários gráficos</a></li>
+<li class="chapter" data-level="4.2.8" data-path="gráficos.html"><a href="gráficos.html#ajustes-de-posição"><i class="fa fa-check"></i><b>4.2.8</b> Ajustes de Posição</a></li>
+<li class="chapter" data-level="4.2.9" data-path="gráficos.html"><a href="gráficos.html#geom-smooth"><i class="fa fa-check"></i><b>4.2.9</b> Geom Smooth</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="gráficos.html"><a href="gráficos.html#outros-pacotes-gráficos"><i class="fa fa-check"></i><b>4.3</b> Outros pacotes gráficos</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="gráficos.html"><a href="gráficos.html#usando-as-cores"><i class="fa fa-check"></i><b>4.3.1</b> Usando as cores</a></li>
+<li class="chapter" data-level="4.3.2" data-path="gráficos.html"><a href="gráficos.html#análise-gráfica-exploratória"><i class="fa fa-check"></i><b>4.3.2</b> Análise gráfica exploratória</a></li>
+<li class="chapter" data-level="4.3.3" data-path="gráficos.html"><a href="gráficos.html#ggplot2-mais-parâmetros"><i class="fa fa-check"></i><b>4.3.3</b> GGPLOT2: mais parâmetros</a></li>
+<li class="chapter" data-level="4.3.4" data-path="gráficos.html"><a href="gráficos.html#diagrama-de-venn"><i class="fa fa-check"></i><b>4.3.4</b> Diagrama de Venn</a></li>
+<li class="chapter" data-level="4.3.5" data-path="gráficos.html"><a href="gráficos.html#diagramas"><i class="fa fa-check"></i><b>4.3.5</b> Diagramas</a></li>
+<li class="chapter" data-level="4.3.6" data-path="gráficos.html"><a href="gráficos.html#outra-opção-é-o-pacote-ggflowchart"><i class="fa fa-check"></i><b>4.3.6</b> Outra opção é o pacote ggflowchart</a></li>
+<li class="chapter" data-level="4.3.7" data-path="gráficos.html"><a href="gráficos.html#datas-e-séries-temporais"><i class="fa fa-check"></i><b>4.3.7</b> Datas e séries temporais</a></li>
+<li class="chapter" data-level="4.3.8" data-path="gráficos.html"><a href="gráficos.html#time-series---dados-de-casos-de-covid-no-paraná"><i class="fa fa-check"></i><b>4.3.8</b> Time series - Dados de casos de COVID no Paraná</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="estatística.html"><a href="estatística.html"><i class="fa fa-check"></i><b>5</b> Estatística</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="estatística.html"><a href="estatística.html#estatística-descritiva"><i class="fa fa-check"></i><b>5.1</b> Estatística descritiva</a></li>
+<li class="chapter" data-level="5.2" data-path="estatística.html"><a href="estatística.html#testes-estatísticos"><i class="fa fa-check"></i><b>5.2</b> Testes estatísticos</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="estatística.html"><a href="estatística.html#normalidade"><i class="fa fa-check"></i><b>5.2.1</b> Normalidade</a></li>
+<li class="chapter" data-level="5.2.2" data-path="estatística.html"><a href="estatística.html#assimetria-e-curtose"><i class="fa fa-check"></i><b>5.2.2</b> Assimetria e curtose</a></li>
+<li class="chapter" data-level="5.2.3" data-path="estatística.html"><a href="estatística.html#teste-t"><i class="fa fa-check"></i><b>5.2.3</b> Teste t</a></li>
+<li class="chapter" data-level="5.2.4" data-path="estatística.html"><a href="estatística.html#teste-qui-quadrado"><i class="fa fa-check"></i><b>5.2.4</b> Teste qui-quadrado</a></li>
+<li class="chapter" data-level="5.2.5" data-path="estatística.html"><a href="estatística.html#correlação"><i class="fa fa-check"></i><b>5.2.5</b> Correlação</a></li>
+<li class="chapter" data-level="5.2.6" data-path="estatística.html"><a href="estatística.html#regressão"><i class="fa fa-check"></i><b>5.2.6</b> Regressão</a></li>
+<li class="chapter" data-level="5.2.7" data-path="estatística.html"><a href="estatística.html#anova"><i class="fa fa-check"></i><b>5.2.7</b> ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="estatística.html"><a href="estatística.html#visualização-de-resultados-estatísticos"><i class="fa fa-check"></i><b>5.3</b> Visualização de resultados estatísticos</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="funções-e-loops.html"><a href="funções-e-loops.html"><i class="fa fa-check"></i><b>6</b> Funções e loops</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="funções-e-loops.html"><a href="funções-e-loops.html#funções"><i class="fa fa-check"></i><b>6.1</b> Funções</a></li>
+<li class="chapter" data-level="6.2" data-path="funções-e-loops.html"><a href="funções-e-loops.html#loops"><i class="fa fa-check"></i><b>6.2</b> Loops</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="funções-e-loops.html"><a href="funções-e-loops.html#for"><i class="fa fa-check"></i><b>6.2.1</b> for</a></li>
+<li class="chapter" data-level="6.2.2" data-path="funções-e-loops.html"><a href="funções-e-loops.html#while"><i class="fa fa-check"></i><b>6.2.2</b> while</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="funções-e-loops.html"><a href="funções-e-loops.html#if-e-else"><i class="fa fa-check"></i><b>6.3</b> if e else</a></li>
+<li class="chapter" data-level="6.4" data-path="funções-e-loops.html"><a href="funções-e-loops.html#funções-apply-lapply-sapply-tapply-mapply"><i class="fa fa-check"></i><b>6.4</b> Funções apply, lapply, sapply, tapply, mapply</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="genética.html"><a href="genética.html"><i class="fa fa-check"></i><b>7</b> Genética</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="genética.html"><a href="genética.html#genética-de-populações"><i class="fa fa-check"></i><b>7.1</b> Genética de populações</a></li>
+<li class="chapter" data-level="7.2" data-path="genética.html"><a href="genética.html#genotipagem-com-genetics-e-loop"><i class="fa fa-check"></i><b>7.2</b> Genotipagem com genetics e loop</a></li>
+<li class="chapter" data-level="7.3" data-path="genética.html"><a href="genética.html#heredogramas"><i class="fa fa-check"></i><b>7.3</b> Heredogramas</a></li>
+<li class="chapter" data-level="7.4" data-path="genética.html"><a href="genética.html#análises-filogenéticas"><i class="fa fa-check"></i><b>7.4</b> Análises filogenéticas</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>8</b> Network</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="network.html"><a href="network.html#pacote-igraph"><i class="fa fa-check"></i><b>8.1</b> Pacote Igraph</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="bioconductor.html"><a href="bioconductor.html"><i class="fa fa-check"></i><b>9</b> Bioconductor</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="bioconductor.html"><a href="bioconductor.html#pacote-msa"><i class="fa fa-check"></i><b>9.1</b> Pacote msa</a></li>
+<li class="chapter" data-level="9.2" data-path="bioconductor.html"><a href="bioconductor.html#pacote-multimir"><i class="fa fa-check"></i><b>9.2</b> Pacote multiMiR</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html"><i class="fa fa-check"></i><b>10</b> Dados não estruturados</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#texto"><i class="fa fa-check"></i><b>10.1</b> Texto</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#análise-de-sentimentos"><i class="fa fa-check"></i><b>10.1.1</b> Análise de sentimentos</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#imagens"><i class="fa fa-check"></i><b>10.2</b> Imagens</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#edição-de-imagens"><i class="fa fa-check"></i><b>10.2.1</b> Edição de imagens</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#áudio"><i class="fa fa-check"></i><b>10.3</b> Áudio</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html"><i class="fa fa-check"></i><b>11</b> Pesquisa bibliográfica e Bibliometria</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#pesquisa-bibliográfica"><i class="fa fa-check"></i><b>11.1</b> Pesquisa bibliográfica</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#termos-da-busca"><i class="fa fa-check"></i><b>11.1.1</b> Termos da busca</a></li>
+<li class="chapter" data-level="11.1.2" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#bases-de-dados"><i class="fa fa-check"></i><b>11.1.2</b> Bases de dados</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#pubmed"><i class="fa fa-check"></i><b>11.2</b> PubMed</a></li>
+<li class="chapter" data-level="11.3" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#bibliometria"><i class="fa fa-check"></i><b>11.3</b> Bibliometria</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>12</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="r-markdown.html"><a href="r-markdown.html#incluindo-gráficos"><i class="fa fa-check"></i><b>12.1</b> Incluindo gráficos</a></li>
+<li class="chapter" data-level="12.2" data-path="r-markdown.html"><a href="r-markdown.html#chunk-opções"><i class="fa fa-check"></i><b>12.2</b> Chunk: opções</a></li>
+<li class="chapter" data-level="12.3" data-path="r-markdown.html"><a href="r-markdown.html#formatação"><i class="fa fa-check"></i><b>12.3</b> Formatação</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://docs.ufpr.br/~lehtonen/" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análises de Dados com R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="gráficos" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Capítulo 4</span> Gráficos<a href="gráficos.html#gráficos" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>O R permite fazer qualquer tipo de gráfico, os quais podem ser personalizados e salvos em diversos formatos e resoluções.<br />
+Existem muitos pacotes gráficos no R e nesse capítulo vamos ver alguns deles.</p>
+<div id="gráficos-com-o-pacote-graphics-r-base" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Gráficos com o pacote graphics (R base)<a href="gráficos.html#gráficos-com-o-pacote-graphics-r-base" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="introdução-aos-gráficos-do-r" class="section level3 hasAnchor" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> Introdução aos gráficos do R<a href="gráficos.html#introdução-aos-gráficos-do-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Quando instalamos o R, já temos um pacote para gráficos (graphics) e com ele podemos fazer e personalizar os principais tipos de gráficos.</p>
+<p>Vamos começar carregando os dados. Usaremos o arquivo iris e vamos criar um gráfico de dispersão com as variáveis comprimento e largura das sépalas.</p>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="gráficos.html#cb178-1" tabindex="-1"></a>dados<span class="ot">&lt;-</span><span class="fu">read.table</span>(<span class="st">&quot;dados/iris.txt&quot;</span>, <span class="at">head=</span>T, <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>)</span>
+<span id="cb178-2"><a href="gráficos.html#cb178-2" tabindex="-1"></a><span class="fu">head</span>(dados)</span></code></pre></div>
+<pre><code>##   sepal_l sepal_w petal_l petal_w       class
+## 1     5.1     3.5     1.4     0.2 Iris-setosa
+## 2     4.9     3.0     1.4     0.2 Iris-setosa
+## 3     4.7     3.2     1.3     0.2 Iris-setosa
+## 4     4.6     3.1     1.5     0.2 Iris-setosa
+## 5     5.0     3.6     1.4     0.2 Iris-setosa
+## 6     5.4     3.9     1.7     0.4 Iris-setosa</code></pre>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="gráficos.html#cb180-1" tabindex="-1"></a><span class="fu">plot</span>(dados<span class="sc">$</span>sepal_l,dados<span class="sc">$</span>sepal_w)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20dados-1.png" width="672" /></p>
+<p>Podemos usar mais parâmetros, como type.</p>
+<ul>
+<li>p: Points.<br />
+</li>
+<li>l: Lines.<br />
+</li>
+<li>b: Both.<br />
+</li>
+<li>c: The lines part alone of b<br />
+</li>
+<li>o: Both “overplotted”<br />
+</li>
+<li>h: Histogram like (or high-density) vertical lines.<br />
+</li>
+<li>n: No plotting.</li>
+</ul>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="gráficos.html#cb181-1" tabindex="-1"></a>x<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb181-2"><a href="gráficos.html#cb181-2" tabindex="-1"></a>y<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">7</span>,<span class="dv">15</span>,<span class="dv">8</span>,<span class="dv">10</span>,<span class="dv">21</span>,<span class="dv">19</span>,<span class="dv">12</span>,<span class="dv">6</span>,<span class="dv">10</span>)</span>
+<span id="cb181-3"><a href="gráficos.html#cb181-3" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">type=</span><span class="st">&quot;l&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20plot-1.png" width="672" /></p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="gráficos.html#cb182-1" tabindex="-1"></a><span class="fu">plot</span>(x,y,<span class="at">type=</span><span class="st">&quot;b&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20plot-2.png" width="672" /></p>
+<p>Podemos mudar o padrão dos pontos com pch
+Os valores vão de 0 a 25:</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="gráficos.html#cb183-1" tabindex="-1"></a><span class="fu">plot</span>(dados<span class="sc">$</span>sepal_l,dados<span class="sc">$</span>sepal_w, <span class="at">pch=</span><span class="dv">19</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20plot%202-1.png" width="672" /></p>
+</div>
+<div id="salvar" class="section level3 hasAnchor" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> Salvar<a href="gráficos.html#salvar" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para salvar um gráfico podemos clicar na opção export, na janela Plots do RStudio ou podemos fazer assim:</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="gráficos.html#cb184-1" tabindex="-1"></a><span class="fu">png</span>(<span class="at">file=</span><span class="st">&quot;figura1.png&quot;</span>, <span class="at">units=</span><span class="st">&quot;in&quot;</span>, <span class="at">res =</span> <span class="dv">300</span>, <span class="at">width =</span> <span class="dv">5</span>,<span class="at">height =</span> <span class="dv">5</span>)</span>
+<span id="cb184-2"><a href="gráficos.html#cb184-2" tabindex="-1"></a><span class="fu">plot</span>(dados<span class="sc">$</span>sepal_l,dados<span class="sc">$</span>sepal_w)</span>
+<span id="cb184-3"><a href="gráficos.html#cb184-3" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
+<pre><code>## png 
+##   2</code></pre>
+<p>As opções de units são: px, in, cm ou mm. Também podemos salvar em outros formatos como jpg ou tif.</p>
+<p>Para entender as questões de tamanho e resolução de imagem, consulte: <a href="https://pixelcalculator.com/en" class="uri">https://pixelcalculator.com/en</a></p>
+<p>É possível fazer vários gráficos na mesma janela usando par() e mfrow().<br />
+Para um arranjo 2 por 2:</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="gráficos.html#cb186-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>)) </span>
+<span id="cb186-2"><a href="gráficos.html#cb186-2" tabindex="-1"></a><span class="fu">plot</span>(dados<span class="sc">$</span>sepal_l,dados<span class="sc">$</span>sepal_w)</span>
+<span id="cb186-3"><a href="gráficos.html#cb186-3" tabindex="-1"></a><span class="fu">plot</span>(dados<span class="sc">$</span>petal_l,dados<span class="sc">$</span>petal_w)</span>
+<span id="cb186-4"><a href="gráficos.html#cb186-4" tabindex="-1"></a><span class="fu">plot</span>(dados<span class="sc">$</span>sepal_l,dados<span class="sc">$</span>petal_w)</span>
+<span id="cb186-5"><a href="gráficos.html#cb186-5" tabindex="-1"></a><span class="fu">plot</span>(dados<span class="sc">$</span>sepal_w,dados<span class="sc">$</span>petal_l)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20par-1.png" width="672" /></p>
+<p>Para voltar ao normal:</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="gráficos.html#cb187-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb187-2"><a href="gráficos.html#cb187-2" tabindex="-1"></a><span class="fu">plot</span>(dados<span class="sc">$</span>sepal_l,dados<span class="sc">$</span>sepal_w)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20par%202-1.png" width="672" /></p>
+<p>Personalizando o gráfico</p>
+<p>Podemos usar vários parâmetros para dar nome ao gráficos e aos eixos, especificar as cores, etc.</p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="gráficos.html#cb188-1" tabindex="-1"></a><span class="fu">plot</span>(dados<span class="sc">$</span>sepal_l,dados<span class="sc">$</span>sepal_w,</span>
+<span id="cb188-2"><a href="gráficos.html#cb188-2" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Nome eixo X&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Nome eixo Y&quot;</span>,</span>
+<span id="cb188-3"><a href="gráficos.html#cb188-3" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Título do gráfico&quot;</span>,</span>
+<span id="cb188-4"><a href="gráficos.html#cb188-4" tabindex="-1"></a>     <span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">9</span>),<span class="co">#limites do eixo x</span></span>
+<span id="cb188-5"><a href="gráficos.html#cb188-5" tabindex="-1"></a>     <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">6</span>),<span class="co">#limites do eixo y</span></span>
+<span id="cb188-6"><a href="gráficos.html#cb188-6" tabindex="-1"></a>     <span class="at">col=</span><span class="st">&quot;darkmagenta&quot;</span>,<span class="co">#cor dos pontos</span></span>
+<span id="cb188-7"><a href="gráficos.html#cb188-7" tabindex="-1"></a>     <span class="at">pch=</span><span class="dv">22</span>,<span class="co">#formato dos pontos</span></span>
+<span id="cb188-8"><a href="gráficos.html#cb188-8" tabindex="-1"></a>     <span class="at">bg=</span><span class="st">&quot;darkolivegreen&quot;</span>,<span class="co">#cor de preenchimento</span></span>
+<span id="cb188-9"><a href="gráficos.html#cb188-9" tabindex="-1"></a>     <span class="at">tcl=</span><span class="fl">0.4</span>,<span class="co">#tamanho dos traços dos eixos</span></span>
+<span id="cb188-10"><a href="gráficos.html#cb188-10" tabindex="-1"></a>     <span class="at">las=</span><span class="dv">1</span>,<span class="co">#orientação dos valores nos eixos: 0,1,2,3</span></span>
+<span id="cb188-11"><a href="gráficos.html#cb188-11" tabindex="-1"></a>     <span class="at">cex=</span><span class="fl">1.5</span>,<span class="co">#tamanho do ponto</span></span>
+<span id="cb188-12"><a href="gráficos.html#cb188-12" tabindex="-1"></a>     <span class="at">bty=</span><span class="st">&quot;n&quot;</span>)<span class="co">#altera as bordas: &quot;o&quot; (default), </span></span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20plot%203-1.png" width="672" /></p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="gráficos.html#cb189-1" tabindex="-1"></a><span class="co">#&quot;l&quot;, &quot;7&quot;, &quot;c&quot;, &quot;u&quot;, or &quot;]&quot; .  &quot;n&quot; suppresses the box.</span></span></code></pre></div>
+<p>O gráfico pode ficar mais informativo:</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="gráficos.html#cb190-1" tabindex="-1"></a>dados<span class="sc">$</span>class<span class="ot">&lt;-</span><span class="fu">as.factor</span>(dados<span class="sc">$</span>class)</span>
+<span id="cb190-2"><a href="gráficos.html#cb190-2" tabindex="-1"></a><span class="fu">plot</span>(dados<span class="sc">$</span>sepal_l,dados<span class="sc">$</span>sepal_w, <span class="at">col =</span> dados<span class="sc">$</span>class)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20plot%204-1.png" width="672" /></p>
+<p>Colocando legenda das cores:</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="gráficos.html#cb191-1" tabindex="-1"></a>dados<span class="sc">$</span>class<span class="ot">&lt;-</span><span class="fu">as.factor</span>(dados<span class="sc">$</span>class)</span>
+<span id="cb191-2"><a href="gráficos.html#cb191-2" tabindex="-1"></a><span class="fu">plot</span>(dados<span class="sc">$</span>sepal_l,dados<span class="sc">$</span>sepal_w, <span class="at">col =</span> dados<span class="sc">$</span>class)</span>
+<span id="cb191-3"><a href="gráficos.html#cb191-3" tabindex="-1"></a></span>
+<span id="cb191-4"><a href="gráficos.html#cb191-4" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&#39;topright&#39;</span>, <span class="at">col=</span><span class="fu">unique</span>(dados<span class="sc">$</span>class), <span class="at">legend=</span><span class="fu">levels</span>(dados<span class="sc">$</span>class), <span class="at">pch =</span><span class="dv">1</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20plot%205-1.png" width="672" /></p>
+<p>Se quiser especificar as cores:</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="gráficos.html#cb192-1" tabindex="-1"></a><span class="fu">plot</span>(dados<span class="sc">$</span>sepal_l,dados<span class="sc">$</span>sepal_w, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&#39;red&#39;</span>, <span class="st">&#39;blue&#39;</span>, <span class="st">&#39;green&#39;</span>)[<span class="fu">as.numeric</span>(dados<span class="sc">$</span>class)])</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20plot%206-1.png" width="672" /></p>
+<p>Brincando com as cores:</p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="gráficos.html#cb193-1" tabindex="-1"></a>val <span class="ot">&lt;-</span> dados<span class="sc">$</span>sepal_l <span class="sc">+</span> dados<span class="sc">$</span>sepal_w</span>
+<span id="cb193-2"><a href="gráficos.html#cb193-2" tabindex="-1"></a>maxnovo<span class="ot">&lt;-</span><span class="dv">1</span></span>
+<span id="cb193-3"><a href="gráficos.html#cb193-3" tabindex="-1"></a>minnovo<span class="ot">&lt;-</span><span class="dv">0</span></span>
+<span id="cb193-4"><a href="gráficos.html#cb193-4" tabindex="-1"></a></span>
+<span id="cb193-5"><a href="gráficos.html#cb193-5" tabindex="-1"></a>valcol<span class="ot">&lt;-</span>((val<span class="sc">-</span><span class="fu">min</span>(val))<span class="sc">/</span>(<span class="fu">max</span>(val) <span class="sc">-</span> <span class="fu">min</span>(val)))<span class="sc">*</span>(maxnovo <span class="sc">-</span> minnovo) <span class="sc">+</span> minnovo</span>
+<span id="cb193-6"><a href="gráficos.html#cb193-6" tabindex="-1"></a></span>
+<span id="cb193-7"><a href="gráficos.html#cb193-7" tabindex="-1"></a><span class="fu">plot</span>(dados<span class="sc">$</span>sepal_l,dados<span class="sc">$</span>sepal_w, <span class="at">pch =</span> <span class="dv">15</span>, <span class="at">col =</span> <span class="fu">gray</span>(valcol))</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20plot%207-1.png" width="672" /></p>
+<p>Podemos explorar os dados:</p>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="gráficos.html#cb194-1" tabindex="-1"></a><span class="fu">pairs</span>(dados)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20pairs-1.png" width="672" /></p>
+<p>Acrescentando cor por espécie:</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="gráficos.html#cb195-1" tabindex="-1"></a><span class="fu">pairs</span>(dados,<span class="at">col =</span> dados<span class="sc">$</span>class)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20pairs%202-1.png" width="672" /></p>
+</div>
+<div id="histogramas" class="section level3 hasAnchor" number="4.1.3">
+<h3><span class="header-section-number">4.1.3</span> Histogramas<a href="gráficos.html#histogramas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para fazer um histograma usamos a função hist.</p>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="gráficos.html#cb196-1" tabindex="-1"></a><span class="fu">hist</span>(dados<span class="sc">$</span>sepal_l)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20hist-1.png" width="672" /></p>
+<p>Também podemos personalizar o histograma:</p>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="gráficos.html#cb197-1" tabindex="-1"></a><span class="fu">hist</span>(dados<span class="sc">$</span>sepal_l,</span>
+<span id="cb197-2"><a href="gráficos.html#cb197-2" tabindex="-1"></a>     <span class="at">main=</span><span class="st">&quot;Folha&quot;</span>,</span>
+<span id="cb197-3"><a href="gráficos.html#cb197-3" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;comprimento sépala&quot;</span>,</span>
+<span id="cb197-4"><a href="gráficos.html#cb197-4" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;Frequência&quot;</span>,</span>
+<span id="cb197-5"><a href="gráficos.html#cb197-5" tabindex="-1"></a>     <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;gold4&quot;</span>,<span class="st">&quot;darkseagreen4&quot;</span>),</span>
+<span id="cb197-6"><a href="gráficos.html#cb197-6" tabindex="-1"></a>     <span class="at">border=</span><span class="st">&quot;black&quot;</span>,</span>
+<span id="cb197-7"><a href="gráficos.html#cb197-7" tabindex="-1"></a>     <span class="at">adj=</span><span class="dv">0</span>, <span class="co">#alinhamento do texto</span></span>
+<span id="cb197-8"><a href="gráficos.html#cb197-8" tabindex="-1"></a>     <span class="at">col.axis=</span><span class="st">&quot;forestgreen&quot;</span>)<span class="co">#cor do texto nos eixos</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20hist%202-1.png" width="672" /></p>
+</div>
+<div id="boxplot" class="section level3 hasAnchor" number="4.1.4">
+<h3><span class="header-section-number">4.1.4</span> Boxplot<a href="gráficos.html#boxplot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Outro tipo de gráfico bastante usado é o boxplot</p>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="gráficos.html#cb198-1" tabindex="-1"></a><span class="fu">boxplot</span>(dados<span class="sc">$</span>sepal_l <span class="sc">~</span> dados<span class="sc">$</span>class, </span>
+<span id="cb198-2"><a href="gráficos.html#cb198-2" tabindex="-1"></a>        <span class="at">main=</span><span class="st">&quot;Sépalas&quot;</span>, <span class="at">names=</span> <span class="fu">c</span>(<span class="st">&quot;Iris-setosa&quot;</span>,<span class="st">&quot;Iris-versicolor&quot;</span>,<span class="st">&quot;Iris-virginica&quot;</span>),<span class="at">xlab=</span><span class="st">&quot;espécies&quot;</span>,</span>
+<span id="cb198-3"><a href="gráficos.html#cb198-3" tabindex="-1"></a>        <span class="at">ylab=</span><span class="st">&quot;comprimento&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20boxplot-1.png" width="672" /></p>
+<p>Podemos personalizar o boxplot:</p>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="gráficos.html#cb199-1" tabindex="-1"></a><span class="fu">boxplot</span>(dados<span class="sc">$</span>sepal_l <span class="sc">~</span> dados<span class="sc">$</span>class, </span>
+<span id="cb199-2"><a href="gráficos.html#cb199-2" tabindex="-1"></a>        <span class="at">main=</span><span class="st">&quot;Sépalas&quot;</span>, <span class="at">names=</span> <span class="fu">c</span>(<span class="st">&quot;Iris-setosa&quot;</span>,<span class="st">&quot;Iris-versicolor&quot;</span>,<span class="st">&quot;Iris-virginica&quot;</span>),<span class="at">xlab=</span><span class="st">&quot;espécies&quot;</span>,</span>
+<span id="cb199-3"><a href="gráficos.html#cb199-3" tabindex="-1"></a>        <span class="at">ylab=</span><span class="st">&quot;comprimento&quot;</span>,</span>
+<span id="cb199-4"><a href="gráficos.html#cb199-4" tabindex="-1"></a>        <span class="at">notch=</span>T,</span>
+<span id="cb199-5"><a href="gráficos.html#cb199-5" tabindex="-1"></a>        <span class="at">col=</span><span class="fu">c</span>(<span class="st">&quot;brown1&quot;</span>,<span class="st">&quot;khaki1&quot;</span>, <span class="st">&quot;blue&quot;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20boxplot%202-1.png" width="672" /></p>
+<p>As cores podem ser especificadas pelo nome da cor ou pelo código hex.
+Os nomes e os códigos podem ser encontrados em vários sites como:</p>
+<p><a href="http://www.sthda.com/english/wiki/colors-in-r" class="uri">http://www.sthda.com/english/wiki/colors-in-r</a>
+<a href="http://sape.inf.usi.ch/quick-reference/ggplot2/colour" class="uri">http://sape.inf.usi.ch/quick-reference/ggplot2/colour</a></p>
+</div>
+<div id="barplot" class="section level3 hasAnchor" number="4.1.5">
+<h3><span class="header-section-number">4.1.5</span> Barplot<a href="gráficos.html#barplot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Também temos o gráfico de barras. Embora tenha semelhamças com o histograma, os histogramas são barras conectadas umas às outras, visualizando a distribuição de uma variável quantitativa contínua e os gráficos de barras usam retângulos de tamanho proporcional para visualizar algum tipo de dados categóricos.</p>
+<p>Podemos criar uma tabela de frequência com a função table e usar o resultado para criar um gráfico de barras:</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="gráficos.html#cb200-1" tabindex="-1"></a>x<span class="ot">&lt;-</span><span class="fu">table</span>(dados<span class="sc">$</span>class) </span>
+<span id="cb200-2"><a href="gráficos.html#cb200-2" tabindex="-1"></a><span class="fu">barplot</span>(x, <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;brown1&quot;</span>,<span class="st">&quot;khaki1&quot;</span>, <span class="st">&quot;blue&quot;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20barplot-1.png" width="672" /></p>
+</div>
+</div>
+<div id="o-pacote-ggplot2" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> O pacote ggplot2<a href="gráficos.html#o-pacote-ggplot2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>O pacote ggplot2 é um dos principais pacotes gráficos do R.</p>
+<p>Os elementos de um gráfico (dados, sistema de coordenadas, rótulos, anotações, entre outros) são as camadas e a construção de um gráfico se dá pela sobreposição dessas camadas.</p>
+<div id="gráficos-de-pontos-dispersão" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Gráficos de pontos (dispersão)<a href="gráficos.html#gráficos-de-pontos-dispersão" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="gráficos.html#cb201-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2) </span>
+<span id="cb201-2"><a href="gráficos.html#cb201-2" tabindex="-1"></a><span class="fu">ggplot</span>(dados) <span class="sc">+</span></span>
+<span id="cb201-3"><a href="gráficos.html#cb201-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(sepal_l, sepal_w))</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20geom_point-1.png" width="672" /></p>
+<ul>
+<li>A primeira camada é dada pela função ggplot() e recebe a nossos dados;</li>
+<li>A segunda camada é dada pela função geom_point(), especificando a forma geométrica utilizada no mapeamento das observações (pontos);</li>
+<li>As camadas são unidas com um +;</li>
+<li>O mapeamento na função geom_point() recebe a função aes(), responsável por descrever como as variáveis serão mapeadas nos aspectos visuais dos pontos (a forma geométrica escolhida);</li>
+<li>Neste caso, os aspectos visuais mapeados são a posição do ponto no eixo x e a posição do ponto no eixo y;</li>
+</ul>
+<p>Podemos usar pipes:</p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="gráficos.html#cb202-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb202-2"><a href="gráficos.html#cb202-2" tabindex="-1"></a>dados<span class="sc">%&gt;%</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb202-3"><a href="gráficos.html#cb202-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> sepal_l, <span class="at">y =</span> sepal_w))</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20pipes-1.png" width="672" /></p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="gráficos.html#cb203-1" tabindex="-1"></a><span class="co"># obs: não precisamos colocar x e y</span></span></code></pre></div>
+<p>Podemos criar um objeto ggplot e depois adicionar camadas:</p>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="gráficos.html#cb204-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(dados)</span>
+<span id="cb204-2"><a href="gráficos.html#cb204-2" tabindex="-1"></a></span>
+<span id="cb204-3"><a href="gráficos.html#cb204-3" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(sepal_l, sepal_w,<span class="at">color=</span> class))<span class="sc">+</span></span>
+<span id="cb204-4"><a href="gráficos.html#cb204-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Iris&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Comprimento das sépalas&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Largura das sépalas&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Espécies&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20camadas-1.png" width="672" /></p>
+<p>Também podemos alterar o tamanho:</p>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="gráficos.html#cb205-1" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(sepal_l, sepal_w, <span class="at">size=</span> class))</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20geom_point%202-1.png" width="672" /></p>
+<p>Podemos adicionar mais camadas:</p>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="gráficos.html#cb206-1" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(sepal_l, sepal_w, <span class="at">color=</span> class))<span class="sc">+</span></span>
+<span id="cb206-2"><a href="gráficos.html#cb206-2" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>class)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20facet_wrap-1.png" width="672" /></p>
+</div>
+<div id="salvar-1" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Salvar<a href="gráficos.html#salvar-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para salvar usamos a função ggsave, que vai salvar o último gráfico gerado:</p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="gráficos.html#cb207-1" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
+<span id="cb207-2"><a href="gráficos.html#cb207-2" tabindex="-1"></a>  <span class="st">&quot;figura.jpg&quot;</span>,</span>
+<span id="cb207-3"><a href="gráficos.html#cb207-3" tabindex="-1"></a>  <span class="at">plot =</span> <span class="fu">last_plot</span>(),</span>
+<span id="cb207-4"><a href="gráficos.html#cb207-4" tabindex="-1"></a>  <span class="at">dpi =</span> <span class="dv">300</span>,</span>
+<span id="cb207-5"><a href="gráficos.html#cb207-5" tabindex="-1"></a>)</span></code></pre></div>
+<pre><code>## Saving 7 x 5 in image</code></pre>
+<p>Vamos carregar outra planilha de dados:</p>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="gráficos.html#cb209-1" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
+<span id="cb209-2"><a href="gráficos.html#cb209-2" tabindex="-1"></a>dados2<span class="ot">&lt;-</span><span class="fu">read.xlsx</span>(<span class="st">&quot;dados/Data_Cortex_Nuclear.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">1</span>, <span class="at">colNames =</span> T)</span>
+<span id="cb209-3"><a href="gráficos.html#cb209-3" tabindex="-1"></a><span class="fu">head</span>(dados2)</span></code></pre></div>
+<pre><code>##   MouseID  DYRK1A_N   ITSN1_N    BDNF_N    NR1_N   NR2A_N    pAKT_N   pBRAF_N
+## 1   309_1 0.5036439 0.7471932 0.4301753 2.816329 5.990152 0.2188300 0.1775655
+## 2   309_2 0.5146171 0.6890635 0.4117703 2.789514 5.685038 0.2116362 0.1728170
+## 3   309_3 0.5091831 0.7302468 0.4183088 2.687201 5.622059 0.2090109 0.1757222
+## 4   309_4 0.4421067 0.6170762 0.3586263 2.466947 4.979503 0.2228858 0.1764626
+## 5   309_5 0.4349402 0.6174298 0.3588022 2.365785 4.718679 0.2131059 0.1736270
+## 6   309_6 0.4475064 0.6281758 0.3673881 2.385939 4.807635 0.2185778 0.1762334
+##   pCAMKII_N   pCREB_N   pELK_N    pERK_N    pJNK_N    PKCA_N    pMEK_N
+## 1  2.373744 0.2322238 1.750936 0.6879062 0.3063817 0.4026984 0.2969273
+## 2  2.292150 0.2269721 1.596377 0.6950062 0.2990511 0.3859868 0.2813189
+## 3  2.283337 0.2302468 1.561316 0.6773484 0.2912761 0.3810025 0.2817103
+## 4  2.152301 0.2070042 1.595086 0.5832768 0.2967287 0.3770870 0.3138320
+## 5  2.134014 0.1921579 1.504230 0.5509601 0.2869612 0.3635021 0.2779643
+## 6  2.141282 0.1951875 1.442398 0.5663396 0.2898239 0.3638930 0.2668369
+##      pNR1_N   pNR2A_N  pNR2B_N pPKCAB_N    pRSK_N     AKT_N    BRAF_N  CAMKII_N
+## 1 1.0220603 0.6056726 1.877684 2.308745 0.4415994 0.8593658 0.4162891 0.3696080
+## 2 0.9566759 0.5875587 1.725774 2.043037 0.4452219 0.8346593 0.4003642 0.3561775
+## 3 1.0036350 0.6024488 1.731873 2.017984 0.4676679 0.8143294 0.3998469 0.3680888
+## 4 0.8753903 0.5202932 1.566852 2.132754 0.4776707 0.7277046 0.3856387 0.3629700
+## 5 0.8649120 0.5079898 1.480059 2.013697 0.4834161 0.6877937 0.3675305 0.3553109
+## 6 0.8591209 0.5213066 1.538244 1.968275 0.4959000 0.6724022 0.3694045 0.3571717
+##      CREB_N    ELK_N    ERK_N  GSK3B_N     JNK_N     MEK_N    TRKA_N     RSK_N
+## 1 0.1789443 1.866358 3.685247 1.537227 0.2645263 0.3196770 0.8138665 0.1658460
+## 2 0.1736797 1.761047 3.485287 1.509249 0.2557270 0.3044187 0.7805042 0.1571935
+## 3 0.1739047 1.765544 3.571456 1.501244 0.2596135 0.3117467 0.7851540 0.1608954
+## 4 0.1794489 1.286277 2.970137 1.419710 0.2595358 0.2792181 0.7344917 0.1622099
+## 5 0.1748355 1.324695 2.896334 1.359876 0.2507050 0.2736672 0.7026991 0.1548274
+## 6 0.1797285 1.227450 2.956983 1.447910 0.2508402 0.2840436 0.7043958 0.1568759
+##       APP_N Bcatenin_N    SOD1_N    MTOR_N     P38_N   pMTOR_N   DSCR1_N
+## 1 0.4539098   3.037621 0.3695096 0.4585385 0.3353358 0.8251920 0.5769155
+## 2 0.4309403   2.921882 0.3422793 0.4235599 0.3248347 0.7617176 0.5450973
+## 3 0.4231873   2.944136 0.3436962 0.4250048 0.3248517 0.7570308 0.5436197
+## 4 0.4106149   2.500204 0.3445093 0.4292113 0.3301208 0.7469798 0.5467626
+## 5 0.3985498   2.456560 0.3291258 0.4087552 0.3134148 0.6919565 0.5368605
+## 6 0.3910472   2.467133 0.3275978 0.4044899 0.2962764 0.6744186 0.5397231
+##     AMPKA_N    NR2B_N   pNUMB_N  RAPTOR_N   TIAM1_N  pP70S6_N    NUMB_N
+## 1 0.4480993 0.5862714 0.3947213 0.3395706 0.4828639 0.2941698 0.1821505
+## 2 0.4208761 0.5450973 0.3682546 0.3219592 0.4545193 0.2764306 0.1820863
+## 3 0.4046298 0.5529941 0.3638799 0.3130859 0.4471972 0.2566482 0.1843877
+## 4 0.3868603 0.5478485 0.3667707 0.3284919 0.4426497 0.3985340 0.1617677
+## 5 0.3608164 0.5128240 0.3515510 0.3122063 0.4190949 0.3934470 0.1602002
+## 6 0.3542143 0.5143164 0.3472241 0.3031321 0.4128243 0.3825783 0.1623303
+##     P70S6_N  pGSK3B_N  pPKCG_N    CDK5_N      S6_N ADARB1_N AcetylH3K9_N
+## 1 0.8427252 0.1926084 1.443091 0.2947000 0.3546045 1.339070    0.1701188
+## 2 0.8476146 0.1948153 1.439460 0.2940598 0.3545483 1.306323    0.1714271
+## 3 0.8561658 0.2007373 1.524364 0.3018807 0.3860868 1.279600    0.1854563
+## 4 0.7602335 0.1841694 1.612382 0.2963818 0.2906795 1.198765    0.1597991
+## 5 0.7681129 0.1857183 1.645807 0.2968294 0.3093450 1.206995    0.1646503
+## 6 0.7796946 0.1867930 1.634615 0.2880373 0.3323671 1.123445    0.1756929
+##      RRP1_N     BAX_N     ARC_N   ERBB4_N    nNOS_N     Tau_N    GFAP_N
+## 1 0.1591024 0.1888517 0.1063052 0.1449893 0.1766677 0.1251904 0.1152909
+## 2 0.1581289 0.1845700 0.1065922 0.1504709 0.1783090 0.1342751 0.1182345
+## 3 0.1486963 0.1905322 0.1083031 0.1453302 0.1762129 0.1325604 0.1177602
+## 4 0.1661123 0.1853235 0.1031838 0.1406558 0.1638042 0.1232096 0.1174394
+## 5 0.1606870 0.1882214 0.1047838 0.1419830 0.1677096 0.1368377 0.1160478
+## 6 0.1505939 0.1838235 0.1064762 0.1395645 0.1748445 0.1305147 0.1152432
+##     GluR3_N   GluR4_N    IL1B_N   P3525_N pCASP9_N  PSD95_N    SNCA_N
+## 1 0.2280435 0.1427556 0.4309575 0.2475378 1.603310 2.014875 0.1082343
+## 2 0.2380731 0.1420366 0.4571562 0.2576322 1.671738 2.004605 0.1097485
+## 3 0.2448173 0.1424450 0.5104723 0.2553430 1.663550 2.016831 0.1081962
+## 4 0.2349467 0.1450682 0.4309959 0.2511031 1.484624 1.957233 0.1198832
+## 5 0.2555277 0.1408705 0.4812265 0.2517730 1.534835 2.009109 0.1195244
+## 6 0.2368495 0.1364536 0.4785775 0.2444853 1.507777 2.003535 0.1206872
+##   Ubiquitin_N pGSK3B_Tyr216_N     SHH_N     BAD_N BCL2_N     pS6_N   pCFOS_N
+## 1   1.0449792       0.8315565 0.1888517 0.1226520     NA 0.1063052 0.1083359
+## 2   1.0098831       0.8492704 0.2004036 0.1166822     NA 0.1065922 0.1043154
+## 3   0.9968476       0.8467087 0.1936845 0.1185082     NA 0.1083031 0.1062193
+## 4   0.9902247       0.8332768 0.1921119 0.1327812     NA 0.1031838 0.1112620
+## 5   0.9977750       0.8786678 0.2056042 0.1299541     NA 0.1047838 0.1106939
+## 6   0.9201782       0.8436793 0.1904695 0.1315752     NA 0.1064762 0.1094457
+##       SYP_N H3AcK18_N    EGR1_N  H3MeK4_N   CaNA_N Genotype Treatment Behavior
+## 1 0.4270992 0.1147832 0.1317900 0.1281856 1.675652  Control Memantine      C/S
+## 2 0.4415813 0.1119735 0.1351030 0.1311187 1.743610  Control Memantine      C/S
+## 3 0.4357769 0.1118829 0.1333618 0.1274311 1.926427  Control Memantine      C/S
+## 4 0.3916910 0.1304053 0.1474442 0.1469011 1.700563  Control Memantine      C/S
+## 5 0.4341538 0.1184814 0.1403143 0.1483799 1.839730  Control Memantine      C/S
+## 6 0.4398331 0.1166572 0.1407664 0.1421804 1.816389  Control Memantine      C/S
+##    class
+## 1 c-CS-m
+## 2 c-CS-m
+## 3 c-CS-m
+## 4 c-CS-m
+## 5 c-CS-m
+## 6 c-CS-m</code></pre>
+<p>Esses dados podem ser baixados do seguinte endereço:<br />
+<a href="https://archive.ics.uci.edu/dataset/342/mice+protein+expression" class="uri">https://archive.ics.uci.edu/dataset/342/mice+protein+expression</a><br />
+<span class="citation">(<a href="#ref-misc_mice_protein_expression_342">Higuera and Cios 2015</a>)</span></p>
+<p>Podemos selecionar algumas colunas e criar um objeto ggplot:</p>
+<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="gráficos.html#cb211-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> dados2 <span class="sc">%&gt;%</span> </span>
+<span id="cb211-2"><a href="gráficos.html#cb211-2" tabindex="-1"></a>  <span class="fu">select</span>(DYRK1A_N<span class="sc">:</span>pAKT_N,Genotype<span class="sc">:</span>class)<span class="sc">%&gt;%</span></span>
+<span id="cb211-3"><a href="gráficos.html#cb211-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(DYRK1A_N, ITSN1_N, <span class="at">color =</span> Genotype))</span></code></pre></div>
+<p>E criar um gráfico de dispersão:</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="gráficos.html#cb212-1" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.7</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20dispersao-1.png" width="672" /></p>
+<p>Podemos mudar as escalas dos eixos x e y. Por exemplo, vamos usar uma escala logarítmica (log na base 10):</p>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="gráficos.html#cb213-1" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb213-2"><a href="gráficos.html#cb213-2" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
+<span id="cb213-3"><a href="gráficos.html#cb213-3" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20scale_x-1.png" width="672" /></p>
+</div>
+<div id="histogramas-1" class="section level3 hasAnchor" number="4.2.3">
+<h3><span class="header-section-number">4.2.3</span> Histogramas<a href="gráficos.html#histogramas-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Criando um objeto ggplot:</p>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="gráficos.html#cb214-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> dados2 <span class="sc">%&gt;%</span> </span>
+<span id="cb214-2"><a href="gráficos.html#cb214-2" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> DYRK1A_N))</span></code></pre></div>
+<p>Histograma básico:</p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="gráficos.html#cb215-1" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20geom_histogram%202-1.png" width="672" /></p>
+<p>Personalizando a cor de preenchimento, cor da linha e legendas:</p>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="gráficos.html#cb216-1" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.1</span>, <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb216-2"><a href="gráficos.html#cb216-2" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;expressão&quot;</span>) <span class="sc">+</span></span>
+<span id="cb216-3"><a href="gráficos.html#cb216-3" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Histograma&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20geom_histogram%203-1.png" width="672" /></p>
+</div>
+<div id="density-plot" class="section level3 hasAnchor" number="4.2.4">
+<h3><span class="header-section-number">4.2.4</span> Density plot<a href="gráficos.html#density-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Um gráfico de densidade é uma representação da distribuição de uma variável numérica. É uma versão suavizada do histograma e é usado no mesmo conceito.</p>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="gráficos.html#cb217-1" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_density</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20geom_density-1.png" width="672" /></p>
+<p>Podemos usar cores:</p>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="gráficos.html#cb218-1" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_density</span>(<span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20geom_density%202-1.png" width="672" /></p>
+<p>Transparência</p>
+<div class="sourceCode" id="cb219"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb219-1"><a href="gráficos.html#cb219-1" tabindex="-1"></a><span class="fu">ggplot</span>(dados2, <span class="fu">aes</span>(EGR1_N, <span class="at">fill =</span> class, <span class="at">colour =</span> class)) <span class="sc">+</span></span>
+<span id="cb219-2"><a href="gráficos.html#cb219-2" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20geom_density%203-1.png" width="672" /></p>
+</div>
+<div id="boxplot-1" class="section level3 hasAnchor" number="4.2.5">
+<h3><span class="header-section-number">4.2.5</span> Boxplot<a href="gráficos.html#boxplot-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>O boxplot é um gráfico onde a parte central contém os valores que estão entre o primeiro quartil e o terceiro quartil. As hastes inferiores e superiores se estendem, respectivamente, do primeiro quartil até o menor valor, limite inferior, e do terceiro quartil até o maior valor.</p>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="gráficos.html#cb220-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> dados2 <span class="sc">%&gt;%</span> </span>
+<span id="cb220-2"><a href="gráficos.html#cb220-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> ADARB1_N , <span class="at">group=</span>class, <span class="at">color=</span>class))</span>
+<span id="cb220-3"><a href="gráficos.html#cb220-3" tabindex="-1"></a></span>
+<span id="cb220-4"><a href="gráficos.html#cb220-4" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20geom_boxplot-1.png" width="672" /></p>
+</div>
+<div id="gráfico-q-q" class="section level3 hasAnchor" number="4.2.6">
+<h3><span class="header-section-number">4.2.6</span> Gráfico Q-Q<a href="gráficos.html#gráfico-q-q" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>O gráfico Q-Q é um gráfico de probabilidades, usado para comparar duas distribuições de probabilidade, traçando seus quantis uns contra os outros.</p>
+<p>QQ-plot básico no ggplot2:</p>
+<div class="sourceCode" id="cb221"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb221-1"><a href="gráficos.html#cb221-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> dados2 <span class="sc">%&gt;%</span> </span>
+<span id="cb221-2"><a href="gráficos.html#cb221-2" tabindex="-1"></a>  <span class="fu">select</span>(DYRK1A_N<span class="sc">:</span>pAKT_N,Genotype<span class="sc">:</span>class)<span class="sc">%&gt;%</span></span>
+<span id="cb221-3"><a href="gráficos.html#cb221-3" tabindex="-1"></a>  <span class="fu">filter</span>(Genotype <span class="sc">==</span><span class="st">&quot;Ts65Dn&quot;</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb221-4"><a href="gráficos.html#cb221-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">sample =</span> DYRK1A_N))</span>
+<span id="cb221-5"><a href="gráficos.html#cb221-5" tabindex="-1"></a></span>
+<span id="cb221-6"><a href="gráficos.html#cb221-6" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_qq</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20geom_qq-1.png" width="672" /></p>
+<p>Podemos fazer um QQ-plot contra uma distribuição normal com a mesma média e desvio padrão:</p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="gráficos.html#cb222-1" tabindex="-1"></a>params <span class="ot">&lt;-</span> dados2 <span class="sc">%&gt;%</span> </span>
+<span id="cb222-2"><a href="gráficos.html#cb222-2" tabindex="-1"></a>  <span class="fu">select</span>(DYRK1A_N<span class="sc">:</span>pAKT_N,Genotype<span class="sc">:</span>class)<span class="sc">%&gt;%</span></span>
+<span id="cb222-3"><a href="gráficos.html#cb222-3" tabindex="-1"></a>  <span class="fu">filter</span>(Genotype <span class="sc">==</span><span class="st">&quot;Ts65Dn&quot;</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb222-4"><a href="gráficos.html#cb222-4" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(DYRK1A_N, <span class="at">na.rm =</span> T), <span class="at">sd =</span> <span class="fu">sd</span>(DYRK1A_N, <span class="at">na.rm=</span>T))</span>
+<span id="cb222-5"><a href="gráficos.html#cb222-5" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_qq</span>(<span class="at">dparams =</span> params) <span class="sc">+</span></span>
+<span id="cb222-6"><a href="gráficos.html#cb222-6" tabindex="-1"></a>  <span class="fu">geom_abline</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20geom_qq%202-1.png" width="672" /></p>
+</div>
+<div id="figura-com-vários-gráficos" class="section level3 hasAnchor" number="4.2.7">
+<h3><span class="header-section-number">4.2.7</span> Figura com vários gráficos<a href="gráficos.html#figura-com-vários-gráficos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para juntar vários gráficos do ggplot2 em uma imagem usamos o pacote gridExtra</p>
+<p>Vamos primeiro criar os gráficos e armazer em p1, p2, p3:</p>
+<div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="gráficos.html#cb223-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> dados2 <span class="sc">%&gt;%</span> </span>
+<span id="cb223-2"><a href="gráficos.html#cb223-2" tabindex="-1"></a>  <span class="fu">select</span>(DYRK1A_N<span class="sc">:</span>pAKT_N,Genotype<span class="sc">:</span>class)<span class="sc">%&gt;%</span></span>
+<span id="cb223-3"><a href="gráficos.html#cb223-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> DYRK1A_N))</span>
+<span id="cb223-4"><a href="gráficos.html#cb223-4" tabindex="-1"></a></span>
+<span id="cb223-5"><a href="gráficos.html#cb223-5" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.1</span>, <span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb223-6"><a href="gráficos.html#cb223-6" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">&quot;red&quot;</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb223-7"><a href="gráficos.html#cb223-7" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> p <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.3</span>, <span class="at">fill =</span> <span class="st">&quot;green&quot;</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>)</span></code></pre></div>
+<p>Então usamos o pacote gridExtra para compor a imagem. Nesse exemplo, vamos dispor as imagens em uma linha e três colunas:</p>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="gráficos.html#cb224-1" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb224-2"><a href="gráficos.html#cb224-2" tabindex="-1"></a><span class="fu">grid.arrange</span>(p1, p2, p3, <span class="at">ncol =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20gridextra%202-1.png" width="672" /></p>
+</div>
+<div id="ajustes-de-posição" class="section level3 hasAnchor" number="4.2.8">
+<h3><span class="header-section-number">4.2.8</span> Ajustes de Posição<a href="gráficos.html#ajustes-de-posição" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>position = “identity” irá colocar cada objeto na posição exata em que ele cairia no contexto do gráfico</p>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="gráficos.html#cb225-1" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="fu">aes</span>(class, <span class="at">fill=</span>Genotype),</span>
+<span id="cb225-2"><a href="gráficos.html#cb225-2" tabindex="-1"></a>             <span class="at">position=</span><span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20position-1.png" width="672" /></p>
+<p>position = “dodge” coloca objetos sobrepostos um ao lado do outro. Isto torna mais fácil a comparação de valores individuais</p>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="gráficos.html#cb226-1" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="fu">aes</span>(Genotype, <span class="at">fill=</span>class),</span>
+<span id="cb226-2"><a href="gráficos.html#cb226-2" tabindex="-1"></a>           <span class="at">position=</span><span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20position%202-1.png" width="672" /></p>
+<p>position = “fill” irá empilhar os elementos um sobre o outro, mas normalizando a altura. Isso é muito útil para comparar proporções entre os grupos</p>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="gráficos.html#cb227-1" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="fu">aes</span>(Genotype, <span class="at">fill=</span>class),</span>
+<span id="cb227-2"><a href="gráficos.html#cb227-2" tabindex="-1"></a>             <span class="at">position=</span><span class="st">&quot;fill&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20position%203-1.png" width="672" /></p>
+</div>
+<div id="geom-smooth" class="section level3 hasAnchor" number="4.2.9">
+<h3><span class="header-section-number">4.2.9</span> Geom Smooth<a href="gráficos.html#geom-smooth" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="gráficos.html#cb228-1" tabindex="-1"></a><span class="fu">ggplot</span>(dados2, <span class="fu">aes</span>(SNCA_N,EGR1_N)) <span class="sc">+</span></span>
+<span id="cb228-2"><a href="gráficos.html#cb228-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb228-3"><a href="gráficos.html#cb228-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">size =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20geom_smooth-1.png" width="672" /></p>
+<p>Para saber mais:<br />
+<span class="citation">Wickham, Çetinkaya-Rundel, and Grolemund (<a href="#ref-wickham2023r">2023</a>)</span> <span class="citation">Irizarry (<a href="#ref-irizarry2019introduction">2019</a>)</span>]</p>
+</div>
+</div>
+<div id="outros-pacotes-gráficos" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Outros pacotes gráficos<a href="gráficos.html#outros-pacotes-gráficos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Vamos carregar os dados e ativar os pacotes:</p>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="gráficos.html#cb229-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb229-2"><a href="gráficos.html#cb229-2" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
+<span id="cb229-3"><a href="gráficos.html#cb229-3" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
+<span id="cb229-4"><a href="gráficos.html#cb229-4" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb229-5"><a href="gráficos.html#cb229-5" tabindex="-1"></a>dados<span class="ot">&lt;-</span><span class="fu">read.xlsx</span>(<span class="st">&quot;dados/pinguim.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">1</span>, <span class="at">colNames =</span> T)</span>
+<span id="cb229-6"><a href="gráficos.html#cb229-6" tabindex="-1"></a><span class="fu">head</span>(dados)</span></code></pre></div>
+<pre><code>##   species    island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+## 1  Adelie Torgersen           39.1          18.7               181        3750
+## 2  Adelie Torgersen           39.5          17.4               186        3800
+## 3  Adelie Torgersen           40.3          18.0               195        3250
+## 4  Adelie Torgersen             NA            NA                NA          NA
+## 5  Adelie Torgersen           36.7          19.3               193        3450
+## 6  Adelie Torgersen           39.3          20.6               190        3650
+##      sex year
+## 1   male 2007
+## 2 female 2007
+## 3 female 2007
+## 4   &lt;NA&gt; 2007
+## 5 female 2007
+## 6   male 2007</code></pre>
+<div id="usando-as-cores" class="section level3 hasAnchor" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> Usando as cores<a href="gráficos.html#usando-as-cores" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Primeiro vamos fazer um gráfico, sem especificar quais cores usar:</p>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="gráficos.html#cb231-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> dados <span class="sc">%&gt;%</span> </span>
+<span id="cb231-2"><a href="gráficos.html#cb231-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> bill_length_mm, <span class="at">group=</span>species, <span class="at">color=</span>species))</span>
+<span id="cb231-3"><a href="gráficos.html#cb231-3" tabindex="-1"></a></span>
+<span id="cb231-4"><a href="gráficos.html#cb231-4" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20cores-1.png" width="672" /></p>
+<p>No ggplot2, é possível armazenar a paleta de cores em uma variável e usá-la posteriormente.</p>
+<p>Por exemplo:</p>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="gráficos.html#cb232-1" tabindex="-1"></a>cbPalette <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;#999999&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>, <span class="st">&quot;#009E73&quot;</span>, <span class="st">&quot;#F0E442&quot;</span>, <span class="st">&quot;#0072B2&quot;</span>, <span class="st">&quot;#D55E00&quot;</span>, <span class="st">&quot;#CC79A7&quot;</span>)</span></code></pre></div>
+<p>Então podemos usar essas cores no gráfico:</p>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="gráficos.html#cb233-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> dados <span class="sc">%&gt;%</span> </span>
+<span id="cb233-2"><a href="gráficos.html#cb233-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> bill_length_mm, <span class="at">group=</span>species, <span class="at">fill=</span>species))</span>
+<span id="cb233-3"><a href="gráficos.html#cb233-3" tabindex="-1"></a></span>
+<span id="cb233-4"><a href="gráficos.html#cb233-4" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb233-5"><a href="gráficos.html#cb233-5" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span>cbPalette)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20cores%203-1.png" width="672" /></p>
+<p>Para o preenchimento adicionamos:</p>
+<p>scale_fill_manual(values=cbPalette)</p>
+<p>Para cor da linha ou pontos adicionamos:</p>
+<p>scale_colour_manual(values=cbPalette)</p>
+<p>Também podemos usar outras escalas de cores, como as retiradas do pacote RColorBrewer</p>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="gráficos.html#cb234-1" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb234-2"><a href="gráficos.html#cb234-2" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">&quot;Set1&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20cores%204-1.png" width="672" /></p>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="gráficos.html#cb235-1" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb235-2"><a href="gráficos.html#cb235-2" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">&quot;Oranges&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20cores%204-2.png" width="672" /></p>
+<p>Podem consultar as opções em: <a href="https://r-graph-gallery.com/38-rcolorbrewers-palettes.html" class="uri">https://r-graph-gallery.com/38-rcolorbrewers-palettes.html</a></p>
+</div>
+<div id="análise-gráfica-exploratória" class="section level3 hasAnchor" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> Análise gráfica exploratória<a href="gráficos.html#análise-gráfica-exploratória" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="gráficos.html#cb236-1" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb236-2"><a href="gráficos.html#cb236-2" tabindex="-1"></a>dados2<span class="ot">&lt;-</span><span class="fu">select</span>(dados, species, bill_length_mm<span class="sc">:</span>body_mass_g)</span></code></pre></div>
+<p>Para isso usaremos o pacote GGally, que é uma extensão para o ggplot2.</p>
+<p>Vamos usar a função ggpairs e selecionar uma variável categórica para color:</p>
+<div class="sourceCode" id="cb237"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb237-1"><a href="gráficos.html#cb237-1" tabindex="-1"></a><span class="fu">ggpairs</span>(dados2, <span class="fu">aes</span>(<span class="at">color =</span> species))</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20ggally%202-1.png" width="672" /></p>
+</div>
+<div id="ggplot2-mais-parâmetros" class="section level3 hasAnchor" number="4.3.3">
+<h3><span class="header-section-number">4.3.3</span> GGPLOT2: mais parâmetros<a href="gráficos.html#ggplot2-mais-parâmetros" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Vamos usar outro geom, o geom_segment:</p>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="gráficos.html#cb238-1" tabindex="-1"></a><span class="fu">ggplot</span>(dados, <span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm , <span class="at">y=</span>bill_depth_mm )) <span class="sc">+</span></span>
+<span id="cb238-2"><a href="gráficos.html#cb238-2" tabindex="-1"></a>  <span class="fu">geom_segment</span>( <span class="fu">aes</span>(<span class="at">x=</span>bill_length_mm , <span class="at">xend=</span>bill_length_mm , <span class="at">y=</span><span class="dv">10</span>, <span class="at">yend=</span>bill_depth_mm), <span class="at">color=</span><span class="st">&quot;grey&quot;</span>) <span class="sc">+</span></span>
+<span id="cb238-3"><a href="gráficos.html#cb238-3" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">&quot;orange&quot;</span>, <span class="at">size=</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb238-4"><a href="gráficos.html#cb238-4" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span></span>
+<span id="cb238-5"><a href="gráficos.html#cb238-5" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb238-6"><a href="gráficos.html#cb238-6" tabindex="-1"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb238-7"><a href="gráficos.html#cb238-7" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb238-8"><a href="gráficos.html#cb238-8" tabindex="-1"></a>    <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb238-9"><a href="gráficos.html#cb238-9" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb238-10"><a href="gráficos.html#cb238-10" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb238-11"><a href="gráficos.html#cb238-11" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Value of Y&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20geom_segment-1.png" width="672" /></p>
+</div>
+<div id="diagrama-de-venn" class="section level3 hasAnchor" number="4.3.4">
+<h3><span class="header-section-number">4.3.4</span> Diagrama de Venn<a href="gráficos.html#diagrama-de-venn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Vamos criar uma lista com dados aleatórios</p>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="gráficos.html#cb239-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">654925</span>)            </span>
+<span id="cb239-2"><a href="gráficos.html#cb239-2" tabindex="-1"></a></span>
+<span id="cb239-3"><a href="gráficos.html#cb239-3" tabindex="-1"></a>list_venn <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">A =</span> <span class="fu">sort</span>(<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">20</span>)),</span>
+<span id="cb239-4"><a href="gráficos.html#cb239-4" tabindex="-1"></a>                  <span class="at">B =</span> <span class="fu">sort</span>(<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">20</span>)),</span>
+<span id="cb239-5"><a href="gráficos.html#cb239-5" tabindex="-1"></a>                  <span class="at">C =</span> <span class="fu">sort</span>(<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">20</span>)),</span>
+<span id="cb239-6"><a href="gráficos.html#cb239-6" tabindex="-1"></a>                  <span class="at">D =</span> <span class="fu">sort</span>(<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">20</span>)))</span>
+<span id="cb239-7"><a href="gráficos.html#cb239-7" tabindex="-1"></a><span class="fu">head</span>(list_venn)  </span></code></pre></div>
+<pre><code>## $A
+##  [1]  1  3  4 11 19 20 22 32 34 36 47 48 58 59 60 64 69 72 97 98
+## 
+## $B
+##  [1]  4 17 18 23 32 33 34 41 45 52 53 56 58 59 66 67 74 78 91 92
+## 
+## $C
+##  [1]  3 10 28 31 34 38 46 47 51 57 58 65 67 70 72 74 80 89 94 97
+## 
+## $D
+##  [1]  8 11 14 15 17 18 19 33 34 47 51 59 66 68 73 77 78 82 86 87</code></pre>
+<p>Carregar o pacote ggvenn e fazer o diagrama com A e C:</p>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="gráficos.html#cb241-1" tabindex="-1"></a><span class="fu">library</span>(ggvenn)</span>
+<span id="cb241-2"><a href="gráficos.html#cb241-2" tabindex="-1"></a><span class="fu">ggvenn</span>(list_venn, <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;C&quot;</span>))   </span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20venn%202-1.png" width="672" /></p>
+<p>Fazer o diagrama com A, C e D:</p>
+<div class="sourceCode" id="cb242"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb242-1"><a href="gráficos.html#cb242-1" tabindex="-1"></a><span class="fu">ggvenn</span>(list_venn, <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;D&quot;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20venn%203-1.png" width="672" /></p>
+<p>Com todos os dados:</p>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="gráficos.html#cb243-1" tabindex="-1"></a><span class="fu">ggvenn</span>(list_venn) </span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20venn%204-1.png" width="672" /></p>
+</div>
+<div id="diagramas" class="section level3 hasAnchor" number="4.3.5">
+<h3><span class="header-section-number">4.3.5</span> Diagramas<a href="gráficos.html#diagramas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Muitas vezes precisamos fazer um diagrama, ou fluxograma, para mostrar as etapas da pesquisa e podemos fazer isso usando o pacote DiagrammeR</p>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="gráficos.html#cb244-1" tabindex="-1"></a><span class="fu">library</span>(DiagrammeR)</span>
+<span id="cb244-2"><a href="gráficos.html#cb244-2" tabindex="-1"></a></span>
+<span id="cb244-3"><a href="gráficos.html#cb244-3" tabindex="-1"></a></span>
+<span id="cb244-4"><a href="gráficos.html#cb244-4" tabindex="-1"></a>figura1<span class="ot">&lt;-</span>DiagrammeR<span class="sc">::</span><span class="fu">grViz</span>(<span class="st">&quot;</span></span>
+<span id="cb244-5"><a href="gráficos.html#cb244-5" tabindex="-1"></a><span class="st">digraph a_nice_graph {</span></span>
+<span id="cb244-6"><a href="gráficos.html#cb244-6" tabindex="-1"></a><span class="st">  node [fontname = Helvetica, color = green]</span></span>
+<span id="cb244-7"><a href="gráficos.html#cb244-7" tabindex="-1"></a><span class="st">  a [label = &#39;Ratos&#39;, color =blue, fontname=Impact]</span></span>
+<span id="cb244-8"><a href="gráficos.html#cb244-8" tabindex="-1"></a><span class="st">  b [label = &#39;caso, n = 20&#39;]</span></span>
+<span id="cb244-9"><a href="gráficos.html#cb244-9" tabindex="-1"></a><span class="st">  c [label = &#39;controle, n = 20&#39;]</span></span>
+<span id="cb244-10"><a href="gráficos.html#cb244-10" tabindex="-1"></a><span class="st">  d [label = &#39;medicamento&#39;]</span></span>
+<span id="cb244-11"><a href="gráficos.html#cb244-11" tabindex="-1"></a><span class="st">  e [label = &#39;salina&#39;]</span></span>
+<span id="cb244-12"><a href="gráficos.html#cb244-12" tabindex="-1"></a><span class="st">  f [label = &#39;30 days&#39;]</span></span>
+<span id="cb244-13"><a href="gráficos.html#cb244-13" tabindex="-1"></a><span class="st">  g [label = &#39;córtex&#39;, color= blue]</span></span>
+<span id="cb244-14"><a href="gráficos.html#cb244-14" tabindex="-1"></a><span class="st">  h [label = &#39;hipocampo&#39; , color= blue]</span></span>
+<span id="cb244-15"><a href="gráficos.html#cb244-15" tabindex="-1"></a><span class="st">  i [label = &#39;fígado&#39;, color =blue]</span></span>
+<span id="cb244-16"><a href="gráficos.html#cb244-16" tabindex="-1"></a><span class="st">  j [label = &#39;atividade enzimática&#39;, color =red,fontname=Impact]</span></span>
+<span id="cb244-17"><a href="gráficos.html#cb244-17" tabindex="-1"></a><span class="st">  # edge definitions with the node IDs</span></span>
+<span id="cb244-18"><a href="gráficos.html#cb244-18" tabindex="-1"></a><span class="st">  a -&gt; {b c}</span></span>
+<span id="cb244-19"><a href="gráficos.html#cb244-19" tabindex="-1"></a><span class="st">  b -&gt; d</span></span>
+<span id="cb244-20"><a href="gráficos.html#cb244-20" tabindex="-1"></a><span class="st">  c -&gt; e</span></span>
+<span id="cb244-21"><a href="gráficos.html#cb244-21" tabindex="-1"></a><span class="st">  {d e} -&gt; f</span></span>
+<span id="cb244-22"><a href="gráficos.html#cb244-22" tabindex="-1"></a><span class="st">  f -&gt; {g h i}</span></span>
+<span id="cb244-23"><a href="gráficos.html#cb244-23" tabindex="-1"></a><span class="st">  {g h i} -&gt; j</span></span>
+<span id="cb244-24"><a href="gráficos.html#cb244-24" tabindex="-1"></a><span class="st">}</span></span>
+<span id="cb244-25"><a href="gráficos.html#cb244-25" tabindex="-1"></a><span class="st">&quot;</span>)</span>
+<span id="cb244-26"><a href="gráficos.html#cb244-26" tabindex="-1"></a>figura1</span></code></pre></div>
+<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-6cfb651ab92997b817a1" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-6cfb651ab92997b817a1">{"x":{"diagram":"\ndigraph a_nice_graph {\n  node [fontname = Helvetica, color = green]\n  a [label = \"Ratos\", color =blue, fontname=Impact]\n  b [label = \"caso, n = 20\"]\n  c [label = \"controle, n = 20\"]\n  d [label = \"medicamento\"]\n  e [label = \"salina\"]\n  f [label = \"30 days\"]\n  g [label = \"córtex\", color= blue]\n  h [label = \"hipocampo\" , color= blue]\n  i [label = \"fígado\", color =blue]\n  j [label = \"atividade enzimática\", color =red,fontname=Impact]\n  # edge definitions with the node IDs\n  a -> {b c}\n  b -> d\n  c -> e\n  {d e} -> f\n  f -> {g h i}\n  {g h i} -> j\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p>Para salvar esse diagrama é preciso carregar mais 2 pacotes: rsvg e DiagrammeRsvg</p>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="gráficos.html#cb245-1" tabindex="-1"></a><span class="fu">library</span>(rsvg)</span>
+<span id="cb245-2"><a href="gráficos.html#cb245-2" tabindex="-1"></a><span class="fu">library</span>(DiagrammeRsvg)</span>
+<span id="cb245-3"><a href="gráficos.html#cb245-3" tabindex="-1"></a>figura1 <span class="ot">=</span> DiagrammeRsvg<span class="sc">::</span><span class="fu">export_svg</span>(figura1)</span>
+<span id="cb245-4"><a href="gráficos.html#cb245-4" tabindex="-1"></a>figura1 <span class="ot">=</span> <span class="fu">charToRaw</span>(figura1) <span class="co"># flatten</span></span>
+<span id="cb245-5"><a href="gráficos.html#cb245-5" tabindex="-1"></a><span class="fu">rsvg_png</span>(figura1, <span class="at">file =</span> <span class="st">&quot;figura1b.png&quot;</span>, <span class="at">width =</span> <span class="dv">5961</span>, <span class="at">height =</span> <span class="dv">7016</span>)</span></code></pre></div>
+</div>
+<div id="outra-opção-é-o-pacote-ggflowchart" class="section level3 hasAnchor" number="4.3.6">
+<h3><span class="header-section-number">4.3.6</span> Outra opção é o pacote ggflowchart<a href="gráficos.html#outra-opção-é-o-pacote-ggflowchart" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para usar esse pacote tem um tutorial no endereço abaixo:<br />
+(<a href="https://nrennie.rbind.io/blog/introducing-ggflowchart/" class="uri">https://nrennie.rbind.io/blog/introducing-ggflowchart/</a>)</p>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="gráficos.html#cb246-1" tabindex="-1"></a><span class="fu">library</span>(ggflowchart)</span>
+<span id="cb246-2"><a href="gráficos.html#cb246-2" tabindex="-1"></a>data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(<span class="at">from =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;F&quot;</span>),</span>
+<span id="cb246-3"><a href="gráficos.html#cb246-3" tabindex="-1"></a>                       <span class="at">to =</span> <span class="fu">c</span>(<span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;D&quot;</span>, <span class="st">&quot;E&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;G&quot;</span>))</span>
+<span id="cb246-4"><a href="gráficos.html#cb246-4" tabindex="-1"></a></span>
+<span id="cb246-5"><a href="gráficos.html#cb246-5" tabindex="-1"></a><span class="fu">ggflowchart</span>(data)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20diagrama%204-1.png" width="672" /></p>
+<p>Podemos usar os seguintes parâmetros:</p>
+<ul>
+<li>fill = “white”. A cor de preenchimento.</li>
+<li>colour = “black”. A cor da caixa de texto.</li>
+<li>text_colour = “black”. A cor do texto.</li>
+<li>text_size = 3.88. O tamanho do texto.</li>
+<li>arrow_colour = “black”. A cor das flechas.</li>
+<li>arrow_size = 0.3. O tamanho das flechas.</li>
+<li>family = “sans”. A fonte do texto.</li>
+<li>x_nudge = 0.35. A largura da caixa de texto.</li>
+<li>y_nudge = 0.25. A altura da caica de texto.</li>
+<li>horizontal = FALSE. A direção do fluxograma.</li>
+</ul>
+<p>Alguns exemplos:</p>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="gráficos.html#cb247-1" tabindex="-1"></a><span class="fu">ggflowchart</span>(data,</span>
+<span id="cb247-2"><a href="gráficos.html#cb247-2" tabindex="-1"></a>            <span class="at">colour =</span> <span class="st">&quot;blue&quot;</span>,</span>
+<span id="cb247-3"><a href="gráficos.html#cb247-3" tabindex="-1"></a>            <span class="at">text_colour =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb247-4"><a href="gráficos.html#cb247-4" tabindex="-1"></a>            <span class="at">arrow_colour =</span> <span class="st">&quot;green&quot;</span>,</span>
+<span id="cb247-5"><a href="gráficos.html#cb247-5" tabindex="-1"></a>            <span class="at">family =</span> <span class="st">&quot;serif&quot;</span>,</span>
+<span id="cb247-6"><a href="gráficos.html#cb247-6" tabindex="-1"></a>            <span class="at">x_nudge =</span> <span class="fl">0.4</span>,</span>
+<span id="cb247-7"><a href="gráficos.html#cb247-7" tabindex="-1"></a>            <span class="at">y_nudge =</span> <span class="fl">0.2</span>,</span>
+<span id="cb247-8"><a href="gráficos.html#cb247-8" tabindex="-1"></a>            <span class="at">arrow_size =</span> <span class="fl">0.3</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20diagrama%205-1.png" width="672" /></p>
+<p>Com fluxograma na horizontal:</p>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="gráficos.html#cb248-1" tabindex="-1"></a><span class="fu">ggflowchart</span>(data,</span>
+<span id="cb248-2"><a href="gráficos.html#cb248-2" tabindex="-1"></a>            <span class="at">colour =</span> <span class="st">&quot;blue&quot;</span>,</span>
+<span id="cb248-3"><a href="gráficos.html#cb248-3" tabindex="-1"></a>            <span class="at">text_colour =</span> <span class="st">&quot;black&quot;</span>,</span>
+<span id="cb248-4"><a href="gráficos.html#cb248-4" tabindex="-1"></a>            <span class="at">arrow_colour =</span> <span class="st">&quot;orange&quot;</span>,</span>
+<span id="cb248-5"><a href="gráficos.html#cb248-5" tabindex="-1"></a>            <span class="at">family =</span> <span class="st">&quot;serif&quot;</span>,</span>
+<span id="cb248-6"><a href="gráficos.html#cb248-6" tabindex="-1"></a>            <span class="at">x_nudge =</span> <span class="fl">0.4</span>,</span>
+<span id="cb248-7"><a href="gráficos.html#cb248-7" tabindex="-1"></a>            <span class="at">y_nudge =</span> <span class="fl">0.2</span>,</span>
+<span id="cb248-8"><a href="gráficos.html#cb248-8" tabindex="-1"></a>            <span class="at">arrow_size =</span> <span class="fl">0.3</span>,</span>
+<span id="cb248-9"><a href="gráficos.html#cb248-9" tabindex="-1"></a>            <span class="at">horizontal =</span> T)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20diagrama%206-1.png" width="672" /></p>
+<p>Utilizando tipos diferentes:</p>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="gráficos.html#cb249-1" tabindex="-1"></a>node_data <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb249-2"><a href="gráficos.html#cb249-2" tabindex="-1"></a>  <span class="at">name =</span> <span class="fu">c</span>(<span class="st">&quot;A&quot;</span>, <span class="st">&quot;B&quot;</span>, <span class="st">&quot;C&quot;</span>, <span class="st">&quot;D&quot;</span>, <span class="st">&quot;E&quot;</span>, <span class="st">&quot;F&quot;</span>, <span class="st">&quot;G&quot;</span>),</span>
+<span id="cb249-3"><a href="gráficos.html#cb249-3" tabindex="-1"></a>  <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;Type 1&quot;</span>, <span class="st">&quot;Type 1&quot;</span>, <span class="st">&quot;Type 1&quot;</span>, <span class="st">&quot;Type 1&quot;</span>, </span>
+<span id="cb249-4"><a href="gráficos.html#cb249-4" tabindex="-1"></a>           <span class="st">&quot;Type 2&quot;</span>, <span class="st">&quot;Type 2&quot;</span>, <span class="st">&quot;Type 2&quot;</span>)</span>
+<span id="cb249-5"><a href="gráficos.html#cb249-5" tabindex="-1"></a>)</span>
+<span id="cb249-6"><a href="gráficos.html#cb249-6" tabindex="-1"></a><span class="fu">ggflowchart</span>(data, node_data, <span class="at">fill =</span> type)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20diagrama%207-1.png" width="672" /></p>
+</div>
+<div id="datas-e-séries-temporais" class="section level3 hasAnchor" number="4.3.7">
+<h3><span class="header-section-number">4.3.7</span> Datas e séries temporais<a href="gráficos.html#datas-e-séries-temporais" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Vamos plotar uma variável (peso) ao longo do tempo.
+Primeiro vamos carregar os dados:</p>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="gráficos.html#cb250-1" tabindex="-1"></a>dados3<span class="ot">&lt;-</span><span class="fu">read.xlsx</span>(<span class="st">&quot;dados/peso.xlsx&quot;</span>, <span class="at">sheet=</span><span class="dv">1</span>,<span class="at">colNames =</span> T)</span>
+<span id="cb250-2"><a href="gráficos.html#cb250-2" tabindex="-1"></a><span class="fu">head</span>(dados3)</span></code></pre></div>
+<pre><code>##   ID    grupo tempo peso
+## 1  1 controle    t1  270
+## 2  2 controle    t1  287
+## 3  3 controle    t1  279
+## 4  4 controle    t1  286
+## 5  5 controle    t1  275
+## 6  6 controle    t1  282</code></pre>
+<p>Nesse arquivo temos a variável grupo (caso e controle), uma variável tempo (t1 a t6) e a variável peso. São 2 grupos de animais, que foram pesados em 6 momentos.<br />
+Agora ativaremos uma função para organizar os dados para poder fazer o gráfico:</p>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="gráficos.html#cb252-1" tabindex="-1"></a>data_summary <span class="ot">&lt;-</span> <span class="cf">function</span>(data, varname, groupnames){</span>
+<span id="cb252-2"><a href="gráficos.html#cb252-2" tabindex="-1"></a>  <span class="fu">require</span>(plyr)</span>
+<span id="cb252-3"><a href="gráficos.html#cb252-3" tabindex="-1"></a>  summary_func <span class="ot">&lt;-</span> <span class="cf">function</span>(x, col){</span>
+<span id="cb252-4"><a href="gráficos.html#cb252-4" tabindex="-1"></a>    <span class="fu">c</span>(<span class="at">mean =</span> <span class="fu">mean</span>(x[[col]], <span class="at">na.rm=</span><span class="cn">TRUE</span>),</span>
+<span id="cb252-5"><a href="gráficos.html#cb252-5" tabindex="-1"></a>      <span class="at">sd =</span> <span class="fu">sd</span>(x[[col]], <span class="at">na.rm=</span><span class="cn">TRUE</span>))</span>
+<span id="cb252-6"><a href="gráficos.html#cb252-6" tabindex="-1"></a>  }</span>
+<span id="cb252-7"><a href="gráficos.html#cb252-7" tabindex="-1"></a>  data_sum<span class="ot">&lt;-</span><span class="fu">ddply</span>(data, groupnames, <span class="at">.fun=</span>summary_func,</span>
+<span id="cb252-8"><a href="gráficos.html#cb252-8" tabindex="-1"></a>                  varname)</span>
+<span id="cb252-9"><a href="gráficos.html#cb252-9" tabindex="-1"></a>  data_sum <span class="ot">&lt;-</span> <span class="fu">rename</span>(data_sum, <span class="fu">c</span>(<span class="st">&quot;mean&quot;</span> <span class="ot">=</span> varname))</span>
+<span id="cb252-10"><a href="gráficos.html#cb252-10" tabindex="-1"></a>  <span class="fu">return</span>(data_sum)</span>
+<span id="cb252-11"><a href="gráficos.html#cb252-11" tabindex="-1"></a>}</span></code></pre></div>
+<p>Agora que a função data_summary está ativa, vamos preparar os dados:</p>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="gráficos.html#cb253-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data_summary</span>(dados3, <span class="at">varname=</span><span class="st">&quot;peso&quot;</span>, </span>
+<span id="cb253-2"><a href="gráficos.html#cb253-2" tabindex="-1"></a>                   <span class="at">groupnames=</span><span class="fu">c</span>(<span class="st">&quot;grupo&quot;</span>, <span class="st">&quot;tempo&quot;</span>))</span>
+<span id="cb253-3"><a href="gráficos.html#cb253-3" tabindex="-1"></a></span>
+<span id="cb253-4"><a href="gráficos.html#cb253-4" tabindex="-1"></a>df</span></code></pre></div>
+<pre><code>##       grupo tempo     peso       sd
+## 1      caso    t1 287.1429 32.28207
+## 2      caso    t2 262.3571 13.78186
+## 3      caso    t3 265.5000 27.38262
+## 4      caso    t4 268.5714 26.69115
+## 5      caso    t5 293.7143 28.22554
+## 6      caso    t6 327.7857 36.65049
+## 7  controle    t1 294.0000 32.87011
+## 8  controle    t2 308.6000 37.88931
+## 9  controle    t3 330.2000 21.04915
+## 10 controle    t4 347.1000 20.14641
+## 11 controle    t5 375.1000 21.74320
+## 12 controle    t6 408.6000 17.94560</code></pre>
+<p>E finalmente o gráfico:</p>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="gráficos.html#cb255-1" tabindex="-1"></a>p<span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x=</span>tempo, <span class="at">y=</span>peso, <span class="at">group=</span>grupo, <span class="at">color=</span>grupo)) <span class="sc">+</span> </span>
+<span id="cb255-2"><a href="gráficos.html#cb255-2" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb255-3"><a href="gráficos.html#cb255-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb255-4"><a href="gráficos.html#cb255-4" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>peso<span class="sc">-</span>sd, <span class="at">ymax=</span>peso<span class="sc">+</span>sd), <span class="at">width=</span>.<span class="dv">2</span>,</span>
+<span id="cb255-5"><a href="gráficos.html#cb255-5" tabindex="-1"></a>                <span class="at">position=</span><span class="fu">position_dodge</span>(<span class="fl">0.05</span>))</span>
+<span id="cb255-6"><a href="gráficos.html#cb255-6" tabindex="-1"></a>p</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20series%20temporais%204-1.png" width="672" /></p>
+<p>Personalizando o gráfico:</p>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="gráficos.html#cb256-1" tabindex="-1"></a>p<span class="sc">+</span><span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Weight variation along 30 days&quot;</span>, <span class="at">x=</span><span class="st">&quot;Time&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Weight&quot;</span>)<span class="sc">+</span></span>
+<span id="cb256-2"><a href="gráficos.html#cb256-2" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb256-3"><a href="gráficos.html#cb256-3" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&#39;#999999&#39;</span>,<span class="st">&#39;#E69F00&#39;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20series%20temporais%205-1.png" width="672" /></p>
+<p>Além da definição das cores, que já vimos, aqui usamos também o theme_classic()<br />
+Esses temas controlam outros aspectos visuais do gráfico.<br />
+Tem vários temas:</p>
+<p>theme_grey()<br />
+theme_gray()<br />
+theme_bw()<br />
+theme_linedraw()<br />
+theme_light()<br />
+theme_dark()<br />
+theme_minimal()<br />
+theme_classic()<br />
+theme_void()<br />
+theme_test()</p>
+</div>
+<div id="time-series---dados-de-casos-de-covid-no-paraná" class="section level3 hasAnchor" number="4.3.8">
+<h3><span class="header-section-number">4.3.8</span> Time series - Dados de casos de COVID no Paraná<a href="gráficos.html#time-series---dados-de-casos-de-covid-no-paraná" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Os dados podem ser baixados de:
+<a href="https://www.saude.pr.gov.br/Pagina/Coronavirus-COVID-19" class="uri">https://www.saude.pr.gov.br/Pagina/Coronavirus-COVID-19</a>
+Como exemplo, vou usar os dados de março de 2022, porque quanto mais recente, maior o arquivo e demora mais para carregar e processar os dados.</p>
+<p>Carregar os dados:</p>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="gráficos.html#cb257-1" tabindex="-1"></a>dados<span class="ot">&lt;-</span><span class="fu">read.csv</span>(<span class="st">&quot;dados/informe_epidemiologico_16_03_2022_geral.csv&quot;</span>, <span class="at">header =</span> T, <span class="at">sep =</span> <span class="st">&quot;;&quot;</span>)</span>
+<span id="cb257-2"><a href="gráficos.html#cb257-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb257-3"><a href="gráficos.html#cb257-3" tabindex="-1"></a><span class="fu">head</span>(dados)</span></code></pre></div>
+<pre><code>##   IBGE_RES_PR IBGE_ATEND_PR UF_RESIDENCIA SEXO IDADE_ORIGINAL
+## 1     4118501       4118501            PR    M             96
+## 2     4106902       4106902            PR    F             77
+## 3     4125704       4108304            PR    M             73
+## 4     4106902       4106902            PR    F             95
+## 5     4119905       4119905            PR    M             81
+## 6     4116802       4116802            PR    M             56
+##         MUN_RESIDENCIA MUN_ATENDIMENTO EXAME DATA_DIAGNOSTICO
+## 1          PATO BRANCO     PATO BRANCO   167       2022-03-02
+## 2             CURITIBA        CURITIBA   167       2022-02-22
+## 3 SAO MIGUEL DO IGUACU   FOZ DO IGUACU    27       2022-02-21
+## 4             CURITIBA        CURITIBA    27       2022-01-20
+## 5         PONTA GROSSA    PONTA GROSSA    27       2022-01-31
+## 6           NOVA CANTU      NOVA CANTU     1       2022-03-07
+##   DATA_CONFIRMACAO_DIVULGACAO DATA_INICIO_SINTOMAS ÓBITO.COVID.19 DATA_OBITO
+## 1                  2022-03-16           2022-02-24            SIM 2022-02-28
+## 2                  2022-03-16                                 SIM 2022-03-14
+## 3                  2022-03-16           2022-02-21            SIM 2022-03-07
+## 4                  2022-03-16           2022-01-14            SIM 2022-02-06
+## 5                  2022-03-16           2022-01-21            SIM 2022-03-04
+## 6                  2022-03-16           2022-03-01            SIM 2022-03-14
+##   DATA_OBITO_DIVULGACAO             STATUS DATA_RECUPERADO_DIVULGACAO
+## 1            2022-03-16 Óbito por COVID-19                           
+## 2            2022-03-16 Óbito por COVID-19                           
+## 3            2022-03-16 Óbito por COVID-19                           
+## 4            2022-03-16 Óbito por COVID-19                           
+## 5            2022-03-16 Óbito por COVID-19                           
+## 6            2022-03-16 Óbito por COVID-19                           
+##                         ORIGEM_NOTIFICACAO
+## 1 Vigilância Epidemiológica de Pato Branco
+## 2                                  e-Saúde
+## 3                        Notifica COVID-19
+## 4                                  e-Saúde
+## 5                        Notifica COVID-19
+## 6                        Notifica COVID-19</code></pre>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="gráficos.html#cb259-1" tabindex="-1"></a>dados<span class="ot">&lt;-</span><span class="fu">select</span>(dados, SEXO<span class="sc">:</span>MUN_RESIDENCIA,DATA_DIAGNOSTICO,DATA_INICIO_SINTOMAS,DATA_OBITO)</span></code></pre></div>
+<p>Os dados tem colunas com data, no entanto, para o R entender que são datas devemos usar o pacote lubridate.
+Devemos olhar como está o formato da data. Nesse caso estão no formato ano, mês, dia, então usamos função ymd:</p>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="gráficos.html#cb260-1" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb260-2"><a href="gráficos.html#cb260-2" tabindex="-1"></a></span>
+<span id="cb260-3"><a href="gráficos.html#cb260-3" tabindex="-1"></a>dados<span class="sc">$</span>DATA_INICIO_SINTOMAS <span class="ot">&lt;-</span><span class="fu">ymd</span>(dados<span class="sc">$</span>DATA_INICIO_SINTOMAS)</span>
+<span id="cb260-4"><a href="gráficos.html#cb260-4" tabindex="-1"></a>dados<span class="sc">$</span>DATA_DIAGNOSTICO <span class="ot">&lt;-</span><span class="fu">ymd</span>(dados<span class="sc">$</span>DATA_DIAGNOSTICO)</span>
+<span id="cb260-5"><a href="gráficos.html#cb260-5" tabindex="-1"></a>dados<span class="sc">$</span>DATA_OBITO <span class="ot">&lt;-</span><span class="fu">ymd</span>(dados<span class="sc">$</span>DATA_OBITO)</span></code></pre></div>
+<p>Podemos plotar o número de casos por data de diagnóstico:</p>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="gráficos.html#cb261-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb261-2"><a href="gráficos.html#cb261-2" tabindex="-1"></a>p <span class="ot">&lt;-</span> dados <span class="sc">%&gt;%</span></span>
+<span id="cb261-3"><a href="gráficos.html#cb261-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(DATA_DIAGNOSTICO))</span>
+<span id="cb261-4"><a href="gráficos.html#cb261-4" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20series%20temporais%208-1.png" width="672" /></p>
+<p>Podemos ver a idade dos casos positivos:</p>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="gráficos.html#cb262-1" tabindex="-1"></a>dados <span class="sc">%&gt;%</span></span>
+<span id="cb262-2"><a href="gráficos.html#cb262-2" tabindex="-1"></a>  <span class="fu">filter</span>(IDADE_ORIGINAL<span class="sc">&gt;=</span><span class="dv">0</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb262-3"><a href="gráficos.html#cb262-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(IDADE_ORIGINAL )) <span class="sc">+</span></span>
+<span id="cb262-4"><a href="gráficos.html#cb262-4" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill=</span><span class="st">&quot;goldenrod1&quot;</span>, <span class="at">col=</span><span class="st">&quot;black&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20series%20temporais%209-1.png" width="672" /></p>
+<p>Ou a idade dos casos de óbito:</p>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="gráficos.html#cb263-1" tabindex="-1"></a>dados <span class="sc">%&gt;%</span></span>
+<span id="cb263-2"><a href="gráficos.html#cb263-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(DATA_OBITO))<span class="sc">%&gt;%</span></span>
+<span id="cb263-3"><a href="gráficos.html#cb263-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span>IDADE_ORIGINAL )) <span class="sc">+</span></span>
+<span id="cb263-4"><a href="gráficos.html#cb263-4" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill=</span><span class="st">&quot;firebrick1&quot;</span>, <span class="at">col=</span><span class="st">&quot;black&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20series%20temporais%2010-1.png" width="672" /></p>
+<p>Podemos separa por sexo:</p>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="gráficos.html#cb264-1" tabindex="-1"></a>dados <span class="sc">%&gt;%</span></span>
+<span id="cb264-2"><a href="gráficos.html#cb264-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(DATA_DIAGNOSTICO, <span class="at">color =</span> SEXO, <span class="at">fill=</span>SEXO)) <span class="sc">+</span></span>
+<span id="cb264-3"><a href="gráficos.html#cb264-3" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">alpha=</span><span class="fl">0.2</span> )</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20series%20temporais%2011-1.png" width="672" /></p>
+<p>Filtros</p>
+<p>Podemos usar filtros, por exemplo, por data:</p>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="gráficos.html#cb265-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> dados <span class="sc">%&gt;%</span></span>
+<span id="cb265-2"><a href="gráficos.html#cb265-2" tabindex="-1"></a>  <span class="fu">filter</span>(DATA_DIAGNOSTICO<span class="sc">&gt;</span><span class="fu">as.Date</span>(<span class="st">&quot;2022-02-15&quot;</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb265-3"><a href="gráficos.html#cb265-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(DATA_DIAGNOSTICO))</span>
+<span id="cb265-4"><a href="gráficos.html#cb265-4" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">&quot;dodgerblue&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20series%20temporais%2012-1.png" width="672" /></p>
+<p>Filtrando por município:</p>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="gráficos.html#cb266-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> dados <span class="sc">%&gt;%</span></span>
+<span id="cb266-2"><a href="gráficos.html#cb266-2" tabindex="-1"></a>  <span class="fu">filter</span>(MUN_RESIDENCIA<span class="sc">==</span><span class="st">&quot;PONTA GROSSA&quot;</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb266-3"><a href="gráficos.html#cb266-3" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> DATA_DIAGNOSTICO))</span>
+<span id="cb266-4"><a href="gráficos.html#cb266-4" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/04-%20series%20temporais%2013-1.png" width="672" /></p>
+<p>Além desses gráficos todos apresentados aqui, existem muitos outros, os quais vocês podem procurar conforme a necessidade.</p>
+<p>Mais detalhes podem ser obtidos em <span class="citation">Wickham, Çetinkaya-Rundel, and Grolemund (<a href="#ref-wickham2023r">2023</a>)</span></p>
+
+</div>
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-misc_mice_protein_expression_342" class="csl-entry">
+Higuera, Gardiner, Clara, and Krzysztof Cios. 2015. <span>“<span>Mice Protein Expression</span>.”</span> UCI Machine Learning Repository.
+</div>
+<div id="ref-irizarry2019introduction" class="csl-entry">
+Irizarry, Rafael A. 2019. <em>Introduction to Data Science: Data Analysis and Prediction Algorithms with r</em>. CRC Press.
+</div>
+<div id="ref-wickham2023r" class="csl-entry">
+Wickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. <em>R for Data Science</em>. " O’Reilly Media, Inc.".
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="o-sistema-tidyverse.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="estatística.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

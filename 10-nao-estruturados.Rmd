@@ -1,0 +1,394 @@
+# Dados não estruturados
+
+Muitos dados estão apresentados de forma não estruturada, como por exemplo textos, imagens, vídeos e sons.
+No entanto, também podemos analisar esse tipo de dados. Por exemplo, um texto pode ser utilizado em um processo de mineração de dados.  
+Nesse capítulo veremos com trabalhar com textos, imagens e sons no R.  
+
+## Texto
+
+Você pode usar qualquer texto, salve como um arquivo txt.  
+Vamos carregar um arquivo de texto. Para isso usaremos o pacote tm:  
+
+```{r 10- tm, message=FALSE, warning=FALSE}
+library(tm)
+library(dplyr)
+texto<-Corpus(DirSource(getwd(),pattern = "texto.txt"))
+
+```
+
+Mas o texto carregado não está em um formato que possa ser analisado, então usamos a função VectorSource que  interpreta cada elemento do vetor x como um documento.
+
+```{r 10- tm 2}
+docs <- Corpus(VectorSource(texto))
+```
+
+Mas um texto tem muitos elementos que não são tão relevantes para uma análise, como pontuação, espaços, stop words e números.
+Podemos resolver isso com as seguintes funções:
+
+```{r 10- tm 3, message=FALSE, warning=FALSE}
+docs <- docs %>%
+  tm_map(removeNumbers) %>%
+  tm_map(removePunctuation) %>%
+  tm_map(stripWhitespace)
+docs <- tm_map(docs, content_transformer(tolower))
+docs <- tm_map(docs, removeWords, stopwords("english"))
+```
+
+
+Agora transformamos em uma matriz:
+
+```{r 10- tm 4, message=FALSE, warning=FALSE}
+dtm <- TermDocumentMatrix(docs) 
+matrix <- as.matrix(dtm)
+head(matrix)
+```
+
+Podemos criar um objeto com as palavras e organizamos as palavras por frequência:
+
+```{r 10- tm 5, message=FALSE, warning=FALSE}
+words <- sort(rowSums(matrix),decreasing=TRUE) 
+df <- data.frame(word = names(words),freq=words)
+head(df)
+```
+
+
+Para procurar os termos mais frequentes usamos a função findFreqTerms, por exemplo, procurar os termos que ocorrem pelo menos 10 vezes:
+
+```{r 10- tm 6}
+inspect(dtm)
+findFreqTerms(dtm, 10) 
+```
+
+Uma das coisas que é possível fazer com esse objeto é uma nuvemn de palavras, para isso vamos usar o pacote wordcloud2:
+
+```{r 10- wordcloud2}
+library(wordcloud2)
+wordcloud2(data=df, size=1.6, color='random-dark')
+```
+
+
+### Análise de sentimentos
+
+A Análise de Sentimentos é o estudo computacional de opiniões, sentimentos e emoções expressas em um texto.  
+Na educação, ela é empregada como método para a obtenção do “feedback” dos alunos ou avaliação de professores.  
+  
+Os professores as vezes têm que lidar com grandes quantidades de mídia textual, o que é trabalhoso e demanda tempo. Nesse cenário, a utilização de ferramentas computacionais que os auxiliem na tarefa de analisar textos é muito atrativa.  
+A ideia é que se possa identificar a tendência geral de uma turma em relação ao tema em discussão, sem a necessidade de ler todos os textos, que podem ser volumosos.  
+
+
+Como exemplo, vamos o mesmo texto, mas agora usaremos o pacote pdftools para ler um arquivo pdf.
+
+```{r 10- sentimentos, message=FALSE, warning=FALSE}
+library(pdftools)
+
+texto2<-pdf_text("texto.pdf")
+```
+
+E agora usaremos o pacote syuzhet para fazer a análise de sentimentos.  
+
+  
+```{r 10- sentimentos 2, message=FALSE, warning=FALSE}
+library(syuzhet)
+library(RColorBrewer)
+
+sentimentos <- get_nrc_sentiment(texto2, lang="english", lowercase = T)
+```
+  
+E plotamos o resultado em um gráfico:  
+
+```{r 10- sentimentos 3, message=FALSE, warning=FALSE}
+barplot(
+  colSums(prop.table(sentimentos[, 1:8])),
+  space = 0.2,
+  horiz = FALSE,
+  las = 1,
+  cex.names = 0.7,
+  col = brewer.pal(n = 8, name = "Set3"),
+  xlab=NULL, ylab = NULL)
+```
+
+Também podemos resumir em sentimentos positivos e negativos:  
+  
+```{r 10- sentimentos 4, message=FALSE, warning=FALSE}
+barplot(
+  colSums(prop.table(sentimentos[, 9:10])),
+  space = 0.2,
+  horiz = FALSE,
+  las = 1,
+  cex.names = 0.7,
+  col = c("tomato","skyblue3"),
+  xlab=NULL, ylab = NULL)
+```
+  
+
+## Imagens
+
+As imagens são outro tipo de dado não estruturado e também podem ser carregadas e editadas. Como  exemplo veremos o pacote magick.
+
+```{r 10- imagens, message=FALSE, warning=FALSE}
+library(magick)
+
+foto<-image_read('dados/foto.jpg')
+foto
+```
+
+Também podemos salvar em diferentes formatos:  
+
+```{r 10- imagens 2}
+image_write(foto, path = "dados/foto.png", format = "png")
+```
+
+
+### Edição de imagens
+
+Podemos cortar a imagem:  
+500px por350px começando na esquerda em +1550px:   
+
+```{r 10- imagens 3}
+image_crop(foto, "500x350+1550") 
+```
+
+Para redimensionar proporcionalmente à largura:
+
+```{r 10- imagens 4}
+image_scale(foto, "500")
+```
+
+Para redimensionar proporcionalmente à altura:
+
+```{r 10- imagens 5}
+image_scale(foto, "x200")
+```
+ 
+Adicionar uma borda:
+
+```{r 10- imagens 6}
+image_border(foto, "red", "20x10")
+```
+
+Vamos redimensionar a imagem para fazer outras alterações
+
+```{r 10- imagens 7}
+foto2<-image_scale(foto, "400")
+foto2
+```
+
+Rotações de imagem:
+
+```{r 10- imagens 8}
+image_rotate(foto2, 45)
+image_flip(foto2)
+image_flop(foto2)
+```
+
+Brilho, saturação e matiz:
+
+```{r 10- imagens 9}
+image_modulate(foto2, brightness = 80, saturation = 120, hue = 90)
+```
+
+
+Pintar a mesa de laranja:
+
+```{r 10- imagens 10}
+image_fill(foto2, "orange", point = "+100+200", fuzz = 20)
+```
+
+
+Outros efeitos:
+
+```{r 10- imagens 11}
+image_blur(foto2, 10, 5)
+image_charcoal(foto2)
+image_oilpaint(foto2)
+image_negate(foto2)
+```
+
+
+Adicionando texto:
+
+```{r 10- imagens 12}
+image_annotate(foto2, "Laboratório", size = 70, gravity = "southwest", color = "green")
+```
+
+
+Personalizando o texto;
+
+```{r 10- imagens 13}
+image_annotate(foto2, "UFPR", size = 30, color = "red", boxcolor = "pink", degrees = -45, location = "+150+100",font = 'Times')
+```
+
+
+Usando pipes  
+Cada uma das funções de transformação de imagem retorna uma cópia modificada da imagem original. Não afeta a imagem original.
+
+```{r 10- imagens 14}
+foto2 %>%
+  image_rotate(270) %>%
+  image_background("blue", flatten = TRUE) %>%
+  image_border("red", "10x10") %>%
+  image_annotate("Lab", color = "blue", size = 50)
+```
+
+
+Vamos carregar outra imagem:
+
+```{r 10- imagens 15}
+logo<-image_read('dados/R.PNG')
+logo
+```
+
+E colocar as duas imagens em um vetor:
+
+```{r 10- imagens 16}
+img <- c(foto2, logo)
+```
+
+Um mosaico imprime imagens umas sobre as outras, expandindo a tela de saída de forma que tudo se encaixe:
+
+```{r 10- imagens 17}
+image_mosaic(img)
+```
+
+
+
+O achatamento combina as camadas em uma única imagem que tem o tamanho da primeira imagem.
+O nivelamento e o mosaico permitem especificar operadores compostos alternativos:
+
+```{r 10- imagens 18}
+image_flatten(img, 'Add')
+
+image_flatten(img, 'Modulate')
+
+image_flatten(img, 'Minus')
+```
+
+
+
+Combinando imagens  
+Anexar significa simplesmente colocar os quadros um ao lado do outro:
+
+```{r 10- imagens 19}
+image_append(image_scale(img, "x200"))
+
+image_append(image_scale(img, "100"), stack = TRUE)
+```
+
+A composição permite combinar duas imagens em uma posição específica:
+
+```{r 10- imagens 20}
+logo2<-image_scale(image_rotate(image_background(logo, "none"), 300), "x200")
+
+image_composite(image_scale(foto2, "x400"), logo2, offset = "+180+100")
+```
+
+
+
+Animação  
+Em vez de tratar os elementos vetoriais como camadas, também podemos transformá-los em quadros em uma animação.
+
+```{r 10- imagens 21}
+image_animate(image_scale(img, "300x300"), fps = 1, dispose = "previous")
+```
+
+  
+
+
+Morphing cria uma sequência de n imagens que transformam gradualmente uma imagem em outra. Faz animações
+
+```{r 10- imagens 22}
+newlogo <- image_scale(image_read("https://jeroen.github.io/images/Rlogo.png"))
+oldlogo <- image_scale(image_read("https://jeroen.github.io/images/Rlogo-old.png"))
+image_resize(c(oldlogo, newlogo), '200x150!') %>%
+  image_background('white') %>%
+  image_morph() %>%
+  image_animate(optimize = TRUE) 
+```
+
+
+
+
+## Áudio
+
+Assim como as imagens, também podemos trabalhar com arquivos de áudio. Para isso, utilizaremos o pacote tuneR. 
+Vamos usar um arquivo de áudio em mp3.
+
+```{r 10- audio, message=FALSE, warning=FALSE}
+library(tuneR)
+bird <- readMP3("dados/bird.mp3")
+bird
+plot(bird)
+```
+Usando:
+play(bird)
+será acionado um player de áudio para tocar o áudio.
+
+Pegaremos apenas um canal para extrair algumas informações do áudio.
+
+```{r 10- audio 2}
+wobjm <- mono(bird, "left")
+WspecObject <- periodogram(wobjm, normalize = TRUE, width = 1024, overlap = 512)
+```
+
+
+ Vejamos o primeiro periodograma:
+```{r 10- audio 3}
+plot(WspecObject, xlim = c(0, 3000), which = 1)
+```
+ 
+Ou o espectrograma:
+```{r 10- audio 4}
+image(WspecObject, ylim = c(0, 500))
+```
+
+Calculando a frequência fundamental
+```{r 10- audio 5}
+ff <- FF(WspecObject)
+print(ff)
+```
+
+
+Derivar nota de FF dado diapasão A=440
+```{r 10- audio 6}
+notes <- noteFromFF(ff, 440)
+```
+
+
+Suavizar as notas:
+```{r 10- audio 7, message=FALSE, warning=FALSE}
+library(pastecs)
+snotes <- smoother(notes)
+```
+
+
+O resultado deve ser 0 para o A do diapasão  e -12 (12 meios-tons abaixo) para A
+
+```{r 10- audio 8}
+print(snotes) 
+```
+
+
+Plotar a melodia e energia do som:
+```{r 10- audio 9}
+melodyplot(WspecObject, snotes)
+```
+
+
+
+Aplique alguma quantização (em 8 partes) e um gráfico, 4 partes por barra:  
+
+```{r 10- audio 10}
+qnotes <- quantize(snotes, WspecObject@energy, parts = 8)
+quantplot(qnotes, expected = rep(c(0, -12), each = 4), bars = 2)
+```
+
+E preparando o objeto para o LilyPond.
+LilyPond é um programa de gravação de música, dedicado a produzir partituras de alta qualidade possíveis (http://lilypond.org/). 
+ 
+```{r 10- audio 11}
+qlily <- quantMerge(snotes, 4, 4, 2)
+qlily
+```
+
+
+

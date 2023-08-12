@@ -1,0 +1,1 @@
+Esse livro foi escrito com o objetivo primário de ser utilizado como material didático das disciplinas que ministro na graduação e pós-graduação e tem o objetivo de ensinar a base do R, tentando mostrar toda versatilidade dessa linguagem de programação na pesquisa científica.

@@ -1,0 +1,168 @@
+# Pesquisa bibliográfica e Bibliometria
+
+
+Uma etapa muito importante em qualquer pesquisa científica é fazer o levantamento bibliográfico. 
+Temos diversas bases de dados nas quais podemos fazer essa busca, sendo que o PubMed é uma das principais.   
+  
+  
+O número de publicações acadêmicas está aumentando em ritmo acelerado e está se tornando cada vez mais inviável manter-se atualizado com tudo o que está sendo publicado.
+
+Os pesquisadores usam diferentes abordagens qualitativas e quantitativas de revisão de literatura para entender e organizar descobertas anteriores. Entre eles, a bibliometria tem o potencial de introduzir um processo de revisão sistemática, transparente e reprodutível baseado na medição estatística da ciência, dos cientistas ou da atividade científica.
+
+## Pesquisa bibliográfica
+
+Antes de fazer uma análise bibliométrica, é preciso fazer uma pesquisa bibliográfica. Para isso temos que estabelecer um pergunta a ser respondida. Com base no que queremos saber, definimos os descritores com os quais montaremos nosso termo de nossa busca.  
+
+Para auxiliar na escolha dos descritores, podemos usar o DeCS/MeSH (https://decs.bvsalud.org/). Aqui poderemos ver, entre outras coisas:
+- a grafia em diferentes idiomas
+- os sinônimos
+
+### Termos da busca
+
+Uma vez definidos os descritores, usamos os operadores boleanos AND, OR, NOT para compor o termo de busca.  
+Exemplos:
+- butyrylcholinesterase OR pseudocholinesterase
+- butyrylcholinesterase AND acetylcholinesterase
+- butyrylcholinesterase NOT alzheimer
+- ((butyrylcholinesterase OR pseudocholinesterase) AND acetylcholinesterase) NOT alzheimer  
+
+Uma vez montado o termo de busca, podemos usá-lo em diferentes bases de dados para fazer nossa pesquisa bibliográfica.  
+
+### Bases de dados
+
+Temos diversas bases de dados. No Brasil temos o Portal de Periódicos CAPES, ao qual temos acesso completo apenas a partir das Universidades.
+Portal de Periódicos CAPES (https://www-periodicos-capes-gov-br.ezl.periodicos.capes.gov.br/index.php?)  
+Também a partir do Portal de Periódicos CAPES, temos acesso a outras bases como a Web of Science e Scopus.  
+Além dessas, temos várias outras, como:  
+PubMed (https://pubmed.ncbi.nlm.nih.gov/)
+Dimensions (https://app.dimensions.ai/discover/publication
+)
+
+
+## PubMed
+
+No caso do PubMed, é possível fazer a busca diretamente pelo R, utilizando o pacote pubmedR.
+Podem ver dicas de utilização do pacote em:
+https://cran.r-project.org/web/packages/pubmedR/vignettes/A_Brief_Example.html
+
+
+Vamos ver um exemplo de utilização, em query montamos o termo de busca e colocamos alguns filtros. Com a função pmQueryTotalCount podemos ver quantos registros a busca retorna:
+
+```{r 11- pubmedR}
+library(pubmedR)
+query <- "PON1[Title/Abstract] AND english[LA]
+AND Journal Article[PT] AND 2018:2023[DP]"
+
+res <- pmQueryTotalCount(query = query, api_key = NULL)
+
+res$total_count
+```
+
+
+Com a função pmApiRequest vamos fazer o download dos dados e com a função pmApi2df transformamos em um dataframe:
+
+```{r 11- pubmedR 2}
+D <- pmApiRequest(query = query, limit = 200, api_key = NULL)
+df <- pmApi2df(D)
+```
+
+São baixados os metadados de cada referência, como título, autores, resumo, revista, ano, etc.
+
+```{r 11- pubmedR 3}
+names(df)
+
+df$TI[1]
+```
+
+Esses dados, em sua maioria, são caracteres, mas também podemos trabalhar com dados não estruturados no R. O pacote tm tem funções para podermos trabalhar com texto.
+Vamos pegar os títulos dos artigos:
+
+```{r 11- pubmedR 4, message=FALSE, warning=FALSE}
+library(tm)
+library(dplyr)
+
+texto <- iconv(df$TI, to = "UTF-8")
+docs <- Corpus(VectorSource(texto))
+docs <- docs %>%
+  tm_map(removePunctuation) %>%
+  tm_map(stripWhitespace)
+docs <- tm_map(docs, content_transformer(tolower))
+docs <- tm_map(docs, removeWords, stopwords("english"))
+```
+
+A seguir criamos um dataframe com as palavras em ordem decrescente de frequência:
+
+```{r 11- pubmedR 5}
+dtm <- TermDocumentMatrix(docs) 
+matrix <- as.matrix(dtm) 
+words <- sort(rowSums(matrix),decreasing=TRUE) 
+df2 <- data.frame(word = names(words),freq=words)
+
+head(df2)
+```
+
+E com esse dataframe podemos fazer uma nuvem de palavras:
+
+```{r 11- pubmedR 6}
+library(wordcloud2)
+
+wordcloud2(data=df2, size=1.6, color='random-dark')
+```
+
+
+## Bibliometria
+
+Para fazer uma análise bibliométrica usamos o pacote bibliometrix
+O manual pode ser acessado em https://www.bibliometrix.org/vignettes/Introduction_to_bibliometrix.html
+[@aria2017bibliometrix]
+
+Você pode fazer sua busca no Web of Science, depois clique em exportar, arquivo de texto sem formatação, escolha a opção de quais quer salvar e selecione a opção registro completo, referências citadas e clique em exportar. Note que com essa opção é possível salvar 500 referências de cada vez, então se tiver mais de 500 referências, você terá vários arquivos, mas poderá importá-los de uma só vez no R.  
+
+Para fazer a bibliometria usaremos dados baixados, em formato texto, do Web of Science. Para fazer a bibliometria, podemos usar dados de várias bases de dados, mas a Web of Science é a que oferece o maior número de metadados, permitindo utilizar todas as opções de análise.
+
+```{r 11- bibliometria}
+library(bibliometrix)
+
+file1 <- c("dados/wos.txt")
+M1 <- convert2df(file = file1, dbsource = "wos", format = "plaintext")
+
+```
+
+Podemos ver um resumo da análise:
+
+```{r 11- bibliometria 2}
+results <- biblioAnalysis(M1)
+summary(results)
+```
+
+
+
+Podemos ver os principais autores sobre o tema e sua produção ao longo do tempo
+
+```{r 11- bibliometria 4}
+topAU <- authorProdOverTime(M1, k = 10, graph = TRUE)
+topAU
+```
+
+Também podemos ver a co-ocorrência de palavras-chave:
+
+```{r 11- bibliometria 5}
+NetMatrix <- biblioNetwork(M1, analysis = "co-occurrences", network = "keywords", sep = ";")
+net=networkPlot(NetMatrix, normalize="association", weighted=T, n = 30, Title = "Keyword Co-occurrences", type = "fruchterman", size=T,edgesize = 5,labelsize=0.7)
+```
+
+E estruturas conceituais usando as palavras-chave:
+
+```{r 11- bibliometria 6, message=FALSE, warning=FALSE}
+CS <- conceptualStructure(M1,field="ID", method="CA", minDegree=4, clust=5, stemming=FALSE, labelsize=10, documents=10)
+```
+
+
+Toda a análise bibliométrica também pode ser feita utilizando shiny, para isso usamos a seguinte função: biblioshiny(), com a qual será aberta uma janela interativa, onde carregamos o arquivo e podemos fazer as análises e gerar os gráficos.  
+Para maiores detalhes, consulte a documentação no site https://www.bibliometrix.org/
+
+
+
+
+
+

@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 11 Pesquisa bibliográfica e Bibliometria | Análises de Dados com R</title>
+  <meta name="description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 11 Pesquisa bibliográfica e Bibliometria | Análises de Dados com R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bookdown.org/ricardo_lehtonen/analise/capa.png" />
+  <meta property="og:description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 11 Pesquisa bibliográfica e Bibliometria | Análises de Dados com R" />
+  
+  <meta name="twitter:description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  <meta name="twitter:image" content="https://bookdown.org/ricardo_lehtonen/analise/capa.png" />
+
+<meta name="author" content="Ricardo Lehtonen R. de Souza" />
+
+
+<meta name="date" content="2023-07-31" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="dados-não-estruturados.html"/>
+<link rel="next" href="r-markdown.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script>
+<link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet" />
+<script src="libs/tabwid-1.1.3/tabwid.js"></script>
+<link href="libs/wordcloud2-0.0.1/wordcloud.css" rel="stylesheet" />
+<script src="libs/wordcloud2-0.0.1/wordcloud2-all.js"></script>
+<script src="libs/wordcloud2-0.0.1/hover.js"></script>
+<script src="libs/wordcloud2-binding-0.2.1/wordcloud2.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Análises de dados com R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefácio</a></li>
+<li class="chapter" data-level="1" data-path="introdução.html"><a href="introdução.html"><i class="fa fa-check"></i><b>1</b> Introdução</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introdução.html"><a href="introdução.html#o-que-é-r"><i class="fa fa-check"></i><b>1.1</b> O que é R</a></li>
+<li class="chapter" data-level="1.2" data-path="introdução.html"><a href="introdução.html#instalação"><i class="fa fa-check"></i><b>1.2</b> Instalação</a></li>
+<li class="chapter" data-level="1.3" data-path="introdução.html"><a href="introdução.html#rstudio"><i class="fa fa-check"></i><b>1.3</b> RStudio</a></li>
+<li class="chapter" data-level="1.4" data-path="introdução.html"><a href="introdução.html#objetos-do-r"><i class="fa fa-check"></i><b>1.4</b> Objetos do R</a></li>
+<li class="chapter" data-level="1.5" data-path="introdução.html"><a href="introdução.html#nomes-dos-objetos-do-r"><i class="fa fa-check"></i><b>1.5</b> Nomes dos objetos do R</a></li>
+<li class="chapter" data-level="1.6" data-path="introdução.html"><a href="introdução.html#vetores"><i class="fa fa-check"></i><b>1.6</b> Vetores</a></li>
+<li class="chapter" data-level="1.7" data-path="introdução.html"><a href="introdução.html#operações-com-vetores"><i class="fa fa-check"></i><b>1.7</b> Operações com Vetores</a></li>
+<li class="chapter" data-level="1.8" data-path="introdução.html"><a href="introdução.html#fatores"><i class="fa fa-check"></i><b>1.8</b> Fatores</a></li>
+<li class="chapter" data-level="1.9" data-path="introdução.html"><a href="introdução.html#matrizes"><i class="fa fa-check"></i><b>1.9</b> Matrizes</a></li>
+<li class="chapter" data-level="1.10" data-path="introdução.html"><a href="introdução.html#listas"><i class="fa fa-check"></i><b>1.10</b> Listas</a></li>
+<li class="chapter" data-level="1.11" data-path="introdução.html"><a href="introdução.html#data-frame"><i class="fa fa-check"></i><b>1.11</b> Data frame</a></li>
+<li class="chapter" data-level="1.12" data-path="introdução.html"><a href="introdução.html#sequências"><i class="fa fa-check"></i><b>1.12</b> Sequências</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html"><i class="fa fa-check"></i><b>2</b> Carregar e manipular dados</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#ler-arquivos-txt-e-csv"><i class="fa fa-check"></i><b>2.1</b> Ler arquivos txt e csv</a></li>
+<li class="chapter" data-level="2.2" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#ler-arquivos-xlsx"><i class="fa fa-check"></i><b>2.2</b> Ler arquivos xlsx</a></li>
+<li class="chapter" data-level="2.3" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#gravar-arquivos-txt-e-xlsx"><i class="fa fa-check"></i><b>2.3</b> Gravar arquivos txt e xlsx</a></li>
+<li class="chapter" data-level="2.4" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#manipulação-de-dados-r-base"><i class="fa fa-check"></i><b>2.4</b> Manipulação de dados (R base)</a></li>
+<li class="chapter" data-level="2.5" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#transformação-de-dados"><i class="fa fa-check"></i><b>2.5</b> Transformação de dados</a></li>
+<li class="chapter" data-level="2.6" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#técnicas-de-normalização"><i class="fa fa-check"></i><b>2.6</b> Técnicas de normalização</a></li>
+<li class="chapter" data-level="2.7" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#juntar-dados-r-base"><i class="fa fa-check"></i><b>2.7</b> Juntar dados (R base)</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html"><i class="fa fa-check"></i><b>3</b> O sistema tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#manipulação-de-dados-com-tidyverse"><i class="fa fa-check"></i><b>3.1</b> Manipulação de dados com tidyverse</a></li>
+<li class="chapter" data-level="3.2" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-filter"><i class="fa fa-check"></i><b>3.2</b> Função filter</a></li>
+<li class="chapter" data-level="3.3" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-arrange"><i class="fa fa-check"></i><b>3.3</b> Função arrange</a></li>
+<li class="chapter" data-level="3.4" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-select"><i class="fa fa-check"></i><b>3.4</b> Função select</a></li>
+<li class="chapter" data-level="3.5" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-mutate-e-transmutate"><i class="fa fa-check"></i><b>3.5</b> Função mutate e transmutate</a></li>
+<li class="chapter" data-level="3.6" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#funções-group_by-e-summarise"><i class="fa fa-check"></i><b>3.6</b> Funções group_by e summarise</a></li>
+<li class="chapter" data-level="3.7" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#funções-pull-e-distinct"><i class="fa fa-check"></i><b>3.7</b> Funções pull e distinct</a></li>
+<li class="chapter" data-level="3.8" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#pipes"><i class="fa fa-check"></i><b>3.8</b> Pipes</a></li>
+<li class="chapter" data-level="3.9" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#pipe-nativa-do-r"><i class="fa fa-check"></i><b>3.9</b> Pipe nativa do R</a></li>
+<li class="chapter" data-level="3.10" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#tibble"><i class="fa fa-check"></i><b>3.10</b> Tibble</a></li>
+<li class="chapter" data-level="3.11" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#juntar-dados"><i class="fa fa-check"></i><b>3.11</b> Juntar dados</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="gráficos.html"><a href="gráficos.html"><i class="fa fa-check"></i><b>4</b> Gráficos</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="gráficos.html"><a href="gráficos.html#gráficos-com-o-pacote-graphics-r-base"><i class="fa fa-check"></i><b>4.1</b> Gráficos com o pacote graphics (R base)</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="gráficos.html"><a href="gráficos.html#introdução-aos-gráficos-do-r"><i class="fa fa-check"></i><b>4.1.1</b> Introdução aos gráficos do R</a></li>
+<li class="chapter" data-level="4.1.2" data-path="gráficos.html"><a href="gráficos.html#salvar"><i class="fa fa-check"></i><b>4.1.2</b> Salvar</a></li>
+<li class="chapter" data-level="4.1.3" data-path="gráficos.html"><a href="gráficos.html#histogramas"><i class="fa fa-check"></i><b>4.1.3</b> Histogramas</a></li>
+<li class="chapter" data-level="4.1.4" data-path="gráficos.html"><a href="gráficos.html#boxplot"><i class="fa fa-check"></i><b>4.1.4</b> Boxplot</a></li>
+<li class="chapter" data-level="4.1.5" data-path="gráficos.html"><a href="gráficos.html#barplot"><i class="fa fa-check"></i><b>4.1.5</b> Barplot</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="gráficos.html"><a href="gráficos.html#o-pacote-ggplot2"><i class="fa fa-check"></i><b>4.2</b> O pacote ggplot2</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="gráficos.html"><a href="gráficos.html#gráficos-de-pontos-dispersão"><i class="fa fa-check"></i><b>4.2.1</b> Gráficos de pontos (dispersão)</a></li>
+<li class="chapter" data-level="4.2.2" data-path="gráficos.html"><a href="gráficos.html#salvar-1"><i class="fa fa-check"></i><b>4.2.2</b> Salvar</a></li>
+<li class="chapter" data-level="4.2.3" data-path="gráficos.html"><a href="gráficos.html#histogramas-1"><i class="fa fa-check"></i><b>4.2.3</b> Histogramas</a></li>
+<li class="chapter" data-level="4.2.4" data-path="gráficos.html"><a href="gráficos.html#density-plot"><i class="fa fa-check"></i><b>4.2.4</b> Density plot</a></li>
+<li class="chapter" data-level="4.2.5" data-path="gráficos.html"><a href="gráficos.html#boxplot-1"><i class="fa fa-check"></i><b>4.2.5</b> Boxplot</a></li>
+<li class="chapter" data-level="4.2.6" data-path="gráficos.html"><a href="gráficos.html#gráfico-q-q"><i class="fa fa-check"></i><b>4.2.6</b> Gráfico Q-Q</a></li>
+<li class="chapter" data-level="4.2.7" data-path="gráficos.html"><a href="gráficos.html#figura-com-vários-gráficos"><i class="fa fa-check"></i><b>4.2.7</b> Figura com vários gráficos</a></li>
+<li class="chapter" data-level="4.2.8" data-path="gráficos.html"><a href="gráficos.html#ajustes-de-posição"><i class="fa fa-check"></i><b>4.2.8</b> Ajustes de Posição</a></li>
+<li class="chapter" data-level="4.2.9" data-path="gráficos.html"><a href="gráficos.html#geom-smooth"><i class="fa fa-check"></i><b>4.2.9</b> Geom Smooth</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="gráficos.html"><a href="gráficos.html#outros-pacotes-gráficos"><i class="fa fa-check"></i><b>4.3</b> Outros pacotes gráficos</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="gráficos.html"><a href="gráficos.html#usando-as-cores"><i class="fa fa-check"></i><b>4.3.1</b> Usando as cores</a></li>
+<li class="chapter" data-level="4.3.2" data-path="gráficos.html"><a href="gráficos.html#análise-gráfica-exploratória"><i class="fa fa-check"></i><b>4.3.2</b> Análise gráfica exploratória</a></li>
+<li class="chapter" data-level="4.3.3" data-path="gráficos.html"><a href="gráficos.html#ggplot2-mais-parâmetros"><i class="fa fa-check"></i><b>4.3.3</b> GGPLOT2: mais parâmetros</a></li>
+<li class="chapter" data-level="4.3.4" data-path="gráficos.html"><a href="gráficos.html#diagrama-de-venn"><i class="fa fa-check"></i><b>4.3.4</b> Diagrama de Venn</a></li>
+<li class="chapter" data-level="4.3.5" data-path="gráficos.html"><a href="gráficos.html#diagramas"><i class="fa fa-check"></i><b>4.3.5</b> Diagramas</a></li>
+<li class="chapter" data-level="4.3.6" data-path="gráficos.html"><a href="gráficos.html#outra-opção-é-o-pacote-ggflowchart"><i class="fa fa-check"></i><b>4.3.6</b> Outra opção é o pacote ggflowchart</a></li>
+<li class="chapter" data-level="4.3.7" data-path="gráficos.html"><a href="gráficos.html#datas-e-séries-temporais"><i class="fa fa-check"></i><b>4.3.7</b> Datas e séries temporais</a></li>
+<li class="chapter" data-level="4.3.8" data-path="gráficos.html"><a href="gráficos.html#time-series---dados-de-casos-de-covid-no-paraná"><i class="fa fa-check"></i><b>4.3.8</b> Time series - Dados de casos de COVID no Paraná</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="estatística.html"><a href="estatística.html"><i class="fa fa-check"></i><b>5</b> Estatística</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="estatística.html"><a href="estatística.html#estatística-descritiva"><i class="fa fa-check"></i><b>5.1</b> Estatística descritiva</a></li>
+<li class="chapter" data-level="5.2" data-path="estatística.html"><a href="estatística.html#testes-estatísticos"><i class="fa fa-check"></i><b>5.2</b> Testes estatísticos</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="estatística.html"><a href="estatística.html#normalidade"><i class="fa fa-check"></i><b>5.2.1</b> Normalidade</a></li>
+<li class="chapter" data-level="5.2.2" data-path="estatística.html"><a href="estatística.html#assimetria-e-curtose"><i class="fa fa-check"></i><b>5.2.2</b> Assimetria e curtose</a></li>
+<li class="chapter" data-level="5.2.3" data-path="estatística.html"><a href="estatística.html#teste-t"><i class="fa fa-check"></i><b>5.2.3</b> Teste t</a></li>
+<li class="chapter" data-level="5.2.4" data-path="estatística.html"><a href="estatística.html#teste-qui-quadrado"><i class="fa fa-check"></i><b>5.2.4</b> Teste qui-quadrado</a></li>
+<li class="chapter" data-level="5.2.5" data-path="estatística.html"><a href="estatística.html#correlação"><i class="fa fa-check"></i><b>5.2.5</b> Correlação</a></li>
+<li class="chapter" data-level="5.2.6" data-path="estatística.html"><a href="estatística.html#regressão"><i class="fa fa-check"></i><b>5.2.6</b> Regressão</a></li>
+<li class="chapter" data-level="5.2.7" data-path="estatística.html"><a href="estatística.html#anova"><i class="fa fa-check"></i><b>5.2.7</b> ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="estatística.html"><a href="estatística.html#visualização-de-resultados-estatísticos"><i class="fa fa-check"></i><b>5.3</b> Visualização de resultados estatísticos</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="funções-e-loops.html"><a href="funções-e-loops.html"><i class="fa fa-check"></i><b>6</b> Funções e loops</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="funções-e-loops.html"><a href="funções-e-loops.html#funções"><i class="fa fa-check"></i><b>6.1</b> Funções</a></li>
+<li class="chapter" data-level="6.2" data-path="funções-e-loops.html"><a href="funções-e-loops.html#loops"><i class="fa fa-check"></i><b>6.2</b> Loops</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="funções-e-loops.html"><a href="funções-e-loops.html#for"><i class="fa fa-check"></i><b>6.2.1</b> for</a></li>
+<li class="chapter" data-level="6.2.2" data-path="funções-e-loops.html"><a href="funções-e-loops.html#while"><i class="fa fa-check"></i><b>6.2.2</b> while</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="funções-e-loops.html"><a href="funções-e-loops.html#if-e-else"><i class="fa fa-check"></i><b>6.3</b> if e else</a></li>
+<li class="chapter" data-level="6.4" data-path="funções-e-loops.html"><a href="funções-e-loops.html#funções-apply-lapply-sapply-tapply-mapply"><i class="fa fa-check"></i><b>6.4</b> Funções apply, lapply, sapply, tapply, mapply</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="genética.html"><a href="genética.html"><i class="fa fa-check"></i><b>7</b> Genética</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="genética.html"><a href="genética.html#genética-de-populações"><i class="fa fa-check"></i><b>7.1</b> Genética de populações</a></li>
+<li class="chapter" data-level="7.2" data-path="genética.html"><a href="genética.html#genotipagem-com-genetics-e-loop"><i class="fa fa-check"></i><b>7.2</b> Genotipagem com genetics e loop</a></li>
+<li class="chapter" data-level="7.3" data-path="genética.html"><a href="genética.html#heredogramas"><i class="fa fa-check"></i><b>7.3</b> Heredogramas</a></li>
+<li class="chapter" data-level="7.4" data-path="genética.html"><a href="genética.html#análises-filogenéticas"><i class="fa fa-check"></i><b>7.4</b> Análises filogenéticas</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>8</b> Network</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="network.html"><a href="network.html#pacote-igraph"><i class="fa fa-check"></i><b>8.1</b> Pacote Igraph</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="bioconductor.html"><a href="bioconductor.html"><i class="fa fa-check"></i><b>9</b> Bioconductor</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="bioconductor.html"><a href="bioconductor.html#pacote-msa"><i class="fa fa-check"></i><b>9.1</b> Pacote msa</a></li>
+<li class="chapter" data-level="9.2" data-path="bioconductor.html"><a href="bioconductor.html#pacote-multimir"><i class="fa fa-check"></i><b>9.2</b> Pacote multiMiR</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html"><i class="fa fa-check"></i><b>10</b> Dados não estruturados</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#texto"><i class="fa fa-check"></i><b>10.1</b> Texto</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#análise-de-sentimentos"><i class="fa fa-check"></i><b>10.1.1</b> Análise de sentimentos</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#imagens"><i class="fa fa-check"></i><b>10.2</b> Imagens</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#edição-de-imagens"><i class="fa fa-check"></i><b>10.2.1</b> Edição de imagens</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#áudio"><i class="fa fa-check"></i><b>10.3</b> Áudio</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html"><i class="fa fa-check"></i><b>11</b> Pesquisa bibliográfica e Bibliometria</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#pesquisa-bibliográfica"><i class="fa fa-check"></i><b>11.1</b> Pesquisa bibliográfica</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#termos-da-busca"><i class="fa fa-check"></i><b>11.1.1</b> Termos da busca</a></li>
+<li class="chapter" data-level="11.1.2" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#bases-de-dados"><i class="fa fa-check"></i><b>11.1.2</b> Bases de dados</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#pubmed"><i class="fa fa-check"></i><b>11.2</b> PubMed</a></li>
+<li class="chapter" data-level="11.3" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#bibliometria"><i class="fa fa-check"></i><b>11.3</b> Bibliometria</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>12</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="r-markdown.html"><a href="r-markdown.html#incluindo-gráficos"><i class="fa fa-check"></i><b>12.1</b> Incluindo gráficos</a></li>
+<li class="chapter" data-level="12.2" data-path="r-markdown.html"><a href="r-markdown.html#chunk-opções"><i class="fa fa-check"></i><b>12.2</b> Chunk: opções</a></li>
+<li class="chapter" data-level="12.3" data-path="r-markdown.html"><a href="r-markdown.html#formatação"><i class="fa fa-check"></i><b>12.3</b> Formatação</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://docs.ufpr.br/~lehtonen/" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análises de Dados com R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="pesquisa-bibliográfica-e-bibliometria" class="section level1 hasAnchor" number="11">
+<h1><span class="header-section-number">Capítulo 11</span> Pesquisa bibliográfica e Bibliometria<a href="pesquisa-bibliográfica-e-bibliometria.html#pesquisa-bibliográfica-e-bibliometria" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Uma etapa muito importante em qualquer pesquisa científica é fazer o levantamento bibliográfico.
+Temos diversas bases de dados nas quais podemos fazer essa busca, sendo que o PubMed é uma das principais.</p>
+<p>O número de publicações acadêmicas está aumentando em ritmo acelerado e está se tornando cada vez mais inviável manter-se atualizado com tudo o que está sendo publicado.</p>
+<p>Os pesquisadores usam diferentes abordagens qualitativas e quantitativas de revisão de literatura para entender e organizar descobertas anteriores. Entre eles, a bibliometria tem o potencial de introduzir um processo de revisão sistemática, transparente e reprodutível baseado na medição estatística da ciência, dos cientistas ou da atividade científica.</p>
+<div id="pesquisa-bibliográfica" class="section level2 hasAnchor" number="11.1">
+<h2><span class="header-section-number">11.1</span> Pesquisa bibliográfica<a href="pesquisa-bibliográfica-e-bibliometria.html#pesquisa-bibliográfica" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Antes de fazer uma análise bibliométrica, é preciso fazer uma pesquisa bibliográfica. Para isso temos que estabelecer um pergunta a ser respondida. Com base no que queremos saber, definimos os descritores com os quais montaremos nosso termo de nossa busca.</p>
+<p>Para auxiliar na escolha dos descritores, podemos usar o DeCS/MeSH (<a href="https://decs.bvsalud.org/" class="uri">https://decs.bvsalud.org/</a>). Aqui poderemos ver, entre outras coisas:
+- a grafia em diferentes idiomas
+- os sinônimos</p>
+<div id="termos-da-busca" class="section level3 hasAnchor" number="11.1.1">
+<h3><span class="header-section-number">11.1.1</span> Termos da busca<a href="pesquisa-bibliográfica-e-bibliometria.html#termos-da-busca" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Uma vez definidos os descritores, usamos os operadores boleanos AND, OR, NOT para compor o termo de busca.<br />
+Exemplos:
+- butyrylcholinesterase OR pseudocholinesterase
+- butyrylcholinesterase AND acetylcholinesterase
+- butyrylcholinesterase NOT alzheimer
+- ((butyrylcholinesterase OR pseudocholinesterase) AND acetylcholinesterase) NOT alzheimer</p>
+<p>Uma vez montado o termo de busca, podemos usá-lo em diferentes bases de dados para fazer nossa pesquisa bibliográfica.</p>
+</div>
+<div id="bases-de-dados" class="section level3 hasAnchor" number="11.1.2">
+<h3><span class="header-section-number">11.1.2</span> Bases de dados<a href="pesquisa-bibliográfica-e-bibliometria.html#bases-de-dados" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Temos diversas bases de dados. No Brasil temos o Portal de Periódicos CAPES, ao qual temos acesso completo apenas a partir das Universidades.
+Portal de Periódicos CAPES (<a href="https://www-periodicos-capes-gov-br.ezl.periodicos.capes.gov.br/index.php" class="uri">https://www-periodicos-capes-gov-br.ezl.periodicos.capes.gov.br/index.php</a>?)<br />
+Também a partir do Portal de Periódicos CAPES, temos acesso a outras bases como a Web of Science e Scopus.<br />
+Além dessas, temos várias outras, como:<br />
+PubMed (<a href="https://pubmed.ncbi.nlm.nih.gov/" class="uri">https://pubmed.ncbi.nlm.nih.gov/</a>)
+Dimensions (<a href="https://app.dimensions.ai/discover/publication" class="uri">https://app.dimensions.ai/discover/publication</a>
+)</p>
+</div>
+</div>
+<div id="pubmed" class="section level2 hasAnchor" number="11.2">
+<h2><span class="header-section-number">11.2</span> PubMed<a href="pesquisa-bibliográfica-e-bibliometria.html#pubmed" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>No caso do PubMed, é possível fazer a busca diretamente pelo R, utilizando o pacote pubmedR.
+Podem ver dicas de utilização do pacote em:
+<a href="https://cran.r-project.org/web/packages/pubmedR/vignettes/A_Brief_Example.html" class="uri">https://cran.r-project.org/web/packages/pubmedR/vignettes/A_Brief_Example.html</a></p>
+<p>Vamos ver um exemplo de utilização, em query montamos o termo de busca e colocamos alguns filtros. Com a função pmQueryTotalCount podemos ver quantos registros a busca retorna:</p>
+<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb566-1" tabindex="-1"></a><span class="fu">library</span>(pubmedR)</span>
+<span id="cb566-2"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb566-2" tabindex="-1"></a>query <span class="ot">&lt;-</span> <span class="st">&quot;PON1[Title/Abstract] AND english[LA]</span></span>
+<span id="cb566-3"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb566-3" tabindex="-1"></a><span class="st">AND Journal Article[PT] AND 2018:2023[DP]&quot;</span></span>
+<span id="cb566-4"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb566-4" tabindex="-1"></a></span>
+<span id="cb566-5"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb566-5" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">pmQueryTotalCount</span>(<span class="at">query =</span> query, <span class="at">api_key =</span> <span class="cn">NULL</span>)</span>
+<span id="cb566-6"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb566-6" tabindex="-1"></a></span>
+<span id="cb566-7"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb566-7" tabindex="-1"></a>res<span class="sc">$</span>total_count</span></code></pre></div>
+<pre><code>## [1] 909</code></pre>
+<p>Com a função pmApiRequest vamos fazer o download dos dados e com a função pmApi2df transformamos em um dataframe:</p>
+<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb568-1" tabindex="-1"></a>D <span class="ot">&lt;-</span> <span class="fu">pmApiRequest</span>(<span class="at">query =</span> query, <span class="at">limit =</span> <span class="dv">200</span>, <span class="at">api_key =</span> <span class="cn">NULL</span>)</span></code></pre></div>
+<pre><code>## Documents  200  of  200</code></pre>
+<div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb570-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">pmApi2df</span>(D)</span></code></pre></div>
+<pre><code>## ================================================================================</code></pre>
+<p>São baixados os metadados de cada referência, como título, autores, resumo, revista, ano, etc.</p>
+<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb572-1" tabindex="-1"></a><span class="fu">names</span>(df)</span></code></pre></div>
+<pre><code>##  [1] &quot;AU&quot;        &quot;AF&quot;        &quot;TI&quot;        &quot;SO&quot;        &quot;SO_CO&quot;     &quot;LA&quot;       
+##  [7] &quot;DT&quot;        &quot;DE&quot;        &quot;ID&quot;        &quot;MESH&quot;      &quot;AB&quot;        &quot;C1&quot;       
+## [13] &quot;CR&quot;        &quot;TC&quot;        &quot;SN&quot;        &quot;J9&quot;        &quot;JI&quot;        &quot;PY&quot;       
+## [19] &quot;PY_IS&quot;     &quot;VL&quot;        &quot;DI&quot;        &quot;PG&quot;        &quot;GRANT_ID&quot;  &quot;GRANT_ORG&quot;
+## [25] &quot;UT&quot;        &quot;PMID&quot;      &quot;DB&quot;        &quot;AU_UN&quot;     &quot;AU_CO&quot;     &quot;AU1_CO&quot;</code></pre>
+<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb574-1" tabindex="-1"></a>df<span class="sc">$</span>TI[<span class="dv">1</span>]</span></code></pre></div>
+<pre><code>## [1] &quot;THE EFFECT OF ROYAL JELLY ON TELOMERE LENGTH AND SOME BIOCHEMICAL PARAMETERS IN WISTAR ALBINO RATS WITH LIVER DAMAGE CAUSED BY CARBON TETRACHLORIDE.&quot;</code></pre>
+<p>Esses dados, em sua maioria, são caracteres, mas também podemos trabalhar com dados não estruturados no R. O pacote tm tem funções para podermos trabalhar com texto.
+Vamos pegar os títulos dos artigos:</p>
+<div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb576-1" tabindex="-1"></a><span class="fu">library</span>(tm)</span>
+<span id="cb576-2"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb576-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb576-3"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb576-3" tabindex="-1"></a></span>
+<span id="cb576-4"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb576-4" tabindex="-1"></a>texto <span class="ot">&lt;-</span> <span class="fu">iconv</span>(df<span class="sc">$</span>TI, <span class="at">to =</span> <span class="st">&quot;UTF-8&quot;</span>)</span>
+<span id="cb576-5"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb576-5" tabindex="-1"></a>docs <span class="ot">&lt;-</span> <span class="fu">Corpus</span>(<span class="fu">VectorSource</span>(texto))</span>
+<span id="cb576-6"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb576-6" tabindex="-1"></a>docs <span class="ot">&lt;-</span> docs <span class="sc">%&gt;%</span></span>
+<span id="cb576-7"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb576-7" tabindex="-1"></a>  <span class="fu">tm_map</span>(removePunctuation) <span class="sc">%&gt;%</span></span>
+<span id="cb576-8"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb576-8" tabindex="-1"></a>  <span class="fu">tm_map</span>(stripWhitespace)</span>
+<span id="cb576-9"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb576-9" tabindex="-1"></a>docs <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(docs, <span class="fu">content_transformer</span>(tolower))</span>
+<span id="cb576-10"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb576-10" tabindex="-1"></a>docs <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(docs, removeWords, <span class="fu">stopwords</span>(<span class="st">&quot;english&quot;</span>))</span></code></pre></div>
+<p>A seguir criamos um dataframe com as palavras em ordem decrescente de frequência:</p>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb577-1" tabindex="-1"></a>dtm <span class="ot">&lt;-</span> <span class="fu">TermDocumentMatrix</span>(docs) </span>
+<span id="cb577-2"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb577-2" tabindex="-1"></a>matrix <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(dtm) </span>
+<span id="cb577-3"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb577-3" tabindex="-1"></a>words <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">rowSums</span>(matrix),<span class="at">decreasing=</span><span class="cn">TRUE</span>) </span>
+<span id="cb577-4"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb577-4" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">word =</span> <span class="fu">names</span>(words),<span class="at">freq=</span>words)</span>
+<span id="cb577-5"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb577-5" tabindex="-1"></a></span>
+<span id="cb577-6"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb577-6" tabindex="-1"></a><span class="fu">head</span>(df2)</span></code></pre></div>
+<pre><code>##                      word freq
+## paraoxonase   paraoxonase   44
+## activity         activity   32
+## patients         patients   31
+## disease           disease   28
+## paraoxonase1 paraoxonase1   24
+## pon1                 pon1   22</code></pre>
+<p>E com esse dataframe podemos fazer uma nuvem de palavras:</p>
+<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb579-1" tabindex="-1"></a><span class="fu">library</span>(wordcloud2)</span>
+<span id="cb579-2"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb579-2" tabindex="-1"></a></span>
+<span id="cb579-3"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb579-3" tabindex="-1"></a><span class="fu">wordcloud2</span>(<span class="at">data=</span>df2, <span class="at">size=</span><span class="fl">1.6</span>, <span class="at">color=</span><span class="st">&#39;random-dark&#39;</span>)</span></code></pre></div>
+<div class="wordcloud2 html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-d269f33b581bcacc288c" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-d269f33b581bcacc288c">{"x":{"word":["paraoxonase","activity","patients","disease","paraoxonase1","pon1","study","oxidative","effect","gene","stress","associated","association","serum","carcinoma","biomarkers","effects","coronary","hdl","hepatocellular","antioxidant","cancer","polymorphisms","analysis","review","evaluation","diabetes","prognosis","genetic","plasma","acute","role","heart","molecular","lipid","metaanalysis","novel","metabolic","type","systematic","ischemic","stroke","immune","levels","risk","polymorphism","parameters","rats","population","human","artery","cholesterol","potential","atherosclerosis","function","expression","capacity","vitro","covid19","genes","kidney","pesticides","inflammation","markers","arthritis","relationship","rheumatoid","silico","enzyme","mice","impact","rs662","q192r","exposure","lipoprotein","variables","damage","inflammatory","enzymes","syndrome","infarction","signature","identification","treatment","status","proteomic","disorders","casecontrol","profile","mellitus","changes","renal","trial","biochemical","liver","complications","redox","cardiovascular","genotype","major","variants","pathway","exercise","elevation","myocardial","blood","combined","obese","diagnosis","immunotherapy","therapy","brain","cognitive","efficacy","therapeutic","elevated","modulates","followup","validation","cell","functionality","vascular","resistance","inhibition","predict","prognostic","vitamin","ldl","chronic","dogs","women","organochlorine","activities","oxide","cohort","highdensity","clinical","efflux","sleep","results","subjects","children","based","derivatives","oxidation","diet","proteins","organophosphorus","sperm","development","features","stressrelated","adults","randomized","dna","indian","tofacitinib","prostate","xenobiotic","arylesterase","antioxidative","black","different","experimental","model","tissues","distribution","stsegment","inactivation","properties","protective","apelin","lipids","reduction","young","adh1b","drugs","alzheimers","disabilities","mild","moderate","diseases","pathophysiology","ameliorates","dietinduced","obesity","health","multiple","high","suggests","paraoxonases","dali","physical","prospective","docking","fetuina","modulators","quantitative","gender","impairment","cerebral","importance","content","investigation","phytochemical","parkinsons","comparison","agents","value","environmental","factors","modulatory","measure","treated","basis","scores","severity","l55m","interactions","involved","lead","pesticide","cad","cardiometabolic","iranian","hypothyroidism","assessment","agricultural","preeclampsia","studies","induce","vivo","defenses","lowered","hypertension","pregnancy","boar","quality","seminal","following","obstructive","breast","predictive","paraoxonasearylesterase","mechanisms","extract","rat","lycopene","myeloperoxidase","apolipoprotein","atrial","fibrillation","snp","enzymatic","lung","presence","related","data","hydrolysis","biological","comprehensive","infiltration","significance","advanced","products","cardiac","highfat","factor","chlorpyrifos","phenotype","regulation","sensitive","endoplasmic","reticulum","controlled","exposures","biomarker","inhibiting","comorbid","disorder","child","father","mother","norwegian","prenatal","deficit","among","exposed","nucleotide","single","microenvironment","tumor","albino","carbon","caused","jelly","length","royal","telomere","tetrachloride","wistar","cascades","circulatory","imbalance","pcsk9","pilot","adverse","events","malignancies","receiving","functional","metabolizing","534dihydroxyphenylγvalerolactone","flavan3ol","metabolism","substrate","averagetrained","concentration","dissociation","menthe","repetitions","cherry","cornelian","currant","juices","can","prediction","replaced","severe","alzheimer","subclasses","catalytic","dihydrocoumarin","recombinant","substratedependent","surfactants","turnover","aerobic","consumption","ease","incr2green","max","men","pressure","sixweek","tea","voand","ferroptosis","inflammationassociated","optimizes","options","afatinibassociated","smallmolecule","targeting","dicarbonyls","promising","reactive","targets","acid","boric","functions","tissue","component","consequent","janusfaced","actor","become","detoxifying","infectious","5671","bacillus","bifidobacterium","breve","condition","foxp3","gata3","licheniformis","mcc2514","ncim","probiotic","regulates","hyperlipidemic","vutiglabridin","exploration","5year","defense","sclerosis","discovery","glycoprotein","grade","ovarian","serous","across","followed","independent","mammals","path","pseudogenization","semiaquatic","stepwise","sickle","neurological","behavior","cord","findings","maternal","sedentary","doubleblind","dry","eye","multicenter","tears","blockers","calcium","channel","dihydropyridineclass","dynamics","hpon1","simulations","innate","proteomics","responses","tetranectin","age","interleukin6","due","metabolomic","link","periodontitis","druginduced","fucosylation","multitargeted","secretome","via","clinicoradiological","dysfunctional","first","qualitative","determination","dioica","lcmsms","nettle","urtica","causal","ewes","immunity","influence","lambs","passive","period","transference","transition","aspirin","pharmacogenetics","exosome","nonobese","proteomes","accelerates","accumulation","amyloid","autophagy","beta","depletion","dysregulates","mtor","clopidogrel","increase","intervention","mutations","percutaneous","thrombosis","hepatocyte","malignant","new","reveals","singlecell","subpopulations","transcriptome","knee","matrix","metalloproteinases","osteoarthritis","lifestylerelated","ankylosing","cryotherapy","endothelium","spondylitis","wholebody","carotid","electronegative","plaque","vulnerability","context","enzymekinetic","brachytherapy","irradiation","abnormal","doppler","power","predicts","signal","ultrasound","aryl","esterase","experiments","homocysteine","purified","thiolactone","understanding","angiography","gensini","intake","joint","syntax","undergoing","vitamins","components","ethnic","fars","group","rs854560","arsenic","cadmium","depression","mechanism","mercury","suspected","saliva","accurate","electrokinetic","membrane","nanoparticlegated","quantifying","sensor","area","brazil","central","incidence","level","patterns","rs25487","xrcc1","placentaassociated","pregnant","thrombophilia","bearing","benzothiazole","chalcone","scaffold","series","synthesis","leukemia","changing","dynamic","evolution","family","highly","metazoa","pon","roles","within","dialyzer","hemodialysis","reuse","thyroid","tumors","altered","fibromyalgia","malondialdehyde","nitric","primary","core","final","increased","peroxidation","strongly","volume","explorative","gestational","overweightobese","clinicopathologic","echocardiographic","mitral","ntprobnp","valve","outcome","phospholipid","hdlmediated","semen","apnea","expansion","measures","night","one","pharyngoplasty","postoperative","8year","boosting","gradient","identified","machine","postradiotherapy","pre","preliminary","atopic","dermatitis","future","perspectives","phototherapy","antiinflammatory","coat","hyperlipidemia","hypolipidemic","juglans","regia","seed","triton","walnut","wr1339induced","decreasing","endogenous","metformin","triggering","associations","1phosphate","correlations","familial","hypercholesterolemia","sphingosine","untreated","hypercholesterolemic","healthy","nonsmoking","pancreatitis","rs5069","rs670","smoking","broiler","chicks","injection","mobile","ovo","performance","phone","posthatch","radiation","asthma","localization","subcellular","palsy","considering","intensity","postcovid","ascites","attenuated","ehrlich","live","mmr","murine","oncolytic","using","vaccine","isoenzymes","rate","adipokines","oneyear","enhance","lysodgts","prevent","structureactivity","endometrial","pentraxin3","course","fatal","indicates","low","hcc","ligases","march","end","glycation","hashimotos","reliable","thyroiditis","empagliflozin","endstage","epitheliumderived","pigment","transplantation","may","ejaculates","portion","positively","spermrich","cardioprotective","airways","associates","oxylipins","small","suppressed","aluminum","induced","nanotoxicity","zinc","difference","insecticide","juvenile","mechanistic","toxicity","longterm","lower","nonstsegment","worse","callistemon","citrinus","hypercaloric","terpenes","angiogram","positive","differentially","neuroblastoma","parathion","regulate","response","5methyltetrahydrofolate","developing","mthfr","platform","predicting"," pregnant","bioinformatic","loss","recurrent","155","microrna","xiii","affecting","diets","diseasefree","lycopenerich","middleaged","moderately","modulate","overweight","size","without","argentine","birth","exploratory","preterm","expressions","important","leukocytes","activating","lipophagy","lipotoxicity","pyroptosis","alopecia","areata","comparative","crosssectional","berberine","benzohydrazide","inhibitors","abuse","bipolar","substance","contributes","differentiationrelated","index","carotenoids","pentraxin","psoriasispreliminary","antioxidants","cryotolerance","horse","phytochemicals","diagnoses","measurement","usefulness","coenzyme","injury","q10","underlying","beneficiaries","chemotherapy","early","induction","locoregionally","nasopharyngeal","enalapril","essential","felodipine","salusinβ","endothelialmediated","epaderived","impairs","lactone","vasodilation","zonation","adhd","preschool","7kchol","7βohchol","choltriol","relationships","t1dm","t2dm","additional","beadchip","bisulphite","candidate","epic","measurements","methylation","nine","seqcap","sequencing","targeted","adiponectin","adulticide","determine","dirofilaria","endothelin1","heartworm","immitis","phase","aggressiveness","bladder","hfpef","modalities","optimex","substudy","training","facilitates","interacting","interferon","nonstructural","protein9","prrsv","replication","viral","eggs","plantbased","depressive","mpo","pon2","pon3","circulating","lowdose","paraoxonase1related","pneumonia","radiotherapy","evaluate","benzoate","methyl","farmworkers","occupational","algorithm","analyses","lasso","macrophagerelated","regard","wgcna","bovine","cloned","compromise","ecm","formation","migration","placentation","vessel","8isoprostan","attention","hyperactivity","paraxonase1","total","cytotoxic","genotoxic","insights","invitro","ops","pakistan","pyr","variant","workers","china","fluorosis","guizhou","nutrients","skeletal","bariatric","enhancement","reduced","surgeryinduced","dyslipidemia","including","lipidlowering","mir499a","pharmacological","fibrosis","epilepsy","lobe","medicine","nomothetic","precision","psychiatric","temporal","executive","moba","preschoolaged","failure","microvascular","cytokines","deficiency","inhibits","microglial","pathwaymediated","phagocytosis","proinflammatory","promotes","release","trem2","bacterial","corrigendum","genotypes","schizophrenia","translocation","structure","atlanticus","dietfed","hamsters","insulin","polyphenol","supplementation","thymus","chilean","susceptibility","characterization","diagnostic","refractorinessrelated","tace","possible","challenges","herbal","medications","natural","potentials","c311s","lesions","assay","bioorthogonally","characteristics","chemical","fluorescence","geometrically","harnessing","lactonase","probes","synthesized","turnon","apnoea","concentrations","attenuates","combination","copd","cysteine","exacerbation","nacetyl","oxidativeinflammatory","propolis","calves","dexamethasone","illicit","marker","protein","veal","thirtyeight","agingrelated","subtype","anthocyanins","bilberry","crossover","fruit","isolated","placebocontrolled","rice","neuritis","optic","outcomes","pediatric","twoyear","infertility","male","snps","southeast","north","elevates","hydrolytic","paraxonase","snitrosylation"],"freq":[44,32,31,28,24,22,20,18,16,16,16,15,15,14,13,12,12,12,12,11,10,10,10,9,9,9,8,8,8,8,8,8,8,8,8,7,7,7,7,7,7,7,7,7,7,7,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"fontFamily":"Segoe UI","fontWeight":"bold","color":"random-dark","minSize":0,"weightFactor":6.545454545454546,"backgroundColor":"white","gridSize":0,"minRotation":-0.7853981633974483,"maxRotation":0.7853981633974483,"shuffle":true,"rotateRatio":0.4,"shape":"circle","ellipticity":0.65,"figBase64":null,"hover":null},"evals":[],"jsHooks":{"render":[{"code":"function(el,x){\n                        console.log(123);\n                        if(!iii){\n                          window.location.reload();\n                          iii = False;\n\n                        }\n  }","data":null}]}}</script>
+</div>
+<div id="bibliometria" class="section level2 hasAnchor" number="11.3">
+<h2><span class="header-section-number">11.3</span> Bibliometria<a href="pesquisa-bibliográfica-e-bibliometria.html#bibliometria" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Para fazer uma análise bibliométrica usamos o pacote bibliometrix
+O manual pode ser acessado em <a href="https://www.bibliometrix.org/vignettes/Introduction_to_bibliometrix.html" class="uri">https://www.bibliometrix.org/vignettes/Introduction_to_bibliometrix.html</a>
+<span class="citation">(<a href="#ref-aria2017bibliometrix">Aria and Cuccurullo 2017</a>)</span></p>
+<p>Você pode fazer sua busca no Web of Science, depois clique em exportar, arquivo de texto sem formatação, escolha a opção de quais quer salvar e selecione a opção registro completo, referências citadas e clique em exportar. Note que com essa opção é possível salvar 500 referências de cada vez, então se tiver mais de 500 referências, você terá vários arquivos, mas poderá importá-los de uma só vez no R.</p>
+<p>Para fazer a bibliometria usaremos dados baixados, em formato texto, do Web of Science. Para fazer a bibliometria, podemos usar dados de várias bases de dados, mas a Web of Science é a que oferece o maior número de metadados, permitindo utilizar todas as opções de análise.</p>
+<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb580-1" tabindex="-1"></a><span class="fu">library</span>(bibliometrix)</span></code></pre></div>
+<pre><code>## Warning: package &#39;bibliometrix&#39; was built under R version 4.3.1</code></pre>
+<pre><code>## Please note that our software is open source and available for use, distributed under the MIT license.
+## When it is used in a publication, we ask that authors properly cite the following reference:
+## 
+## Aria, M. &amp; Cuccurullo, C. (2017) bibliometrix: An R-tool for comprehensive science mapping analysis, 
+##                         Journal of Informetrics, 11(4), pp 959-975, Elsevier.
+## 
+## Failure to properly cite the software is considered a violation of the license.
+##                         
+## For information and bug reports:
+##                         - Take a look at https://www.bibliometrix.org
+##                         - Send an email to info@bibliometrix.org   
+##                         - Write a post on https://github.com/massimoaria/bibliometrix/issues
+##                         
+## Help us to keep Bibliometrix and Biblioshiny free to download and use by contributing with a small donation to support our research team (https://bibliometrix.org/donate.html)
+## 
+##                         
+## To start with the Biblioshiny app, please digit:
+## biblioshiny()</code></pre>
+<pre><code>## 
+## Attaching package: &#39;bibliometrix&#39;</code></pre>
+<pre><code>## The following object is masked _by_ &#39;.GlobalEnv&#39;:
+## 
+##     logo</code></pre>
+<pre><code>## The following object is masked from &#39;package:magick&#39;:
+## 
+##     logo</code></pre>
+<pre><code>## The following object is masked from &#39;package:IRanges&#39;:
+## 
+##     trim</code></pre>
+<pre><code>## The following object is masked from &#39;package:gdata&#39;:
+## 
+##     trim</code></pre>
+<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb588-1" tabindex="-1"></a>file1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;dados/wos.txt&quot;</span>)</span>
+<span id="cb588-2"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb588-2" tabindex="-1"></a>M1 <span class="ot">&lt;-</span> <span class="fu">convert2df</span>(<span class="at">file =</span> file1, <span class="at">dbsource =</span> <span class="st">&quot;wos&quot;</span>, <span class="at">format =</span> <span class="st">&quot;plaintext&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+## Converting your wos collection into a bibliographic dataframe
+## 
+## Done!
+## 
+## 
+## Generating affiliation field tag AU_UN from C1:  Done!</code></pre>
+<p>Podemos ver um resumo da análise:</p>
+<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb590-1" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">biblioAnalysis</span>(M1)</span>
+<span id="cb590-2"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb590-2" tabindex="-1"></a><span class="fu">summary</span>(results)</span></code></pre></div>
+<pre><code>## 
+## 
+## MAIN INFORMATION ABOUT DATA
+## 
+##  Timespan                              2013 : 2023 
+##  Sources (Journals, Books, etc)        261 
+##  Documents                             500 
+##  Annual Growth Rate %                  -18.6 
+##  Document Average Age                  5.31 
+##  Average citations per doc             16.2 
+##  Average citations per year per doc    2.425 
+##  References                            14641 
+##  
+## DOCUMENT TYPES                     
+##  article                         452 
+##  article; book chapter           1 
+##  article; early access           5 
+##  article; proceedings paper      21 
+##  meeting abstract                3 
+##  proceedings paper               1 
+##  review                          17 
+##  
+## DOCUMENT CONTENTS
+##  Keywords Plus (ID)                    1476 
+##  Author&#39;s Keywords (DE)                1260 
+##  
+## AUTHORS
+##  Authors                               2331 
+##  Author Appearances                    3225 
+##  Authors of single-authored docs       12 
+##  
+## AUTHORS COLLABORATION
+##  Single-authored docs                  19 
+##  Documents per Author                  0.215 
+##  Co-Authors per Doc                    6.45 
+##  International co-authorships %        29 
+##  
+## 
+## Annual Scientific Production
+## 
+##  Year    Articles
+##     2013       47
+##     2014       41
+##     2015       38
+##     2016       51
+##     2017       52
+##     2018       54
+##     2019       66
+##     2020       44
+##     2021       52
+##     2022       44
+##     2023        6
+## 
+## Annual Percentage Growth Rate -18.6 
+## 
+## 
+## Most Productive Authors
+## 
+##    Authors        Articles Authors        Articles Fractionalized
+## 1    GULCIN I           38   POHANKA M                       8.17
+## 2    TASLIMI P          32   GULCIN I                        6.58
+## 3    LOCKRIDGE O        21   TASLIMI P                       5.23
+## 4    MASSON P           19   LOCKRIDGE O                     4.52
+## 5    KUCA K             14   TURKAN F                        3.43
+## 6    MUSILEK K          14   MASSON P                        3.10
+## 7    SCHOPFER LM        14   SCHOPFER LM                     3.08
+## 8    STEPANKOVA S       13   SAXENA A                        2.64
+## 9    JUN D              11   STEPANKOVA S                    2.06
+## 10   KOVARIK Z          11   KUCA K                          2.02
+## 
+## 
+## Top manuscripts per citations
+## 
+##                            Paper                                     DOI  TC TCperYear  NTC
+## 1  GULCIN I, 2016, J ENZYM INHIB MED CH   10.3109/14756366.2015.1135914  144      18.0 4.81
+## 2  TURKAN F, 2019, BIOORG CHEM            10.1016/j.bioorg.2019.02.013   135      27.0 8.56
+## 3  AKSU K, 2016, ARCH PHARM               10.1002/ardp.201600183         119      14.9 3.97
+## 4  OZTASKIN N, 2017, BIOORG CHEM          10.1016/j.bioorg.2017.07.010   117      16.7 5.04
+## 5  BAYRAK C, 2017, BIOORG CHEM            10.1016/j.bioorg.2017.03.001   114      16.3 4.91
+## 6  ERDEMIR F, 2018, J MOL STRUCT          10.1016/j.molstruc.2017.11.079 113      18.8 6.29
+## 7  GARIBOV E, 2016, J ENZYM INHIB MED CH  10.1080/14756366.2016.1198901  112      14.0 3.74
+## 8  GULCIN I, 2016, J ENZYM INHIB MED CH-a 10.3109/14756366.2015.1094470  110      13.8 3.67
+## 9  OZGUN DO, 2016, J ENZYM INHIB MED CH   10.3109/14756366.2016.1149479  109      13.6 3.64
+## 10 OZBEY F, 2016, J ENZYM INHIB MED CH    10.1080/14756366.2016.1189422  107      13.4 3.57
+## 
+## 
+## Corresponding Author&#39;s Countries
+## 
+##           Country Articles   Freq SCP MCP MCP_Ratio
+## 1  TURKEY               71 0.1429  54  17     0.239
+## 2  USA                  68 0.1368  46  22     0.324
+## 3  CZECH REPUBLIC       42 0.0845  32  10     0.238
+## 4  CHINA                41 0.0825  35   6     0.146
+## 5  BRAZIL               32 0.0644  24   8     0.250
+## 6  PAKISTAN             28 0.0563  16  12     0.429
+## 7  RUSSIA               26 0.0523  16  10     0.385
+## 8  INDIA                20 0.0402  17   3     0.150
+## 9  GERMANY              19 0.0382  15   4     0.211
+## 10 KOREA                15 0.0302  12   3     0.200
+## 
+## 
+## SCP: Single Country Publications
+## 
+## MCP: Multiple Country Publications
+## 
+## 
+## Total Citations per Country
+## 
+##      Country      Total Citations Average Article Citations
+## 1  TURKEY                    2581                     36.35
+## 2  USA                        980                     14.41
+## 3  ITALY                      477                     34.07
+## 4  CZECH REPUBLIC             470                     11.19
+## 5  CHINA                      404                      9.85
+## 6  BRAZIL                     319                      9.97
+## 7  PAKISTAN                   318                     11.36
+## 8  INDIA                      273                     13.65
+## 9  POLAND                     265                     18.93
+## 10 KOREA                      229                     15.27
+## 
+## 
+## Most Relevant Sources
+## 
+##                                          Sources        Articles
+## 1  CHEMICO-BIOLOGICAL INTERACTIONS                            31
+## 2  MOLECULES                                                  22
+## 3  JOURNAL OF ENZYME INHIBITION AND MEDICINAL CHEMISTRY       18
+## 4  BIOORGANIC CHEMISTRY                                       17
+## 5  JOURNAL OF BIOCHEMICAL AND MOLECULAR TOXICOLOGY            11
+## 6  EUROPEAN JOURNAL OF MEDICINAL CHEMISTRY                    10
+## 7  ARCHIV DER PHARMAZIE                                        9
+## 8  BIOORGANIC &amp; MEDICINAL CHEMISTRY                            7
+## 9  ARCHIVES OF TOXICOLOGY                                      6
+## 10 JOURNAL OF MOLECULAR STRUCTURE                              6
+## 
+## 
+## Most Relevant Keywords
+## 
+##    Author Keywords (DE)      Articles Keywords-Plus (ID)     Articles
+## 1      BUTYRYLCHOLINESTERASE      296  ACETYLCHOLINESTERASE       152
+## 2      ACETYLCHOLINESTERASE       262  BUTYRYLCHOLINESTERASE       88
+## 3      MOLECULAR DOCKING           46  ALZHEIMERS-DISEASE          86
+## 4      CARBONIC ANHYDRASE          34  DERIVATIVES                 65
+## 5      ENZYME INHIBITION           32  CHOLINESTERASE              42
+## 6      ORGANOPHOSPHATE             17  DESIGN                      42
+## 7      MOLECULAR MODELING          13  CHOLINESTERASES             37
+## 8      ANTIOXIDANT                 12  INHIBITION                  35
+## 9      ANTIOXIDANT ACTIVITY        12  IN-VITRO                    34
+## 10     BIOSCAVENGER                12  BIOLOGICAL EVALUATION       33</code></pre>
+<p>Podemos ver os principais autores sobre o tema e sua produção ao longo do tempo</p>
+<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb592-1" tabindex="-1"></a>topAU <span class="ot">&lt;-</span> <span class="fu">authorProdOverTime</span>(M1, <span class="at">k =</span> <span class="dv">10</span>, <span class="at">graph =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/11-%20bibliometria%204-1.png" width="672" /></p>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb593-1" tabindex="-1"></a>topAU</span></code></pre></div>
+<pre><code>## $dfAU
+##          Author year freq  TC        TCpY
+## 1      GULCIN I 2016    7 787  98.3750000
+## 2      GULCIN I 2017   10 732 104.5714286
+## 3      GULCIN I 2018    9 544  90.6666667
+## 4      GULCIN I 2019    6 362  72.4000000
+## 5      GULCIN I 2020    3  31   7.7500000
+## 6      GULCIN I 2021    1  29   9.6666667
+## 7      GULCIN I 2022    1   0   0.0000000
+## 8         JUN D 2013    2  48   4.3636364
+## 9         JUN D 2014    1   9   0.9000000
+## 10        JUN D 2017    2  36   5.1428571
+## 11        JUN D 2018    1   6   1.0000000
+## 12        JUN D 2019    2   2   0.4000000
+## 13        JUN D 2020    1  14   3.5000000
+## 14        JUN D 2021    1   2   0.6666667
+## 15        JUN D 2022    1   0   0.0000000
+## 16    KOVARIK Z 2013    2  77   7.0000000
+## 17    KOVARIK Z 2016    2  45   5.6250000
+## 18    KOVARIK Z 2017    2  34   4.8571429
+## 19    KOVARIK Z 2018    1  21   3.5000000
+## 20    KOVARIK Z 2019    1  21   4.2000000
+## 21    KOVARIK Z 2020    2  27   6.7500000
+## 22    KOVARIK Z 2021    1   9   3.0000000
+## 23       KUCA K 2013    3  62   5.6363636
+## 24       KUCA K 2015    2  27   3.0000000
+## 25       KUCA K 2017    2  36   5.1428571
+## 26       KUCA K 2018    1   6   1.0000000
+## 27       KUCA K 2019    5  38   7.6000000
+## 28       KUCA K 2020    1  14   3.5000000
+## 29  LOCKRIDGE O 2013    1  13   1.1818182
+## 30  LOCKRIDGE O 2014    2  43   4.3000000
+## 31  LOCKRIDGE O 2015    3  89   9.8888889
+## 32  LOCKRIDGE O 2016    5  95  11.8750000
+## 33  LOCKRIDGE O 2017    3  41   5.8571429
+## 34  LOCKRIDGE O 2018    4  30   5.0000000
+## 35  LOCKRIDGE O 2019    1   5   1.0000000
+## 36  LOCKRIDGE O 2020    1   1   0.2500000
+## 37  LOCKRIDGE O 2022    1   2   1.0000000
+## 38     MASSON P 2013    1  17   1.5454545
+## 39     MASSON P 2014    2  28   2.8000000
+## 40     MASSON P 2015    1  17   1.8888889
+## 41     MASSON P 2016    3  73   9.1250000
+## 42     MASSON P 2017    2  29   4.1428571
+## 43     MASSON P 2018    2   5   0.8333333
+## 44     MASSON P 2019    4  18   3.6000000
+## 45     MASSON P 2020    2  12   3.0000000
+## 46     MASSON P 2021    1   1   0.3333333
+## 47     MASSON P 2022    1   1   0.5000000
+## 48    MUSILEK K 2013    1  19   1.7272727
+## 49    MUSILEK K 2015    2  27   3.0000000
+## 50    MUSILEK K 2018    1   6   1.0000000
+## 51    MUSILEK K 2019    5  27   5.4000000
+## 52    MUSILEK K 2020    1  14   3.5000000
+## 53    MUSILEK K 2021    4  13   4.3333333
+## 54  SCHOPFER LM 2013    1  13   1.1818182
+## 55  SCHOPFER LM 2014    1  20   2.0000000
+## 56  SCHOPFER LM 2015    1  40   4.4444444
+## 57  SCHOPFER LM 2016    2  28   3.5000000
+## 58  SCHOPFER LM 2017    3  41   5.8571429
+## 59  SCHOPFER LM 2018    3  28   4.6666667
+## 60  SCHOPFER LM 2019    1   5   1.0000000
+## 61  SCHOPFER LM 2020    1   1   0.2500000
+## 62  SCHOPFER LM 2022    1   2   1.0000000
+## 63 STEPANKOVA S 2013    1  37   3.3636364
+## 64 STEPANKOVA S 2014    2  20   2.0000000
+## 65 STEPANKOVA S 2015    1  19   2.1111111
+## 66 STEPANKOVA S 2016    2  33   4.1250000
+## 67 STEPANKOVA S 2018    1  12   2.0000000
+## 68 STEPANKOVA S 2020    3  13   3.2500000
+## 69 STEPANKOVA S 2021    2  11   3.6666667
+## 70 STEPANKOVA S 2022    1   1   0.5000000
+## 71    TASLIMI P 2016    5 533  66.6250000
+## 72    TASLIMI P 2017    8 636  90.8571429
+## 73    TASLIMI P 2018    9 544  90.6666667
+## 74    TASLIMI P 2019    5 353  70.6000000
+## 75    TASLIMI P 2021    1  29   9.6666667
+## 76    TASLIMI P 2022    4   5   2.5000000
+## 
+## $dfPapersAU
+## # A tibble: 186 × 7
+##    Author    year TI                                                                             SO    DOI      TC  TCpY
+##    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;                                                                          &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 GULCIN I  2022 EVALUATION OF ANTICHOLINERGIC, ANTIDIABETIC AND ANTIOXIDANT ACTIVITY OF ASTRA… KSU … 10.1…     0  0   
+##  2 GULCIN I  2021 DETERMINATION OF ANTICANCER PROPERTIES AND INHIBITORY EFFECTS OF SOME METABOL… JOUR… 10.1…    29  9.67
+##  3 GULCIN I  2020 ANTICHOLINERGIC AND ANTIOXIDANT ACTIVITIES OF AVOCADO (FOLIUM PERSEAE) LEAVES… INTE… 10.1…    24  6   
+##  4 GULCIN I  2020 SYNTHESIS AND PHARMACOLOGICAL EFFECTS OF NOVEL BENZENESULFONAMIDES CARRYING B… TURK… 10.3…     4  1   
+##  5 GULCIN I  2020 SCREENING OF NON-ALKALOID ACETYLCHOLINESTERASE AND CARBONIC ANHYDRASE ISOENZY… JOUR… 10.1…     3  0.75
+##  6 GULCIN I  2019 THE IMPACTS OF SOME SEDATIVE DRUGS ON ALPHA -GLYCOSIDASE, ACETYLCHOLINESTERAS… LETT… 10.2…    18  3.6 
+##  7 GULCIN I  2019 THE EFFECTS OF SOME ANTIBIOTICS FROM CEPHALOSPORIN GROUPS ON THE ACETYLCHOLIN… ARCH… 10.1…    47  9.4 
+##  8 GULCIN I  2019 PHYTOCHEMICAL CONTENT, ANTIOXIDANT ACTIVITY, AND ENZYME INHIBITION EFFECT OF … JOUR… 10.1…    93 18.6 
+##  9 GULCIN I  2019 SYNTHESIS, CHARACTERIZATION, CRYSTAL STRUCTURES, THEORETICAL CALCULATIONS AND… JOUR… 10.1…    60 12   
+## 10 GULCIN I  2019 SAR EVALUATION OF DISUBSTITUTED TACRINE ANALOGUES AS PROMISING CHOLINESTERASE… INDI… 10.5…     9  1.8 
+## # ℹ 176 more rows
+## 
+## $graph</code></pre>
+<p><img src="_main_files/figure-html/11-%20bibliometria%204-2.png" width="672" /></p>
+<p>Também podemos ver a co-ocorrência de palavras-chave:</p>
+<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb595-1" tabindex="-1"></a>NetMatrix <span class="ot">&lt;-</span> <span class="fu">biblioNetwork</span>(M1, <span class="at">analysis =</span> <span class="st">&quot;co-occurrences&quot;</span>, <span class="at">network =</span> <span class="st">&quot;keywords&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;;&quot;</span>)</span>
+<span id="cb595-2"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb595-2" tabindex="-1"></a>net<span class="ot">=</span><span class="fu">networkPlot</span>(NetMatrix, <span class="at">normalize=</span><span class="st">&quot;association&quot;</span>, <span class="at">weighted=</span>T, <span class="at">n =</span> <span class="dv">30</span>, <span class="at">Title =</span> <span class="st">&quot;Keyword Co-occurrences&quot;</span>, <span class="at">type =</span> <span class="st">&quot;fruchterman&quot;</span>, <span class="at">size=</span>T,<span class="at">edgesize =</span> <span class="dv">5</span>,<span class="at">labelsize=</span><span class="fl">0.7</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/11-%20bibliometria%205-1.png" width="672" /></p>
+<p>E estruturas conceituais usando as palavras-chave:</p>
+<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="pesquisa-bibliográfica-e-bibliometria.html#cb596-1" tabindex="-1"></a>CS <span class="ot">&lt;-</span> <span class="fu">conceptualStructure</span>(M1,<span class="at">field=</span><span class="st">&quot;ID&quot;</span>, <span class="at">method=</span><span class="st">&quot;CA&quot;</span>, <span class="at">minDegree=</span><span class="dv">4</span>, <span class="at">clust=</span><span class="dv">5</span>, <span class="at">stemming=</span><span class="cn">FALSE</span>, <span class="at">labelsize=</span><span class="dv">10</span>, <span class="at">documents=</span><span class="dv">10</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/11-%20bibliometria%206-1.png" width="672" /><img src="_main_files/figure-html/11-%20bibliometria%206-2.png" width="672" /><img src="_main_files/figure-html/11-%20bibliometria%206-3.png" width="672" /><img src="_main_files/figure-html/11-%20bibliometria%206-4.png" width="672" /></p>
+<p>Toda a análise bibliométrica também pode ser feita utilizando shiny, para isso usamos a seguinte função: biblioshiny(), com a qual será aberta uma janela interativa, onde carregamos o arquivo e podemos fazer as análises e gerar os gráficos.<br />
+Para maiores detalhes, consulte a documentação no site <a href="https://www.bibliometrix.org/" class="uri">https://www.bibliometrix.org/</a></p>
+
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-aria2017bibliometrix" class="csl-entry">
+Aria, Massimo, and Corrado Cuccurullo. 2017. <span>“Bibliometrix: An r-Tool for Comprehensive Science Mapping Analysis.”</span> <em>Journal of Informetrics</em> 11 (4): 959–75.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="dados-não-estruturados.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="r-markdown.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

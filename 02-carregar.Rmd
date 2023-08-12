@@ -1,0 +1,262 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Carregar e manipular dados
+
+Dados  
+Uma etapa muito importante é planejar as planilhas de dados. Se os dados estiverem bem organizados, isso vai poupar muito tempo.
+
+Como os dados devem estar organizados: os casos nas linhas e as variáveis nas colunas.
+
+Os dados podem estar em planilhas do excel ou em arquivos de texto. Vamos ver como carregar esses dados.
+
+## Ler arquivos txt e csv
+
+Para ler um arquivo txt usamos a função read.table. No exemplo abaixo, o arquivo iris.txt está dentro pasta dados:
+
+```{r 02- txt}
+dados<-read.table("dados/iris.txt", head=T, sep = ",")
+
+head(dados)
+tail(dados)
+```
+
+Onde **head=T** indica que os dados tem uma linha de cabeçalho e **sep** define o separador das variáveis, nesse caso é a vírgula.  
+Use **help("read.table")** para ver outros parâmetros.
+
+Podemos ver as primeiras linhas do objeto **head** e as últimas linhas com **tail**.
+
+## Ler arquivos xlsx
+
+Instale e ative o pacote openxlsx. Temos duas maneiras de instalar um pacote. No RStudio, podemos clicar em **Install** na aba **Packages** e então digitar o nome do pacote a ser instalado. Ou podemos usar a função install.packages(), especificando o nome do pacote dentro do parêntesis.  
+Sempre que formos utilizar um pacote, precisamos ativá-lo. Também temos duas maneiras de fazer isso. A primeira, usando o RStudio, na aba **Packages** procuramos o pacote e clicamos na caixa de seleção. A segunda maneira, a qual recomendo usar, é com a função **library()**. Dessa forma, a ativação já estará no script e não corremos o risco de esquecer de ativar o pacote.
+O pacote openxlsx permite ler e gravar arquivo xlsx, como no exemplo abaixo:  
+
+
+```{r 02- xlsx}
+library(openxlsx)
+dados2<-read.xlsx("dados/pinguim.xlsx", sheet = 1, colNames = T)
+head(dados2)
+```
+Onde sheet especifica qual planilha do arquivo xlsx deve ser lida e colNames = T indica que na primeira linha estão os títulos das colunas.
+Podemos definir outros parâmetros também, como por exemplo, especificar em qual linha começar a ler os dados com startRow =, ou definir quais colunas pegar com cols =.
+
+Também é possível usar a opção do RStudio para importar dados para isso, na aba environment, clique em import Dataset tem opções de importar dados do texto, do excel, do SPSS e outros formatos.
+
+## Gravar arquivos txt e xlsx
+
+Gravar arquivos
+
+Podemos gravar um arquivo txt ou xlsx
+
+```{r 02- write}
+write.table(dados, file="dados/flor.txt", quote=F, row.names = F,append=F)
+
+write.xlsx(dados, "dados/flor.xlsx", sheetName="Plan1", colNames=T, rowNames=F,append=F)
+```
+
+## Manipulação de dados (R base)
+
+Com a função **summary** podemos ver um resumo sobre uma variável:
+
+```{r 02- summary}
+summary(dados$sepal_l)
+```
+
+Para especificar a variável, usamos o nome do objeto seguido de \$ e o nome da coluna
+
+Podemos ver um resumo de todas as variáveis:
+
+```{r 02- summary 2}
+summary(dados)
+```
+
+Podemos ver as características das variáveis usando a função **str**:
+
+```{r 02- str}
+str(dados)
+```
+
+Indexação
+
+Podemos usar indexação para acessar dados específicos.
+
+```{r 02- indexacao}
+dados[2,3] # [linha, coluna]
+dados[,3] # todos os dados da coluna 3
+dados[2,] # todos os dados da linha 2
+dados$sepal_w # todos os dados da coluna sepal_w
+colnames(dados) # nomes das colunas
+```
+
+Selecionando dados.   
+Como exemplo, vamos selecionar apenas as linhas que
+correspondem à espécie *Iris virginica*. Os dados referentes à espécie estão na variável **class**.
+
+```{r 02- filtro}
+virginica<- dados[dados$class=="Iris-virginica",]
+```
+
+A indexação é linha, coluna. A vírgula no final sem nada depois significa que é para pegar todos as colunas.
+
+Se quisermos pegar só a coluna 3 usamos assim:
+
+```{r 02- filtro 2}
+petal_virginica<-dados[dados$class=="Iris-virginica", 3]
+```
+
+Podemos selecionar algumas colunas. No exemplo abaixo selecionamos as colunas 3 a 5:
+
+```{r 02- selecionar}
+dados3<-dados2[, c(3:5)]
+```
+
+Como a indexação é linha, coluna, dentro dos [] tem uma vírgula e nada antes da vírgula, isso significa pegar todas as linhas, depois da vírgula está especificado para pegar as colunas de 3 a 5.
+
+Criando uma coluna
+
+Criando uma coluna chamada índice com NA:
+
+```{r 02- coluna}
+dados$indice<-NA 
+dados$indice
+```
+
+Adicionando dados:
+
+```{r 02- dados}
+dados$indice<-(dados$sepal_l*dados$sepal_w)
+head(dados)
+```
+
+Operadores
+
+Podemos usar operadores:
+
+igual ==   
+diferente !=   
+x ou y =\> x \| y   
+x e y =\> x & y  
+
+
+Então, além de selecionar um parâmetro da variável class, aqui também selecionamos por outro parâmetro da variável sepal_l, usando o operador &.
+
+```{r 02- operadors}
+virginica2<- dados[dados$class=="Iris-virginica" & dados$sepal_l>6.5,]
+virginica2$sepal_l
+```
+
+## Transformação de dados
+
+Muitos valores das características tem escalas muito diferentes. Isso pode gerar dificuldades para algoritmos que usam todos esses valores para compor um valor único de comparação. Para resolver isso pode ser utilizada a normalização ou conversão de dados.
+
+## Técnicas de normalização
+
+Min-max: altera valores extremos e organiza os internos dentro de um novo intervalo. 
+  
+  
+v'=((v-min(v))/(max(v) - min(v)))\*(maxnovo - minnovo) +
+minnovo
+
+Para exemplificar, vamos transformar a variável body_mass_g em uma escala de 0 a 1 e armazenar o resultado em uma nova variável chamada body_norm:
+
+```{r 02- transformacao}
+maxnovo<-1
+minnovo<-0
+dados2$body_norm<-NA
+dados2$body_norm<-((dados2$body_mass_g-(min(dados2$body_mass_g, na.rm = T)))/(max(dados2$body_mass_g,na.rm = T) - (min(dados2$body_mass_g,na.rm = T)))*(maxnovo - minnovo) + minnovo)
+dados2$body_norm
+hist(dados2$body_norm)
+```
+
+Outra opção é o Z-score, no qual os valores são reorganizados pela média e desvio-padrão do conjunto original:  
+v1=(v - média(v))/desvio padrão (v)
+
+Vamos usar a mesma variável e transformar para Z-score:
+
+```{r 02- transformacao 2}
+dados2$body_norm2<-NA
+dados2$body_norm2<-(dados2$body_mass_g - mean(dados2$body_mass_g, na.rm = T))/sd(dados2$body_mass_g, na.rm=T)
+dados2$body_norm2
+hist(dados2$body_norm2)
+```
+
+Para identificando o tipo de variável, podemos usar algumas funções:
+
+```{r 02- identificacao}
+is.numeric(dados2$bill_length_mm)
+is.numeric(dados2$species)
+is.factor(dados2$species)
+is.character(dados2$species)
+```
+
+Transformando tipos de variáveis
+
+```{r 02- tipos}
+dados2$species<-as.factor(dados2$species)
+```
+
+Tem outras opções como as.numeric() e as.matrix()
+
+```{r 02- tipos 2}
+head(dados3)
+dados3<-as.matrix(dados3)
+is.matrix(dados3)
+```
+
+## Juntar dados (R base)
+
+Podemos usar o R para juntar dados de diferentes arquivos.
+
+Primeiro vamos carregar alguns dados:
+
+```{r 02- juntar}
+dados3<-read.xlsx("dados/dados_bioq.xlsx", sheet=1, colNames=T)
+dados4<-read.xlsx("dados/dados_bioq.xlsx", sheet=2, colNames=T)
+dados5<-read.xlsx("dados/dados_bioq.xlsx", sheet=3, colNames=T)
+
+```
+
+Esses dados tem diferentes informações da mesma amostra:
+
+```{r 02- juntar 2}
+head(dados3)
+head(dados4)
+head(dados5)
+```
+
+Juntando os dados3 e dados4:
+
+```{r 02- juntar 3}
+dados6<-merge.data.frame(dados3, dados4, by.x = "ID", by.y = "ID")
+head(dados6)
+```
+
+Em dados6 tem as amostras que estão presentes em dados3 e também em dados4.
+
+Juntando o objeto resultante com dados5:
+
+```{r 02- juntar 4}
+dados7<-merge.data.frame(dados6, dados5, by.x = "ID", by.y = "ID")
+head(dados7)
+```
+
+Mas também podemos manter apenas os dados de um ou outro objeto:
+
+```{r 02- juntar 5}
+dados8<-merge.data.frame(dados6, dados5, by.x = "ID", by.y = "ID", all.x = T)
+head(dados8)
+
+dados9<-merge.data.frame(dados6, dados5, by.x = "ID", by.y = "ID", all.y = T)
+head(dados9)
+```
+
+Ou ainda manter todas as amostras dos 2 objetos
+
+```{r 02- juntar 6 }
+dados10<-merge.data.frame(dados6, dados5, by.x = "ID", by.y = "ID", all.x = T, all.y = T)
+head(dados10)
+```

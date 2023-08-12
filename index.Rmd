@@ -1,0 +1,27 @@
+--- 
+title: "Análises de Dados com R"
+author: "Ricardo Lehtonen R. de Souza"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib]
+url: https://bookdown.org/ricardo_lehtonen/analise
+cover-image: capa.png
+description: |
+  Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações.
+link-citations: yes
+github-repo:
+isbn: 978-65-00-76198-6
+---
+
+# Prefácio {-}
+
+Na pesquisa científica, a análise de dados é uma parte fundamental e o R é uma linguagem que possibilita a fazer as mais diversas análises, não é apenas uma ferramenta estatística.  
+O R é um software livre e uma grande comunidade trabalha aperfeiçoando a ferramenta e todo dia temos novidades, tornando o aprendizado muito dinâmico.
+Há alguns anos, achei importante estimular o uso do R pelos discentes do Programa de Pós-Graduação em Genética da Universidade Federal do Paraná (UFPR), assim reformulei a disciplina de Bioinformática, introduzindo o R. Na primeira oferta da disciplina refomulada, trouxe minha amiga, a Dra Kelly Nunes, para ministrar a disciplina. De lá para cá já foram muitos discentes que passaram pela disciplina e fico contente ao ver eles utilizando o R em suas análises.
+Mais recentemente, havia uma demanda para aprender R por parte do curso de Biomedicina da UFPR, então propus criar uma disciplina optativa para a graduação, a qual foi ofertada inicialmente para os cursos de Biomedicina e Ciências Biológicas.
+Esse livro surgiu da necessidade de organizar o material didático que uso nessas disciplinas, de forma a facilitar a atualização das informações e disponibilização para os discentes.  
+ 
+
+ISBN: 978-65-00-76198-6
+

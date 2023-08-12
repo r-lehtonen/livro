@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 6 Funções e loops | Análises de Dados com R</title>
+  <meta name="description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 6 Funções e loops | Análises de Dados com R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bookdown.org/ricardo_lehtonen/analise/capa.png" />
+  <meta property="og:description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 6 Funções e loops | Análises de Dados com R" />
+  
+  <meta name="twitter:description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  <meta name="twitter:image" content="https://bookdown.org/ricardo_lehtonen/analise/capa.png" />
+
+<meta name="author" content="Ricardo Lehtonen R. de Souza" />
+
+
+<meta name="date" content="2023-07-31" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="estatística.html"/>
+<link rel="next" href="genética.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script>
+<link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet" />
+<script src="libs/tabwid-1.1.3/tabwid.js"></script>
+<link href="libs/wordcloud2-0.0.1/wordcloud.css" rel="stylesheet" />
+<script src="libs/wordcloud2-0.0.1/wordcloud2-all.js"></script>
+<script src="libs/wordcloud2-0.0.1/hover.js"></script>
+<script src="libs/wordcloud2-binding-0.2.1/wordcloud2.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Análises de dados com R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefácio</a></li>
+<li class="chapter" data-level="1" data-path="introdução.html"><a href="introdução.html"><i class="fa fa-check"></i><b>1</b> Introdução</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introdução.html"><a href="introdução.html#o-que-é-r"><i class="fa fa-check"></i><b>1.1</b> O que é R</a></li>
+<li class="chapter" data-level="1.2" data-path="introdução.html"><a href="introdução.html#instalação"><i class="fa fa-check"></i><b>1.2</b> Instalação</a></li>
+<li class="chapter" data-level="1.3" data-path="introdução.html"><a href="introdução.html#rstudio"><i class="fa fa-check"></i><b>1.3</b> RStudio</a></li>
+<li class="chapter" data-level="1.4" data-path="introdução.html"><a href="introdução.html#objetos-do-r"><i class="fa fa-check"></i><b>1.4</b> Objetos do R</a></li>
+<li class="chapter" data-level="1.5" data-path="introdução.html"><a href="introdução.html#nomes-dos-objetos-do-r"><i class="fa fa-check"></i><b>1.5</b> Nomes dos objetos do R</a></li>
+<li class="chapter" data-level="1.6" data-path="introdução.html"><a href="introdução.html#vetores"><i class="fa fa-check"></i><b>1.6</b> Vetores</a></li>
+<li class="chapter" data-level="1.7" data-path="introdução.html"><a href="introdução.html#operações-com-vetores"><i class="fa fa-check"></i><b>1.7</b> Operações com Vetores</a></li>
+<li class="chapter" data-level="1.8" data-path="introdução.html"><a href="introdução.html#fatores"><i class="fa fa-check"></i><b>1.8</b> Fatores</a></li>
+<li class="chapter" data-level="1.9" data-path="introdução.html"><a href="introdução.html#matrizes"><i class="fa fa-check"></i><b>1.9</b> Matrizes</a></li>
+<li class="chapter" data-level="1.10" data-path="introdução.html"><a href="introdução.html#listas"><i class="fa fa-check"></i><b>1.10</b> Listas</a></li>
+<li class="chapter" data-level="1.11" data-path="introdução.html"><a href="introdução.html#data-frame"><i class="fa fa-check"></i><b>1.11</b> Data frame</a></li>
+<li class="chapter" data-level="1.12" data-path="introdução.html"><a href="introdução.html#sequências"><i class="fa fa-check"></i><b>1.12</b> Sequências</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html"><i class="fa fa-check"></i><b>2</b> Carregar e manipular dados</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#ler-arquivos-txt-e-csv"><i class="fa fa-check"></i><b>2.1</b> Ler arquivos txt e csv</a></li>
+<li class="chapter" data-level="2.2" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#ler-arquivos-xlsx"><i class="fa fa-check"></i><b>2.2</b> Ler arquivos xlsx</a></li>
+<li class="chapter" data-level="2.3" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#gravar-arquivos-txt-e-xlsx"><i class="fa fa-check"></i><b>2.3</b> Gravar arquivos txt e xlsx</a></li>
+<li class="chapter" data-level="2.4" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#manipulação-de-dados-r-base"><i class="fa fa-check"></i><b>2.4</b> Manipulação de dados (R base)</a></li>
+<li class="chapter" data-level="2.5" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#transformação-de-dados"><i class="fa fa-check"></i><b>2.5</b> Transformação de dados</a></li>
+<li class="chapter" data-level="2.6" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#técnicas-de-normalização"><i class="fa fa-check"></i><b>2.6</b> Técnicas de normalização</a></li>
+<li class="chapter" data-level="2.7" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#juntar-dados-r-base"><i class="fa fa-check"></i><b>2.7</b> Juntar dados (R base)</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html"><i class="fa fa-check"></i><b>3</b> O sistema tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#manipulação-de-dados-com-tidyverse"><i class="fa fa-check"></i><b>3.1</b> Manipulação de dados com tidyverse</a></li>
+<li class="chapter" data-level="3.2" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-filter"><i class="fa fa-check"></i><b>3.2</b> Função filter</a></li>
+<li class="chapter" data-level="3.3" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-arrange"><i class="fa fa-check"></i><b>3.3</b> Função arrange</a></li>
+<li class="chapter" data-level="3.4" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-select"><i class="fa fa-check"></i><b>3.4</b> Função select</a></li>
+<li class="chapter" data-level="3.5" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-mutate-e-transmutate"><i class="fa fa-check"></i><b>3.5</b> Função mutate e transmutate</a></li>
+<li class="chapter" data-level="3.6" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#funções-group_by-e-summarise"><i class="fa fa-check"></i><b>3.6</b> Funções group_by e summarise</a></li>
+<li class="chapter" data-level="3.7" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#funções-pull-e-distinct"><i class="fa fa-check"></i><b>3.7</b> Funções pull e distinct</a></li>
+<li class="chapter" data-level="3.8" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#pipes"><i class="fa fa-check"></i><b>3.8</b> Pipes</a></li>
+<li class="chapter" data-level="3.9" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#pipe-nativa-do-r"><i class="fa fa-check"></i><b>3.9</b> Pipe nativa do R</a></li>
+<li class="chapter" data-level="3.10" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#tibble"><i class="fa fa-check"></i><b>3.10</b> Tibble</a></li>
+<li class="chapter" data-level="3.11" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#juntar-dados"><i class="fa fa-check"></i><b>3.11</b> Juntar dados</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="gráficos.html"><a href="gráficos.html"><i class="fa fa-check"></i><b>4</b> Gráficos</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="gráficos.html"><a href="gráficos.html#gráficos-com-o-pacote-graphics-r-base"><i class="fa fa-check"></i><b>4.1</b> Gráficos com o pacote graphics (R base)</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="gráficos.html"><a href="gráficos.html#introdução-aos-gráficos-do-r"><i class="fa fa-check"></i><b>4.1.1</b> Introdução aos gráficos do R</a></li>
+<li class="chapter" data-level="4.1.2" data-path="gráficos.html"><a href="gráficos.html#salvar"><i class="fa fa-check"></i><b>4.1.2</b> Salvar</a></li>
+<li class="chapter" data-level="4.1.3" data-path="gráficos.html"><a href="gráficos.html#histogramas"><i class="fa fa-check"></i><b>4.1.3</b> Histogramas</a></li>
+<li class="chapter" data-level="4.1.4" data-path="gráficos.html"><a href="gráficos.html#boxplot"><i class="fa fa-check"></i><b>4.1.4</b> Boxplot</a></li>
+<li class="chapter" data-level="4.1.5" data-path="gráficos.html"><a href="gráficos.html#barplot"><i class="fa fa-check"></i><b>4.1.5</b> Barplot</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="gráficos.html"><a href="gráficos.html#o-pacote-ggplot2"><i class="fa fa-check"></i><b>4.2</b> O pacote ggplot2</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="gráficos.html"><a href="gráficos.html#gráficos-de-pontos-dispersão"><i class="fa fa-check"></i><b>4.2.1</b> Gráficos de pontos (dispersão)</a></li>
+<li class="chapter" data-level="4.2.2" data-path="gráficos.html"><a href="gráficos.html#salvar-1"><i class="fa fa-check"></i><b>4.2.2</b> Salvar</a></li>
+<li class="chapter" data-level="4.2.3" data-path="gráficos.html"><a href="gráficos.html#histogramas-1"><i class="fa fa-check"></i><b>4.2.3</b> Histogramas</a></li>
+<li class="chapter" data-level="4.2.4" data-path="gráficos.html"><a href="gráficos.html#density-plot"><i class="fa fa-check"></i><b>4.2.4</b> Density plot</a></li>
+<li class="chapter" data-level="4.2.5" data-path="gráficos.html"><a href="gráficos.html#boxplot-1"><i class="fa fa-check"></i><b>4.2.5</b> Boxplot</a></li>
+<li class="chapter" data-level="4.2.6" data-path="gráficos.html"><a href="gráficos.html#gráfico-q-q"><i class="fa fa-check"></i><b>4.2.6</b> Gráfico Q-Q</a></li>
+<li class="chapter" data-level="4.2.7" data-path="gráficos.html"><a href="gráficos.html#figura-com-vários-gráficos"><i class="fa fa-check"></i><b>4.2.7</b> Figura com vários gráficos</a></li>
+<li class="chapter" data-level="4.2.8" data-path="gráficos.html"><a href="gráficos.html#ajustes-de-posição"><i class="fa fa-check"></i><b>4.2.8</b> Ajustes de Posição</a></li>
+<li class="chapter" data-level="4.2.9" data-path="gráficos.html"><a href="gráficos.html#geom-smooth"><i class="fa fa-check"></i><b>4.2.9</b> Geom Smooth</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="gráficos.html"><a href="gráficos.html#outros-pacotes-gráficos"><i class="fa fa-check"></i><b>4.3</b> Outros pacotes gráficos</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="gráficos.html"><a href="gráficos.html#usando-as-cores"><i class="fa fa-check"></i><b>4.3.1</b> Usando as cores</a></li>
+<li class="chapter" data-level="4.3.2" data-path="gráficos.html"><a href="gráficos.html#análise-gráfica-exploratória"><i class="fa fa-check"></i><b>4.3.2</b> Análise gráfica exploratória</a></li>
+<li class="chapter" data-level="4.3.3" data-path="gráficos.html"><a href="gráficos.html#ggplot2-mais-parâmetros"><i class="fa fa-check"></i><b>4.3.3</b> GGPLOT2: mais parâmetros</a></li>
+<li class="chapter" data-level="4.3.4" data-path="gráficos.html"><a href="gráficos.html#diagrama-de-venn"><i class="fa fa-check"></i><b>4.3.4</b> Diagrama de Venn</a></li>
+<li class="chapter" data-level="4.3.5" data-path="gráficos.html"><a href="gráficos.html#diagramas"><i class="fa fa-check"></i><b>4.3.5</b> Diagramas</a></li>
+<li class="chapter" data-level="4.3.6" data-path="gráficos.html"><a href="gráficos.html#outra-opção-é-o-pacote-ggflowchart"><i class="fa fa-check"></i><b>4.3.6</b> Outra opção é o pacote ggflowchart</a></li>
+<li class="chapter" data-level="4.3.7" data-path="gráficos.html"><a href="gráficos.html#datas-e-séries-temporais"><i class="fa fa-check"></i><b>4.3.7</b> Datas e séries temporais</a></li>
+<li class="chapter" data-level="4.3.8" data-path="gráficos.html"><a href="gráficos.html#time-series---dados-de-casos-de-covid-no-paraná"><i class="fa fa-check"></i><b>4.3.8</b> Time series - Dados de casos de COVID no Paraná</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="estatística.html"><a href="estatística.html"><i class="fa fa-check"></i><b>5</b> Estatística</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="estatística.html"><a href="estatística.html#estatística-descritiva"><i class="fa fa-check"></i><b>5.1</b> Estatística descritiva</a></li>
+<li class="chapter" data-level="5.2" data-path="estatística.html"><a href="estatística.html#testes-estatísticos"><i class="fa fa-check"></i><b>5.2</b> Testes estatísticos</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="estatística.html"><a href="estatística.html#normalidade"><i class="fa fa-check"></i><b>5.2.1</b> Normalidade</a></li>
+<li class="chapter" data-level="5.2.2" data-path="estatística.html"><a href="estatística.html#assimetria-e-curtose"><i class="fa fa-check"></i><b>5.2.2</b> Assimetria e curtose</a></li>
+<li class="chapter" data-level="5.2.3" data-path="estatística.html"><a href="estatística.html#teste-t"><i class="fa fa-check"></i><b>5.2.3</b> Teste t</a></li>
+<li class="chapter" data-level="5.2.4" data-path="estatística.html"><a href="estatística.html#teste-qui-quadrado"><i class="fa fa-check"></i><b>5.2.4</b> Teste qui-quadrado</a></li>
+<li class="chapter" data-level="5.2.5" data-path="estatística.html"><a href="estatística.html#correlação"><i class="fa fa-check"></i><b>5.2.5</b> Correlação</a></li>
+<li class="chapter" data-level="5.2.6" data-path="estatística.html"><a href="estatística.html#regressão"><i class="fa fa-check"></i><b>5.2.6</b> Regressão</a></li>
+<li class="chapter" data-level="5.2.7" data-path="estatística.html"><a href="estatística.html#anova"><i class="fa fa-check"></i><b>5.2.7</b> ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="estatística.html"><a href="estatística.html#visualização-de-resultados-estatísticos"><i class="fa fa-check"></i><b>5.3</b> Visualização de resultados estatísticos</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="funções-e-loops.html"><a href="funções-e-loops.html"><i class="fa fa-check"></i><b>6</b> Funções e loops</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="funções-e-loops.html"><a href="funções-e-loops.html#funções"><i class="fa fa-check"></i><b>6.1</b> Funções</a></li>
+<li class="chapter" data-level="6.2" data-path="funções-e-loops.html"><a href="funções-e-loops.html#loops"><i class="fa fa-check"></i><b>6.2</b> Loops</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="funções-e-loops.html"><a href="funções-e-loops.html#for"><i class="fa fa-check"></i><b>6.2.1</b> for</a></li>
+<li class="chapter" data-level="6.2.2" data-path="funções-e-loops.html"><a href="funções-e-loops.html#while"><i class="fa fa-check"></i><b>6.2.2</b> while</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="funções-e-loops.html"><a href="funções-e-loops.html#if-e-else"><i class="fa fa-check"></i><b>6.3</b> if e else</a></li>
+<li class="chapter" data-level="6.4" data-path="funções-e-loops.html"><a href="funções-e-loops.html#funções-apply-lapply-sapply-tapply-mapply"><i class="fa fa-check"></i><b>6.4</b> Funções apply, lapply, sapply, tapply, mapply</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="genética.html"><a href="genética.html"><i class="fa fa-check"></i><b>7</b> Genética</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="genética.html"><a href="genética.html#genética-de-populações"><i class="fa fa-check"></i><b>7.1</b> Genética de populações</a></li>
+<li class="chapter" data-level="7.2" data-path="genética.html"><a href="genética.html#genotipagem-com-genetics-e-loop"><i class="fa fa-check"></i><b>7.2</b> Genotipagem com genetics e loop</a></li>
+<li class="chapter" data-level="7.3" data-path="genética.html"><a href="genética.html#heredogramas"><i class="fa fa-check"></i><b>7.3</b> Heredogramas</a></li>
+<li class="chapter" data-level="7.4" data-path="genética.html"><a href="genética.html#análises-filogenéticas"><i class="fa fa-check"></i><b>7.4</b> Análises filogenéticas</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>8</b> Network</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="network.html"><a href="network.html#pacote-igraph"><i class="fa fa-check"></i><b>8.1</b> Pacote Igraph</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="bioconductor.html"><a href="bioconductor.html"><i class="fa fa-check"></i><b>9</b> Bioconductor</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="bioconductor.html"><a href="bioconductor.html#pacote-msa"><i class="fa fa-check"></i><b>9.1</b> Pacote msa</a></li>
+<li class="chapter" data-level="9.2" data-path="bioconductor.html"><a href="bioconductor.html#pacote-multimir"><i class="fa fa-check"></i><b>9.2</b> Pacote multiMiR</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html"><i class="fa fa-check"></i><b>10</b> Dados não estruturados</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#texto"><i class="fa fa-check"></i><b>10.1</b> Texto</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#análise-de-sentimentos"><i class="fa fa-check"></i><b>10.1.1</b> Análise de sentimentos</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#imagens"><i class="fa fa-check"></i><b>10.2</b> Imagens</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#edição-de-imagens"><i class="fa fa-check"></i><b>10.2.1</b> Edição de imagens</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#áudio"><i class="fa fa-check"></i><b>10.3</b> Áudio</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html"><i class="fa fa-check"></i><b>11</b> Pesquisa bibliográfica e Bibliometria</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#pesquisa-bibliográfica"><i class="fa fa-check"></i><b>11.1</b> Pesquisa bibliográfica</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#termos-da-busca"><i class="fa fa-check"></i><b>11.1.1</b> Termos da busca</a></li>
+<li class="chapter" data-level="11.1.2" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#bases-de-dados"><i class="fa fa-check"></i><b>11.1.2</b> Bases de dados</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#pubmed"><i class="fa fa-check"></i><b>11.2</b> PubMed</a></li>
+<li class="chapter" data-level="11.3" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#bibliometria"><i class="fa fa-check"></i><b>11.3</b> Bibliometria</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>12</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="r-markdown.html"><a href="r-markdown.html#incluindo-gráficos"><i class="fa fa-check"></i><b>12.1</b> Incluindo gráficos</a></li>
+<li class="chapter" data-level="12.2" data-path="r-markdown.html"><a href="r-markdown.html#chunk-opções"><i class="fa fa-check"></i><b>12.2</b> Chunk: opções</a></li>
+<li class="chapter" data-level="12.3" data-path="r-markdown.html"><a href="r-markdown.html#formatação"><i class="fa fa-check"></i><b>12.3</b> Formatação</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://docs.ufpr.br/~lehtonen/" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análises de Dados com R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="funções-e-loops" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Capítulo 6</span> Funções e loops<a href="funções-e-loops.html#funções-e-loops" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="funções" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Funções<a href="funções-e-loops.html#funções" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Uma função recebe alguns dados de entrada, faz algumas operações e devolve os dados de saída.</p>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="funções-e-loops.html#cb357-1" tabindex="-1"></a>funcao<span class="ot">&lt;-</span><span class="cf">function</span>(x, y)  <span class="co">#criando uma função</span></span>
+<span id="cb357-2"><a href="funções-e-loops.html#cb357-2" tabindex="-1"></a>{                       <span class="co">#inicio</span></span>
+<span id="cb357-3"><a href="funções-e-loops.html#cb357-3" tabindex="-1"></a>  result<span class="ot">&lt;-</span> x<span class="sc">^</span><span class="dv">2</span><span class="sc">+</span>y<span class="sc">^</span><span class="dv">2</span>      <span class="co">#calculando</span></span>
+<span id="cb357-4"><a href="funções-e-loops.html#cb357-4" tabindex="-1"></a>  <span class="fu">return</span>(result)        <span class="co">#valor a ser retornado</span></span>
+<span id="cb357-5"><a href="funções-e-loops.html#cb357-5" tabindex="-1"></a>}                       <span class="co">#fim</span></span></code></pre></div>
+<p>Usando a função:</p>
+<div class="sourceCode" id="cb358"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb358-1"><a href="funções-e-loops.html#cb358-1" tabindex="-1"></a><span class="fu">funcao</span>(<span class="dv">10</span>,<span class="dv">6</span>)</span></code></pre></div>
+<pre><code>## [1] 136</code></pre>
+<p>Quando ativamos um pacote, estamos ativando as funções daquele pacote.
+Podemos ver o conteúdo das funções digitando e executando o nome da função.</p>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="funções-e-loops.html#cb360-1" tabindex="-1"></a>funcao</span></code></pre></div>
+<pre><code>## function(x, y)  #criando uma função
+## {                       #inicio
+##   result&lt;- x^2+y^2      #calculando
+##   return(result)        #valor a ser retornado
+## }</code></pre>
+<p>Outro exemplo, podemos transformar em uma função aquele script que faz um histograma e sobrepõe a curva da distribuição normal:</p>
+<div class="sourceCode" id="cb362"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb362-1"><a href="funções-e-loops.html#cb362-1" tabindex="-1"></a>curva<span class="ot">&lt;-</span><span class="cf">function</span>(x){</span>
+<span id="cb362-2"><a href="funções-e-loops.html#cb362-2" tabindex="-1"></a>  m<span class="ot">&lt;-</span><span class="fu">mean</span>(x,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
+<span id="cb362-3"><a href="funções-e-loops.html#cb362-3" tabindex="-1"></a>  std<span class="ot">&lt;-</span><span class="fu">sd</span>(x,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
+<span id="cb362-4"><a href="funções-e-loops.html#cb362-4" tabindex="-1"></a>  <span class="fu">hist</span>(x, <span class="at">prob=</span><span class="cn">TRUE</span>)</span>
+<span id="cb362-5"><a href="funções-e-loops.html#cb362-5" tabindex="-1"></a>  <span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="at">mean=</span>m, <span class="at">sd=</span>std), </span>
+<span id="cb362-6"><a href="funções-e-loops.html#cb362-6" tabindex="-1"></a>        <span class="at">col=</span><span class="st">&quot;darkblue&quot;</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">add=</span><span class="cn">TRUE</span>, <span class="at">yaxt=</span><span class="st">&quot;n&quot;</span>)</span>
+<span id="cb362-7"><a href="funções-e-loops.html#cb362-7" tabindex="-1"></a>}</span></code></pre></div>
+<p>Usando a função:</p>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="funções-e-loops.html#cb363-1" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
+<span id="cb363-2"><a href="funções-e-loops.html#cb363-2" tabindex="-1"></a>dados<span class="ot">&lt;-</span><span class="fu">read.xlsx</span>(<span class="st">&quot;dados/pinguim.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">1</span>, <span class="at">colNames =</span> T)</span>
+<span id="cb363-3"><a href="funções-e-loops.html#cb363-3" tabindex="-1"></a></span>
+<span id="cb363-4"><a href="funções-e-loops.html#cb363-4" tabindex="-1"></a><span class="fu">curva</span>(dados<span class="sc">$</span>bill_length_mm)</span></code></pre></div>
+<p><img src="_main_files/figure-html/06-%20funcoes%205-1.png" width="672" /></p>
+<div class="sourceCode" id="cb364"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb364-1"><a href="funções-e-loops.html#cb364-1" tabindex="-1"></a><span class="fu">curva</span>(dados<span class="sc">$</span>bill_depth_mm)</span></code></pre></div>
+<p><img src="_main_files/figure-html/06-%20funcoes%205-2.png" width="672" /></p>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="funções-e-loops.html#cb365-1" tabindex="-1"></a><span class="fu">curva</span>(dados<span class="sc">$</span>flipper_length_mm)</span></code></pre></div>
+<p><img src="_main_files/figure-html/06-%20funcoes%205-3.png" width="672" /></p>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="funções-e-loops.html#cb366-1" tabindex="-1"></a><span class="fu">curva</span>(dados<span class="sc">$</span>body_mass_g)</span></code></pre></div>
+<p><img src="_main_files/figure-html/06-%20funcoes%205-4.png" width="672" /></p>
+<p>Porque escrever funções?</p>
+<p>Uma função te força a escrever tudo em termos gerais.
+As funções são criadas para tarefas que serão repetidas várias vezes. Em vez de copiar e colar o código várias vezes fazendo as alterações necessárias, usar funções é uma maneira muito mais razoável de resolver o problema e, uma vez criada e debbugada, é muito mais prático de usar.</p>
+<p>Um desafio é que o return só aceita um único objeto, ou seja, funções no R só retornam uma única coisa.</p>
+<p>Quando precisa retornar mais de uma coisa, uma opção é o list(), recebe qualquer coisa.</p>
+<p>Outra coisa que pode ser feita é quebrar uma função grande em funções menores. O R permite que uma função chame outra, o que facilita em muito o processo de criação de funções complicadas.</p>
+</div>
+<div id="loops" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Loops<a href="funções-e-loops.html#loops" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>São processos interativos para realizar uma sequências de comandos até uma condição predeterminada.</p>
+<div id="for" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> for<a href="funções-e-loops.html#for" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Uma comando para isso é o for()
+Para esse comando usamos um contador.
+Exemplo:</p>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="funções-e-loops.html#cb367-1" tabindex="-1"></a>i<span class="ot">&lt;-</span><span class="dv">1</span></span>
+<span id="cb367-2"><a href="funções-e-loops.html#cb367-2" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) <span class="fu">print</span>(i)</span></code></pre></div>
+<pre><code>## [1] 1
+## [1] 2
+## [1] 3
+## [1] 4
+## [1] 5</code></pre>
+<p>Podemos vários comandos. Nesse os comandos são colocados entre{}</p>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="funções-e-loops.html#cb369-1" tabindex="-1"></a>i<span class="ot">&lt;-</span><span class="dv">1</span></span>
+<span id="cb369-2"><a href="funções-e-loops.html#cb369-2" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>){</span>
+<span id="cb369-3"><a href="funções-e-loops.html#cb369-3" tabindex="-1"></a>  <span class="fu">print</span>(i)</span>
+<span id="cb369-4"><a href="funções-e-loops.html#cb369-4" tabindex="-1"></a>  <span class="fu">print</span>(i<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb369-5"><a href="funções-e-loops.html#cb369-5" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;teste&quot;</span>)</span>
+<span id="cb369-6"><a href="funções-e-loops.html#cb369-6" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## [1] 1
+## [1] 1
+## [1] &quot;teste&quot;
+## [1] 2
+## [1] 4
+## [1] &quot;teste&quot;
+## [1] 3
+## [1] 9
+## [1] &quot;teste&quot;
+## [1] 4
+## [1] 16
+## [1] &quot;teste&quot;
+## [1] 5
+## [1] 25
+## [1] &quot;teste&quot;</code></pre>
+</div>
+<div id="while" class="section level3 hasAnchor" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> while<a href="funções-e-loops.html#while" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Outro comando é o while</p>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="funções-e-loops.html#cb371-1" tabindex="-1"></a>j<span class="ot">&lt;-</span><span class="dv">1</span></span>
+<span id="cb371-2"><a href="funções-e-loops.html#cb371-2" tabindex="-1"></a><span class="cf">while</span>(j<span class="sc">&lt;</span><span class="dv">6</span>){</span>
+<span id="cb371-3"><a href="funções-e-loops.html#cb371-3" tabindex="-1"></a>  <span class="fu">print</span>(j)</span>
+<span id="cb371-4"><a href="funções-e-loops.html#cb371-4" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">&quot;teste&quot;</span>)</span>
+<span id="cb371-5"><a href="funções-e-loops.html#cb371-5" tabindex="-1"></a>  j<span class="ot">&lt;-</span>j<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb371-6"><a href="funções-e-loops.html#cb371-6" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## [1] 1
+## [1] &quot;teste&quot;
+## [1] 2
+## [1] &quot;teste&quot;
+## [1] 3
+## [1] &quot;teste&quot;
+## [1] 4
+## [1] &quot;teste&quot;
+## [1] 5
+## [1] &quot;teste&quot;</code></pre>
+</div>
+</div>
+<div id="if-e-else" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> if e else<a href="funções-e-loops.html#if-e-else" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Com os comandos if e else se uma condição for atendida é executada uma ação.</p>
+<p>Por exemplo:</p>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="funções-e-loops.html#cb373-1" tabindex="-1"></a>x<span class="ot">&lt;-</span><span class="dv">2</span></span>
+<span id="cb373-2"><a href="funções-e-loops.html#cb373-2" tabindex="-1"></a></span>
+<span id="cb373-3"><a href="funções-e-loops.html#cb373-3" tabindex="-1"></a><span class="cf">if</span>(x<span class="sc">==</span><span class="dv">1</span>) <span class="fu">print</span>(<span class="st">&quot;sim&quot;</span>) <span class="cf">else</span> <span class="fu">print</span>(<span class="st">&quot;não&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;não&quot;</code></pre>
+<p>Podemos usar o if e else dentro de um loop:</p>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="funções-e-loops.html#cb375-1" tabindex="-1"></a>i<span class="ot">&lt;-</span><span class="dv">1</span></span>
+<span id="cb375-2"><a href="funções-e-loops.html#cb375-2" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>){</span>
+<span id="cb375-3"><a href="funções-e-loops.html#cb375-3" tabindex="-1"></a>  <span class="cf">if</span>(i<span class="sc">&lt;</span><span class="dv">6</span>) <span class="fu">print</span>(<span class="st">&quot;sim&quot;</span>) <span class="cf">else</span> <span class="fu">print</span>(<span class="st">&quot;não&quot;</span>)</span>
+<span id="cb375-4"><a href="funções-e-loops.html#cb375-4" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## [1] &quot;sim&quot;
+## [1] &quot;sim&quot;
+## [1] &quot;sim&quot;
+## [1] &quot;sim&quot;
+## [1] &quot;sim&quot;
+## [1] &quot;não&quot;
+## [1] &quot;não&quot;
+## [1] &quot;não&quot;
+## [1] &quot;não&quot;
+## [1] &quot;não&quot;</code></pre>
+<p>Agora vamos usar um loop para fazer o teste de chi-quadrado e torná-lo mais funcional.
+Nesse exemplo temos que montar um arquivo de entrada com as seguintes características:
+- o arquivo de entrada deve ter a primeira coluna identificando a comparação
+- os valores das duas colunas seguintes são os valores do primeiro grupo em seguida os valores do outro grupo
+- exemplo: grupo 1 tem 200 ind. com alelo 1 e 300 com alelo 2 e o grupo 2 tem 250 com alelo 1 350 com alelo 2, então: comp1 200 300 250 350</p>
+<p>Vamos rodar um exemplo para isso vamos carregar o arquivo, transformar em matriz:</p>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="funções-e-loops.html#cb377-1" tabindex="-1"></a>dados4<span class="ot">&lt;-</span><span class="fu">read.xlsx</span>(<span class="st">&quot;dados/quiquadrado.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">1</span>, <span class="at">colNames =</span> F,<span class="at">rowNames =</span> T)</span>
+<span id="cb377-2"><a href="funções-e-loops.html#cb377-2" tabindex="-1"></a>dados5<span class="ot">&lt;-</span><span class="fu">as.matrix</span>(dados4)</span>
+<span id="cb377-3"><a href="funções-e-loops.html#cb377-3" tabindex="-1"></a>dados5</span></code></pre></div>
+<pre><code>##        X1  X2  X3  X4
+## comp1 372 950 244 450
+## comp2 244 850 260 780
+## comp3 510 970 490 950</code></pre>
+<p>Vamos criar um objeto (nomes) com os nomes das linhas.
+Agora vamos criar o loop, usando o comando for. O número de repetições do loop vai ser definido pelo número de elementos em nomes. Vamos armazenar os resultados em um arquivo txt:</p>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="funções-e-loops.html#cb379-1" tabindex="-1"></a>nomes<span class="ot">&lt;-</span><span class="fu">row.names</span>(dados5)</span>
+<span id="cb379-2"><a href="funções-e-loops.html#cb379-2" tabindex="-1"></a>nomes</span></code></pre></div>
+<pre><code>## [1] &quot;comp1&quot; &quot;comp2&quot; &quot;comp3&quot;</code></pre>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="funções-e-loops.html#cb381-1" tabindex="-1"></a>i<span class="ot">&lt;-</span><span class="dv">1</span> </span>
+<span id="cb381-2"><a href="funções-e-loops.html#cb381-2" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> nomes) {</span>
+<span id="cb381-3"><a href="funções-e-loops.html#cb381-3" tabindex="-1"></a>  a<span class="ot">&lt;-</span>dados5[i,<span class="dv">1</span>] <span class="co"># linha i, coluna 1</span></span>
+<span id="cb381-4"><a href="funções-e-loops.html#cb381-4" tabindex="-1"></a>  b<span class="ot">&lt;-</span>dados5[i,<span class="dv">2</span>] <span class="co"># linha i, coluna 2</span></span>
+<span id="cb381-5"><a href="funções-e-loops.html#cb381-5" tabindex="-1"></a>  c<span class="ot">&lt;-</span>dados5[i,<span class="dv">3</span>] <span class="co"># linha i, coluna 3</span></span>
+<span id="cb381-6"><a href="funções-e-loops.html#cb381-6" tabindex="-1"></a>  d<span class="ot">&lt;-</span>dados5[i,<span class="dv">4</span>] <span class="co"># linha i, coluna 4</span></span>
+<span id="cb381-7"><a href="funções-e-loops.html#cb381-7" tabindex="-1"></a>  quadrado<span class="ot">&lt;-</span><span class="fu">rbind</span>(<span class="fu">c</span>(a,c),<span class="fu">c</span>(b,d))</span>
+<span id="cb381-8"><a href="funções-e-loops.html#cb381-8" tabindex="-1"></a>  res_qui<span class="ot">&lt;-</span><span class="fu">chisq.test</span>(quadrado,<span class="at">correct=</span>F)</span>
+<span id="cb381-9"><a href="funções-e-loops.html#cb381-9" tabindex="-1"></a>  <span class="fu">write</span>(i,<span class="at">file=</span><span class="st">&quot;resultados/resultado_quiquadrado.txt&quot;</span>,  <span class="at">append =</span> T)</span>
+<span id="cb381-10"><a href="funções-e-loops.html#cb381-10" tabindex="-1"></a>  <span class="fu">capture.output</span>(res_qui, <span class="at">file=</span><span class="st">&quot;resultados/resultado_quiquadrado.txt&quot;</span>,  <span class="at">append =</span> T)</span>
+<span id="cb381-11"><a href="funções-e-loops.html#cb381-11" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="funções-apply-lapply-sapply-tapply-mapply" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Funções apply, lapply, sapply, tapply, mapply<a href="funções-e-loops.html#funções-apply-lapply-sapply-tapply-mapply" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A família Apply representa um conjunto de funções básicas do R que permite realizar operações sobre os dados contidos nas várias estruturas disponíveis (vetor, data frame, listas).</p>
+<p>A utilização destas funções permitem automatizar a aplicação das operações desejadas, permitindo assim ganhos de velocidade durante procedimentos que necessitam ser repetidos sobre todos os dados.</p>
+<p>A função apply é para matriz</p>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="funções-e-loops.html#cb382-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb382-2"><a href="funções-e-loops.html#cb382-2" tabindex="-1"></a>dados3<span class="ot">&lt;-</span>dados<span class="sc">%&gt;%</span></span>
+<span id="cb382-3"><a href="funções-e-loops.html#cb382-3" tabindex="-1"></a>  <span class="fu">select</span>(bill_length_mm<span class="sc">:</span>body_mass_g)</span>
+<span id="cb382-4"><a href="funções-e-loops.html#cb382-4" tabindex="-1"></a>dados3<span class="ot">&lt;-</span><span class="fu">as.matrix</span>(dados3)</span>
+<span id="cb382-5"><a href="funções-e-loops.html#cb382-5" tabindex="-1"></a></span>
+<span id="cb382-6"><a href="funções-e-loops.html#cb382-6" tabindex="-1"></a><span class="fu">apply</span>(dados3, <span class="dv">2</span>, mean, <span class="at">na.rm=</span>T) <span class="co"># 2 indica colunas, 1 indica linhas</span></span></code></pre></div>
+<pre><code>##    bill_length_mm     bill_depth_mm flipper_length_mm       body_mass_g 
+##          43.92193          17.15117         200.91520        4201.75439</code></pre>
+<p>A função lapply é para lista:</p>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="funções-e-loops.html#cb384-1" tabindex="-1"></a>x<span class="ot">&lt;-</span><span class="fu">list</span>(<span class="at">a =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">b =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>), <span class="at">c =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>,<span class="dv">1</span>), <span class="at">d =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>,<span class="dv">5</span>))</span>
+<span id="cb384-2"><a href="funções-e-loops.html#cb384-2" tabindex="-1"></a>x</span></code></pre></div>
+<pre><code>## $a
+## [1] 1 2 3 4
+## 
+## $b
+##  [1] -0.1462363  1.1329913  2.4079264  0.8440802  1.8885291 -1.5309676
+##  [7]  0.7304055 -1.2286932  1.8829656  0.5071695
+## 
+## $c
+##  [1]  1.1307528  0.1606436 -0.0783188  1.6592956  2.5304673 -0.7101490
+##  [7]  0.3305488  0.3119459  0.2144906  0.5243890 -0.3594519 -0.9596989
+## [13]  1.1986835  1.7080799  1.0791402  1.1761097  0.7434128 -0.2957054
+## [19]  0.7377619  0.4087309
+## 
+## $d
+##   [1] 4.987162 5.926693 5.123900 4.378592 4.231536 6.553934 3.703266 4.146679
+##   [9] 3.682711 4.529510 4.878990 5.071106 5.428486 5.024510 3.286090 3.776374
+##  [17] 4.367179 6.075260 6.586768 5.191323 4.959922 4.710876 6.579611 5.190614
+##  [25] 4.349555 6.711560 7.670846 5.056228 5.651544 5.481577 5.418695 5.314562
+##  [33] 3.749451 6.650012 4.480169 3.967190 3.340270 6.305455 5.190831 4.959075
+##  [41] 5.124409 6.011343 4.396762 4.833261 3.975135 6.206448 3.437240 6.350211
+##  [49] 4.110012 6.236525 8.267206 5.628478 5.075394 4.609689 5.738808 4.983893
+##  [57] 5.240769 5.594473 6.245396 4.209579 5.379996 4.838167 6.219653 5.428798
+##  [65] 6.390918 5.222443 3.840240 5.770810 4.687458 4.711948 3.464836 5.814927
+##  [73] 3.223144 6.755132 5.154703 5.021050 6.232634 5.366411 5.533100 6.266400
+##  [81] 5.635938 5.896446 5.166291 4.976217 6.404555 5.893115 5.587616 5.360103
+##  [89] 4.356734 5.684694 2.997125 4.673638 4.378489 4.450108 7.401493 5.236328
+##  [97] 5.062635 4.463701 5.840819 5.813454</code></pre>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="funções-e-loops.html#cb386-1" tabindex="-1"></a><span class="fu">lapply</span>(x, mean)</span></code></pre></div>
+<pre><code>## $a
+## [1] 2.5
+## 
+## $b
+## [1] 0.648817
+## 
+## $c
+## [1] 0.5755564
+## 
+## $d
+## [1] 5.195654</code></pre>
+<p>A função sapply é parecida com lapply, mas retorna vetor ou matriz:</p>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="funções-e-loops.html#cb388-1" tabindex="-1"></a><span class="fu">sapply</span>(x, mean) </span></code></pre></div>
+<pre><code>##         a         b         c         d 
+## 2.5000000 0.6488170 0.5755564 5.1956540</code></pre>
+<p>A função tapply é utilizada para aplicar um procedimento a diferentes partes dos dados dentro de um array, matriz ou data frame.
+Ela difere das demais funções vistas até aqui por exigir a existência de uma variável categórica, a qual servirá para agrupar os dados aos diferentes níveis.</p>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="funções-e-loops.html#cb390-1" tabindex="-1"></a><span class="fu">tapply</span>(dados<span class="sc">$</span>bill_length_mm, dados<span class="sc">$</span>sex, mean, <span class="at">na.rm=</span>T)</span></code></pre></div>
+<pre><code>##   female     male 
+## 42.09697 45.85476</code></pre>
+<p>A função mapply é uma versão multivariada da função lapply. As funções lapply e sapply atuam somente sobre os elementos de uma única lista.
+No caso da função mapply a função é aplicada sobre o primeiro elemento de cada um dos argumentos, em seguida ao segundo elemento, seguindo ao terceiro, e assim por diante.</p>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="funções-e-loops.html#cb392-1" tabindex="-1"></a><span class="fu">mapply</span>(sum, dados<span class="sc">$</span>bill_length_mm, dados<span class="sc">$</span>bill_depth_mm)</span></code></pre></div>
+<pre><code>##   [1] 57.8 56.9 58.3   NA 56.0 59.9 56.7 58.8 52.2 62.2 54.9 55.1 58.7 59.8 55.7
+##  [16] 54.4 57.7 63.2 52.8 67.5 56.1 56.4 55.1 56.3 56.0 54.2 59.2 58.4 56.5 59.4
+##  [31] 56.2 55.3 57.3 59.8 53.4 60.3 58.8 60.7 56.9 58.9 54.5 59.2 54.5 63.8 53.9
+##  [46] 58.4 60.1 56.4 53.9 63.5 57.3 59.0 52.9 61.5 52.6 60.0 56.5 59.4 53.1 56.7
+##  [61] 52.6 62.4 54.6 59.3 53.5 59.6 51.7 60.2 52.5 61.2 52.5 58.1 56.8 64.7 53.0
+##  [76] 61.3 57.7 56.6 52.3 61.2 51.8 60.5 55.5 54.5 55.1 61.6 55.8 55.5 57.5 57.7
+##  [91] 53.7 59.2 51.1 57.7 53.5 59.7 56.7 58.8 49.2 61.7 52.9 61.0 53.7 57.8 56.5
+## [106] 58.6 55.8 58.2 55.1 62.2 54.6 65.9 57.4 61.7 60.3 61.0 55.6 57.8 52.7 59.7
+## [121] 53.4 57.5 57.2 59.9 51.1 59.6 56.4 59.8 56.1 62.1 56.4 62.3 55.3 56.0 55.7
+## [136] 58.6 53.1 60.3 53.5 57.6 57.3 57.8 47.6 57.7 54.1 57.7 57.8 55.0 53.8 55.9
+## [151] 53.1 60.0 59.3 66.3 62.8 65.2 62.1 60.0 60.0 62.0 56.7 62.2 54.6 65.1 59.2
+## [166] 63.0 60.4 65.0 55.5 64.4 60.7 63.8 64.5 59.6 61.0 62.1 56.0 61.2 58.8 62.8
+## [181] 62.5 65.3 62.6 57.0 59.6 76.6 63.9 64.7 56.3 61.7 57.6 64.4 56.4 65.6 59.0
+## [196] 64.6 66.4 57.5 59.4 66.4 58.2 61.0 60.8 62.6 59.5 65.1 60.9 60.4 57.7 60.5
+## [211] 57.7 65.7 59.1 61.1 59.6 70.0 60.0 66.6 60.6 65.7 57.7 65.7 62.7 62.0 63.8
+## [226] 61.3 61.4 64.6 61.7 67.4 59.0 61.6 63.6 68.1 62.0 65.9 58.7 68.1 57.8 65.5
+## [241] 61.5 69.1 62.5 69.3 60.0 65.6 59.2 66.5 65.2 61.5 62.8 67.6 63.5 72.9 62.7
+## [256] 64.1 61.1 62.9 56.4 69.2 57.3 63.2 65.7 65.7 58.7 67.8 60.3 71.1 60.2 65.0
+## [271] 60.9   NA 61.1 66.1 60.0 66.0 64.4 69.5 70.5 64.1 72.5 63.0 64.3 69.5 64.9
+## [286] 71.2 64.4 72.0 64.3 70.1 63.0 70.1 70.3 75.8 65.0 67.4 59.7 66.0 59.8 70.0
+## [301] 64.6 71.0 68.9 68.5 64.2 72.8 57.5 75.0 59.2 69.8 68.3 64.3 65.9 72.7 63.5
+## [316] 73.4 68.5 63.7 70.0 62.5 68.8 69.3 68.0 68.6 70.2 67.1 64.5 70.4 63.0 70.4
+## [331] 59.8 71.0 61.8 69.2 69.0 65.0 71.4 63.3 62.7 75.6 61.6 67.8 69.8 68.9</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="estatística.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="genética.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

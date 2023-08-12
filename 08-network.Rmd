@@ -1,0 +1,79 @@
+# Network
+
+Em várias áreas temos dados complexos de interações entre diferentes grupos de elementos que estão sendo analisados e para esses casos, um gráfico de rede ajuda a visualizar essas interações, que podem ser espécies, genes ou pessoas.  
+
+Conceitos básicos:
+Vértices (Vertices) e arestas (edges)
+
+Vértices: é um ponto em que duas ou mais curvas, retas ou arestas se encontram.
+Arestas:  segmento de reta que liga dois vértices.  
+
+Os objetos para fazer uma rede é uma matriz de adjacências, que é uma matriz quadrada, onde os nomes das linha e colunas são os vértices e os valores dentro da matriz indicam uma conexão (1) dos vértices ou não (0). No entanto, podemos criar um objeto para rede a partir de um dataframe, como veremos depois.
+
+## Pacote Igraph
+
+
+Um dos principais pacotes para criar gráficos de redes é o igraph, cujo manual pode ser consultado em https://igraph.org/r/
+
+Existem muitas funções para criar diferentes estruturas de gráficos no Igraph.
+
+Conceitos básicos:
+Vértices (Vertices) e arestas (edges)
+
+Vértices: é um ponto em que duas ou mais curvas, retas ou arestas se encontram
+Arestas:  segmento de reta que liga dois vértices
+
+Exemplo:
+
+```{r 08- igraph, message=FALSE, warning=FALSE}
+library(igraph)
+g<-graph.full(n=10, directed = FALSE, loops = F)
+plot(g)
+```
+
+
+Gráfico completo: cada par de vértices tem uma aresta conectando-os, o argumento LOOPS = FALSE significa que as arestas próprias não são adicionadas.
+
+ Gráficos com a lista de arestas (edges) fornecida:
+ 
+```{r 08- igraph 2}
+edges <- c(1,2, 3,2, 2,4)
+g<-graph(edges, n=max(edges), directed=TRUE)
+plot(g)
+```
+ 
+Podemos montar um arquivo com os vértices e arestas
+
+```{r 08- igraph 3}
+library(openxlsx)
+arestas<-read.xlsx("dados/miRNA2.xlsx", sheet=1,colNames = T)
+vertices<-read.xlsx("dados/miRNA2.xlsx", sheet=2,colNames = T)
+head(arestas)
+head(vertices)
+```
+
+Vamos criar o objet net com a função graph_from_data:
+
+```{r 08- igraph 4}
+net <- graph_from_data_frame(arestas, directed=T) 
+net
+```
+
+E gerar o gráfico:
+
+```{r 08- igraph 5}
+plot(net, edge.arrow.size=.2,vertex.label=vertices$nome, vertex.label.color="blue", vertex.label.dist=3, vertex.size=5)
+```
+
+
+Podemos ainda mudar configurações:
+
+```{r 08- igraph 6}
+l <- layout_with_kk(net)
+l <- norm_coords(l, ymin=-1, ymax=1, xmin=-1, xmax=1)
+
+plot(net, rescale=F, layout=l*1.2, edge.arrow.size=.2,vertex.label=vertices$nome, vertex.label.color=vertices$tipo, vertex.label.dist=3, vertex.size=5, vertex.color=vertices$tipo)
+```
+
+
+

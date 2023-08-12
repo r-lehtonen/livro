@@ -1,0 +1,338 @@
+comp1
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 10.567, df = 1, p-value = 0.001151
+
+comp2
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 2.149, df = 1, p-value = 0.1427
+
+comp3
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 0.060399, df = 1, p-value = 0.8059
+
+comp1
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 10.567, df = 1, p-value =
+0.001151
+
+comp2
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 2.149, df = 1, p-value = 0.1427
+
+comp3
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 0.060399, df = 1, p-value =
+0.8059
+
+comp1
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 10.567, df = 1, p-value = 0.001151
+
+comp2
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 2.149, df = 1, p-value = 0.1427
+
+comp3
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 0.060399, df = 1, p-value = 0.8059
+
+comp1
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 10.567, df = 1, p-value = 0.001151
+
+comp2
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 2.149, df = 1, p-value = 0.1427
+
+comp3
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 0.060399, df = 1, p-value = 0.8059
+
+comp1
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 10.567, df = 1, p-value = 0.001151
+
+comp2
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 2.149, df = 1, p-value = 0.1427
+
+comp3
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 0.060399, df = 1, p-value = 0.8059
+
+comp1
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 10.567, df = 1, p-value = 0.001151
+
+comp2
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 2.149, df = 1, p-value = 0.1427
+
+comp3
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 0.060399, df = 1, p-value = 0.8059
+
+comp1
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 10.567, df = 1, p-value = 0.001151
+
+comp2
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 2.149, df = 1, p-value = 0.1427
+
+comp3
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 0.060399, df = 1, p-value = 0.8059
+
+comp1
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 10.567, df = 1, p-value = 0.001151
+
+comp2
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 2.149, df = 1, p-value = 0.1427
+
+comp3
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 0.060399, df = 1, p-value = 0.8059
+
+comp1
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 10.567, df = 1, p-value = 0.001151
+
+comp2
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 2.149, df = 1, p-value = 0.1427
+
+comp3
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 0.060399, df = 1, p-value = 0.8059
+
+comp1
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 10.567, df = 1, p-value = 0.001151
+
+comp2
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 2.149, df = 1, p-value = 0.1427
+
+comp3
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 0.060399, df = 1, p-value = 0.8059
+
+comp1
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 10.567, df = 1, p-value = 0.001151
+
+comp2
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 2.149, df = 1, p-value = 0.1427
+
+comp3
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 0.060399, df = 1, p-value = 0.8059
+
+comp1
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 10.567, df = 1, p-value = 0.001151
+
+comp2
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 2.149, df = 1, p-value = 0.1427
+
+comp3
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 0.060399, df = 1, p-value = 0.8059
+
+comp1
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 10.567, df = 1, p-value = 0.001151
+
+comp2
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 2.149, df = 1, p-value = 0.1427
+
+comp3
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 0.060399, df = 1, p-value = 0.8059
+
+comp1
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 10.567, df = 1, p-value = 0.001151
+
+comp2
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 2.149, df = 1, p-value = 0.1427
+
+comp3
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 0.060399, df = 1, p-value = 0.8059
+
+comp1
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 10.567, df = 1, p-value = 0.001151
+
+comp2
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 2.149, df = 1, p-value = 0.1427
+
+comp3
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 0.060399, df = 1, p-value = 0.8059
+
+comp1
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 10.567, df = 1, p-value = 0.001151
+
+comp2
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 2.149, df = 1, p-value = 0.1427
+
+comp3
+
+	Pearson's Chi-squared test
+
+data:  quadrado
+X-squared = 0.060399, df = 1, p-value = 0.8059
+

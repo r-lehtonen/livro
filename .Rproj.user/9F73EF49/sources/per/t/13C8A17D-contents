@@ -1,0 +1,442 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Introdução
+
+## O que é R
+
+O R é uma linguagem de alto nível e um ambiente para análise de dados e
+geração de gráficos. Alguns pensam que o R é apenas um pacote
+estatístico, no entanto, o R é muito mais do que isso, embora a parte
+estatística seja um dos pontos fortes do R.
+
+O R tem código aberto, ou seja, pode ser modificado, aprimorado a
+qualquer momento por qualquer usuário. Ele foi criado em 1991, na Nova
+Zelândia (University of Auckland) por Ross Ihaka e Robert Gentleman.
+
+O R está estruturado em duas partes principais, a base do R e os pacotes
+que podemos ir instalando.
+
+Existem milhares de pacotes do R para as mais diversas funções, que
+encontramos no repositórios:
+
+-   CRAN package repository.
+-   Bioconductor.
+
+Para saber como citar o R, basta usar o seguinte comando:
+
+```{r 01- citacao, echo=TRUE, message=FALSE, warning=FALSE}
+citation()
+```
+
+Ajuda sobre o R
+
+O R tem um sistema de ajuda bastante elaborado que lhe permitirá obter
+muita informação extra sobre a linguagem, bem como muitos outros
+aspectos. Usando a interface gráfica (RStudio), podemos obter ajuda
+através do menu Help Se pretende simplesmente obter ajuda sobre uma
+função em particular do R, a forma mais simples é usar a função help():
+
+```{r 01- help, message=FALSE, warning=FALSE}
+help(sqrt)
+```
+
+Além disso, disso existem muito material disponível na internet, abaixo
+estão alguns exemplos:
+
+Stackoverflow <https://stackoverflow.com/questions/tagged/r>
+
+Rdocumentation <https://www.rdocumentation.org/>
+
+Rseek <https://rseek.org/>
+
+R-bloggers <https://www.r-bloggers.com/>
+
+## Instalação
+
+O primeiro passo é instalar o R. Podemos baixar a última versão em
+<https://cran.r-project.org/> Nesse mesmo site temos a lista de pacotes
+disponíveis. Quando atualizamos o R, temos que instalar novamente os
+pacotes que tínhamos na versão anterior. Para facilitar, temos um pacote
+chamado installr, que permite atualizar o R, copiar e atualizar os
+pacotes para a nova versão.
+
+## RStudio
+
+Apesar de podermos utilizar o R diretamente no console, o uso da
+interface gráfica RStudio facilta muito o uso do R. Podemos baixar o
+RStudio de <https://posit.co/downloads/>
+
+No seguinte link tem dicas de como usar o RStudio:
+<https://posit.co/wp-content/uploads/2022/10/rstudio-ide-1.pdf>
+
+## Objetos do R
+
+O R é uma linguagem baseada em objetos, de forma que as coisas que
+usamos ficam na memória do computador sob a forma de um objeto. Esses
+objetos recebem um nome e podem armazenar diferentes tipos de
+informações como números, texto, vetores, matrizes, expressões, etc.
+
+Para armazenar algo num objeto usamos o operador de atribuição: **\<-**
+
+Exemplo:
+
+```{r 01 -operador}
+x1 <- 0.6
+```
+
+Para ver o conteúdo do objeto:
+
+```{r 01- objeto}
+x1
+```
+
+-   O [1] que aparece antes do número guardado no objeto mostra o número
+    da linha do conteúdo do objeto.
+-   A operação de atribuição é destrutiva no sentido que ao atribuir um
+    novo valor a um objeto existente, vamos perder o conteúdo que ele
+    estava armazenado anteriormente.
+
+Também podemos atribuir expressões numéricas a objetos. O resultado de
+tal operação é o de que o resultado do cálculo da expressão e não a
+expressão propriamente dita:
+
+```{r 01- operacoes}
+x2 <- 15
+x3 <- x2^3
+x3
+```
+
+-   Os objetos que criamos ficam na memória do computador e se quisermos
+    podemos apagar um objeto.\
+-   Podemos ver quais os objetos atualmente na memória do computador
+    usando as funções ls() ou objects().
+-   Se não necessitamos de algum dos objetos podemos apagá-lo com a
+    função rm()\
+-   No RStudio, podemos ver os objetos na aba environment e, se
+    quisermos apagar todos os objetos, podemos clicar no ícone da
+    vassoura, nesta mesma aba.
+
+## Nomes dos objetos do R
+
+-   Para darmos nome para os objetos podemos usar letras maiúsculas ou
+    minúsculas, os dígitos 0 a 9 (exceto no início do nome), o ponto
+    final e não podemos usar espaços.
+-   Lembre-se de que o R é sensível às letras maiúsculas / minúsculas,
+    por exemplo, o nome **dados** é diferente de **Dados**.
+
+## Vetores
+
+-   Um dos principais objetos do R para é o vetor.
+
+-   Um vetor é uma estrutura de dados que permite armazenar um conjunto
+    de valores do mesmo tipo (por exemplo números) sob um mesmo nome.
+
+-   Esses elementos podem depois ser acessados individualmente usando um
+    esquema de indexação.
+
+-   Este tipo de estrutura de dados é bastante útil quando pretendemos
+    armazenar várias coisas relacionadas.
+
+-   Todos os vetores em R tem um modo e um tamanho.
+
+-   O modo determina o tipo de valores guardado no vetor.
+
+-   Em R podemos ter vetores com modo character, logical, numeric e
+    complex.
+
+-   Ou seja, podemos ter vetores para armazenar os seguintes tipos de
+    dados: conjuntos de caracteres, valores lógicos (F ou T ou FALSE ou
+    TRUE), números inteiros ou reais, e números complexos
+
+-   Para criar vetores usamos a função c() e separamos os elementos por
+    vírgulas. Por exemplo, para armazenar um conjunto de notas:
+
+```{r 01- vetor 1}
+notas <- c(4, 7, 10, 9.5, 7.5)
+notas
+```
+
+-   Comprimento e modo do vetor:
+
+```{r 01- vetor 2}
+length(notas)
+mode(notas)
+```
+
+-   Ao criar um vetor temos que cuidar para que todos os elementos sejam
+    do mesmo tipo (modo).
+-   Se criarmos um vetor com tipos diferentes, o R vai forçá-los a ser
+    do mesmo tipo, como no exemplo a seguir:
+
+```{r 01- vetor 3}
+notas2 <- c(6, 10, 7.5, 9, 8, "nc")
+notas2
+```
+
+O vetor criado será do tipo caracter. No exemplo anterior coloquei nc
+para quem não compareceu. Para resolver isso temos outra alternativa,
+que veremos a seguir.
+
+-   No R temos um elemento especial que é o NA.
+-   Este valor representa um valor desconhecido.
+-   Por exemplo, se temos a idade de pacientes guardados num vetor, mas
+    não temos essa informação de um indivíduo, podemos criar esse vetor:
+
+```{r 01- vetor 4}
+idade<- c(23, 45, NA, 34)
+idade
+```
+
+-   Os elementos de um vetor podem ser acessados através de um índice:
+
+```{r 01- vetor 5}
+idade[2]
+```
+
+-   O R permite criar vetores vazios usando a função vector():
+
+```{r 01- vetor 6}
+x4 <- vector()
+```
+
+-   O tamanho de um vetor existente pode ser alterado atribuindo mais
+    elementos a índices até agora inexistentes:
+
+```{r 01- vetor 7}
+x4[3] <- 60
+x4
+```
+
+## Operações com Vetores
+
+-   A linguagem R permite vetorizar a maioria das suas funções. Por
+    exemplo, a função sqrt() que serve para calcular raíz quadrada:
+
+```{r 01- vetor 8}
+x5 <- c(9, 16, 25, 36, 49)
+x5 <- sqrt(x5)
+x5
+```
+
+O R pode ser usado para fazer operações aritméticas envolvendo vetores:
+
+```{r 01- vetor 9}
+x6 <- c(5, 10, 15)
+x7 <- c(20, 20, 20)
+x6 + x7
+```
+
+-   No entanto, se os vetores tiverem tamanhos diferentes, o R vai
+    reciclar os valores do vetor mais curto até este atingir o tamanho
+    do maior. Por exemplo:
+
+```{r 01- vetor 10}
+x8 <- c(5, 10, 15, 20)
+x9 <- c(5, 10)
+x8 + x9
+```
+
+## Fatores
+
+-   Quando temos variáveis categóricas, podemos usar outro tipo de
+    objeto do R, o fator.
+-   Cada fator tem um conjunto de níveis. Vamos ver um exemplo.
+    Suponhamos que pretendemos guardar o genótipo de 10 indivíduos em um
+    vetor:
+
+```{r 01- fator 1}
+gt <- c("CC", "CT", "CC", "CC", "CT", "TT", "CT", "CT", "TT", "CT")
+gt
+```
+
+Para transformar esse vetor de caracteres em um fator, usamos a função
+**factor**:
+
+```{r 01- fator 2}
+gt <- factor(gt)
+gt
+```
+
+-   Suponha agora que temos 4 indivíduos cujo genótipo pretendemos
+    armazenar.
+-   Imagine que por coincidência não aparece o genótipo TT.
+-   Se pretendemos que o fator resultante mantenha os 3 níveis
+    possíveis, teremos que fazer:
+
+```{r 01- fator 3}
+gt2 <- factor(c("CC", "CT", "CT", "CT"), levels = c("CC", "CT","TT"))
+gt2
+```
+
+Podemos usar a função **table** contar o número de ocorrências de cada
+valor (nível):
+
+```{r 01- fator 4}
+table(gt)
+```
+
+```{r 01- fator 5}
+table(gt2)
+```
+
+-   Para fatores do mesmo tamanho usamos a função table() para fazer
+    tabulações cruzadas de dois fatores.
+-   Usando o fator gt, com os genótipos dos indivíduos, e um novo fator
+    com os grupos (caso x controle), podemos fazer uma tabulação cruzada
+    entre genótipos e e grupo:
+
+```{r 01- fator 6}
+grupo <- factor(c("caso", "caso", "controle", "controle", "caso", "caso", "caso", "controle", "caso", "controle"))
+table(gt, grupo)
+```
+
+-   Também é possível obter frequências marginais e relativas:
+
+```{r 01- fator 7}
+tabela <- table(gt, grupo)
+margin.table(tabela, 1)
+```
+
+Frequências relativas com a função prop.table():
+
+```{r 01- fator 8}
+prop.table(tabela, 1)
+```
+
+```{r 01- fator 9}
+prop.table(tabela, 2)
+```
+
+```{r 01- fator 10}
+prop.table(tabela)
+```
+
+## Matrizes
+
+-   Para armazenar os dados em estruturas com mais do que uma dimensão
+    usamos as matrizes arranjam a informação em duas dimensões.
+
+-   Para criar uma matriz usamos uma função específica para isso. Se
+    quisermos criar uma matriz de 3 linhas e 4 colunas:
+
+```{r 01- matrizes 1}
+dados <- matrix(c(10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120), 3, 4)
+dados
+```
+
+-   Os números são colocados na matriz por coluna, mas se quisermos
+    preencher a matriz por linhas da seguinte forma:
+
+```{r 01- matrizes 2}
+dados2 <- matrix(c(10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120), 3, 4, byrow = T)
+dados2
+```
+
+-   Nas matrizes podemos dar nomes para linhas e colunas. Vejamos como
+    fazer isso no exemplo anterior:
+
+```{r 01- matrizes 3}
+rownames(dados) <- c("caso1", "caso2", "caso3")
+colnames(dados) <- c("var1", "var2", "var3", "var4")
+dados
+```
+
+-   Podemos acessar elementos individuais das matrizes usando um esquema
+    de indexação:
+
+```{r 01- matrizes 4}
+dados[2, 2]
+
+```
+
+Ou então, usando os nomes:
+
+```{r 01- matrizes 5}
+dados["caso1", "var2"] 
+```
+
+-   As funções cbind() e rbind() podem ser usadas para juntar dois ou
+    mais vetores ou matrizes, por colunas ou por linhas,
+    respectivamente, como podemos ver a seguir:
+
+```{r 01- matrizes 6}
+ex1 <- c(15, 25, 65, 75)
+ex2<-c(10, 20, 30, 40)
+
+m1<-cbind(ex1, ex2)
+m1
+m2<-rbind(ex1, ex2)
+m2
+```
+
+-   As regras aritméticas também se aplicam as matrizes.
+
+```{r 01- matrizes 7}
+m1 * 3
+
+```
+
+## Listas
+
+-   Outro objeto que temos é a lista. Na lista podemos colocar coisas
+    variadas, que não precisam ser do mesmo tipo, modo ou tamanho.
+-   Os componentes de uma lista em R são sempre numerados e podem também
+    ter um nome associados a eles.\
+-   Por exemplo, podemos criar uma lista com vários objetos criados
+    anteriormente:
+
+```{r 01- listas 1}
+lt <- list(idade, gt, dados)
+lt[[1]] 
+```
+
+## Data frame
+
+-   Um data frame é um objeto do R usado para guardar tabelas de dados
+    de um problema qualquer.
+-   É muito semelhante a uma matriz, mas as suas colunas tem nomes e
+    podem conter dados de tipo diferente, diferente da matriz.
+-   Um data frame pode ser visto como uma tabela de uma base de dados,
+    em que cada linha corresponde a um registro (linha) da tabela. Cada
+    coluna corresponde às propriedades (campos) a serem armazenadas para
+    cada registro da tabela.
+
+```{r 01- listas 2}
+dados2 <- data.frame(idade = c(50, 45, 30, 20), genotipo = c("CC", "CT", "CT", "TT"), sexo = c("M", "F", "M", "F"))
+dados2
+```
+
+## Sequências
+
+-   Para gerar dados sequenciais, em vez digitar os valores, podemos
+    gerar sequências de várias de formas.
+-   Por exemplo, para criar um vetor com os números de 1 a 100, em vez
+    de os escrevermos todos, podemos usar:
+
+```{r 01- sequencias 1}
+x <- 1:100
+```
+
+-   Exemplos:
+
+```{r 01- sequencias 2}
+seq(from = 1, to = 5, length = 4)
+seq(from = 1, to = 5, length = 2)
+seq(length = 10, from = -2, by = 0.2)
+letters[1:10]
+```
+
+-   Uma outra função bastante útil para gerar sequências é a função
+    rep():
+
+```{r 01- sequencias 3}
+rep(5, 10)
+rep("sim", 3)
+rep(1:3, 2)
+```
+
+Para ler um pouco mais sobre o assunto: [@torgo2011introduccao]

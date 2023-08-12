@@ -1,0 +1,2336 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 12 R Markdown | Análises de Dados com R</title>
+  <meta name="description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 12 R Markdown | Análises de Dados com R" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://bookdown.org/ricardo_lehtonen/analise/capa.png" />
+  <meta property="og:description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 12 R Markdown | Análises de Dados com R" />
+  
+  <meta name="twitter:description" content="Nesse livro trazemos uma introdução à analise de dados com R, começando do básico, com a instalação do R, passando pelos objetos do R, gráficos, estatística e mais algumas aplicações." />
+  <meta name="twitter:image" content="https://bookdown.org/ricardo_lehtonen/analise/capa.png" />
+
+<meta name="author" content="Ricardo Lehtonen R. de Souza" />
+
+
+<meta name="date" content="2023-07-31" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="pesquisa-bibliográfica-e-bibliometria.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.10/grViz.js"></script>
+<link href="libs/tabwid-1.1.3/tabwid.css" rel="stylesheet" />
+<script src="libs/tabwid-1.1.3/tabwid.js"></script>
+<link href="libs/wordcloud2-0.0.1/wordcloud.css" rel="stylesheet" />
+<script src="libs/wordcloud2-0.0.1/wordcloud2-all.js"></script>
+<script src="libs/wordcloud2-0.0.1/hover.js"></script>
+<script src="libs/wordcloud2-binding-0.2.1/wordcloud2.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Análises de dados com R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Prefácio</a></li>
+<li class="chapter" data-level="1" data-path="introdução.html"><a href="introdução.html"><i class="fa fa-check"></i><b>1</b> Introdução</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introdução.html"><a href="introdução.html#o-que-é-r"><i class="fa fa-check"></i><b>1.1</b> O que é R</a></li>
+<li class="chapter" data-level="1.2" data-path="introdução.html"><a href="introdução.html#instalação"><i class="fa fa-check"></i><b>1.2</b> Instalação</a></li>
+<li class="chapter" data-level="1.3" data-path="introdução.html"><a href="introdução.html#rstudio"><i class="fa fa-check"></i><b>1.3</b> RStudio</a></li>
+<li class="chapter" data-level="1.4" data-path="introdução.html"><a href="introdução.html#objetos-do-r"><i class="fa fa-check"></i><b>1.4</b> Objetos do R</a></li>
+<li class="chapter" data-level="1.5" data-path="introdução.html"><a href="introdução.html#nomes-dos-objetos-do-r"><i class="fa fa-check"></i><b>1.5</b> Nomes dos objetos do R</a></li>
+<li class="chapter" data-level="1.6" data-path="introdução.html"><a href="introdução.html#vetores"><i class="fa fa-check"></i><b>1.6</b> Vetores</a></li>
+<li class="chapter" data-level="1.7" data-path="introdução.html"><a href="introdução.html#operações-com-vetores"><i class="fa fa-check"></i><b>1.7</b> Operações com Vetores</a></li>
+<li class="chapter" data-level="1.8" data-path="introdução.html"><a href="introdução.html#fatores"><i class="fa fa-check"></i><b>1.8</b> Fatores</a></li>
+<li class="chapter" data-level="1.9" data-path="introdução.html"><a href="introdução.html#matrizes"><i class="fa fa-check"></i><b>1.9</b> Matrizes</a></li>
+<li class="chapter" data-level="1.10" data-path="introdução.html"><a href="introdução.html#listas"><i class="fa fa-check"></i><b>1.10</b> Listas</a></li>
+<li class="chapter" data-level="1.11" data-path="introdução.html"><a href="introdução.html#data-frame"><i class="fa fa-check"></i><b>1.11</b> Data frame</a></li>
+<li class="chapter" data-level="1.12" data-path="introdução.html"><a href="introdução.html#sequências"><i class="fa fa-check"></i><b>1.12</b> Sequências</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html"><i class="fa fa-check"></i><b>2</b> Carregar e manipular dados</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#ler-arquivos-txt-e-csv"><i class="fa fa-check"></i><b>2.1</b> Ler arquivos txt e csv</a></li>
+<li class="chapter" data-level="2.2" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#ler-arquivos-xlsx"><i class="fa fa-check"></i><b>2.2</b> Ler arquivos xlsx</a></li>
+<li class="chapter" data-level="2.3" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#gravar-arquivos-txt-e-xlsx"><i class="fa fa-check"></i><b>2.3</b> Gravar arquivos txt e xlsx</a></li>
+<li class="chapter" data-level="2.4" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#manipulação-de-dados-r-base"><i class="fa fa-check"></i><b>2.4</b> Manipulação de dados (R base)</a></li>
+<li class="chapter" data-level="2.5" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#transformação-de-dados"><i class="fa fa-check"></i><b>2.5</b> Transformação de dados</a></li>
+<li class="chapter" data-level="2.6" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#técnicas-de-normalização"><i class="fa fa-check"></i><b>2.6</b> Técnicas de normalização</a></li>
+<li class="chapter" data-level="2.7" data-path="carregar-e-manipular-dados.html"><a href="carregar-e-manipular-dados.html#juntar-dados-r-base"><i class="fa fa-check"></i><b>2.7</b> Juntar dados (R base)</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html"><i class="fa fa-check"></i><b>3</b> O sistema tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#manipulação-de-dados-com-tidyverse"><i class="fa fa-check"></i><b>3.1</b> Manipulação de dados com tidyverse</a></li>
+<li class="chapter" data-level="3.2" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-filter"><i class="fa fa-check"></i><b>3.2</b> Função filter</a></li>
+<li class="chapter" data-level="3.3" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-arrange"><i class="fa fa-check"></i><b>3.3</b> Função arrange</a></li>
+<li class="chapter" data-level="3.4" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-select"><i class="fa fa-check"></i><b>3.4</b> Função select</a></li>
+<li class="chapter" data-level="3.5" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#função-mutate-e-transmutate"><i class="fa fa-check"></i><b>3.5</b> Função mutate e transmutate</a></li>
+<li class="chapter" data-level="3.6" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#funções-group_by-e-summarise"><i class="fa fa-check"></i><b>3.6</b> Funções group_by e summarise</a></li>
+<li class="chapter" data-level="3.7" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#funções-pull-e-distinct"><i class="fa fa-check"></i><b>3.7</b> Funções pull e distinct</a></li>
+<li class="chapter" data-level="3.8" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#pipes"><i class="fa fa-check"></i><b>3.8</b> Pipes</a></li>
+<li class="chapter" data-level="3.9" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#pipe-nativa-do-r"><i class="fa fa-check"></i><b>3.9</b> Pipe nativa do R</a></li>
+<li class="chapter" data-level="3.10" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#tibble"><i class="fa fa-check"></i><b>3.10</b> Tibble</a></li>
+<li class="chapter" data-level="3.11" data-path="o-sistema-tidyverse.html"><a href="o-sistema-tidyverse.html#juntar-dados"><i class="fa fa-check"></i><b>3.11</b> Juntar dados</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="gráficos.html"><a href="gráficos.html"><i class="fa fa-check"></i><b>4</b> Gráficos</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="gráficos.html"><a href="gráficos.html#gráficos-com-o-pacote-graphics-r-base"><i class="fa fa-check"></i><b>4.1</b> Gráficos com o pacote graphics (R base)</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="gráficos.html"><a href="gráficos.html#introdução-aos-gráficos-do-r"><i class="fa fa-check"></i><b>4.1.1</b> Introdução aos gráficos do R</a></li>
+<li class="chapter" data-level="4.1.2" data-path="gráficos.html"><a href="gráficos.html#salvar"><i class="fa fa-check"></i><b>4.1.2</b> Salvar</a></li>
+<li class="chapter" data-level="4.1.3" data-path="gráficos.html"><a href="gráficos.html#histogramas"><i class="fa fa-check"></i><b>4.1.3</b> Histogramas</a></li>
+<li class="chapter" data-level="4.1.4" data-path="gráficos.html"><a href="gráficos.html#boxplot"><i class="fa fa-check"></i><b>4.1.4</b> Boxplot</a></li>
+<li class="chapter" data-level="4.1.5" data-path="gráficos.html"><a href="gráficos.html#barplot"><i class="fa fa-check"></i><b>4.1.5</b> Barplot</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="gráficos.html"><a href="gráficos.html#o-pacote-ggplot2"><i class="fa fa-check"></i><b>4.2</b> O pacote ggplot2</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="gráficos.html"><a href="gráficos.html#gráficos-de-pontos-dispersão"><i class="fa fa-check"></i><b>4.2.1</b> Gráficos de pontos (dispersão)</a></li>
+<li class="chapter" data-level="4.2.2" data-path="gráficos.html"><a href="gráficos.html#salvar-1"><i class="fa fa-check"></i><b>4.2.2</b> Salvar</a></li>
+<li class="chapter" data-level="4.2.3" data-path="gráficos.html"><a href="gráficos.html#histogramas-1"><i class="fa fa-check"></i><b>4.2.3</b> Histogramas</a></li>
+<li class="chapter" data-level="4.2.4" data-path="gráficos.html"><a href="gráficos.html#density-plot"><i class="fa fa-check"></i><b>4.2.4</b> Density plot</a></li>
+<li class="chapter" data-level="4.2.5" data-path="gráficos.html"><a href="gráficos.html#boxplot-1"><i class="fa fa-check"></i><b>4.2.5</b> Boxplot</a></li>
+<li class="chapter" data-level="4.2.6" data-path="gráficos.html"><a href="gráficos.html#gráfico-q-q"><i class="fa fa-check"></i><b>4.2.6</b> Gráfico Q-Q</a></li>
+<li class="chapter" data-level="4.2.7" data-path="gráficos.html"><a href="gráficos.html#figura-com-vários-gráficos"><i class="fa fa-check"></i><b>4.2.7</b> Figura com vários gráficos</a></li>
+<li class="chapter" data-level="4.2.8" data-path="gráficos.html"><a href="gráficos.html#ajustes-de-posição"><i class="fa fa-check"></i><b>4.2.8</b> Ajustes de Posição</a></li>
+<li class="chapter" data-level="4.2.9" data-path="gráficos.html"><a href="gráficos.html#geom-smooth"><i class="fa fa-check"></i><b>4.2.9</b> Geom Smooth</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="gráficos.html"><a href="gráficos.html#outros-pacotes-gráficos"><i class="fa fa-check"></i><b>4.3</b> Outros pacotes gráficos</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="gráficos.html"><a href="gráficos.html#usando-as-cores"><i class="fa fa-check"></i><b>4.3.1</b> Usando as cores</a></li>
+<li class="chapter" data-level="4.3.2" data-path="gráficos.html"><a href="gráficos.html#análise-gráfica-exploratória"><i class="fa fa-check"></i><b>4.3.2</b> Análise gráfica exploratória</a></li>
+<li class="chapter" data-level="4.3.3" data-path="gráficos.html"><a href="gráficos.html#ggplot2-mais-parâmetros"><i class="fa fa-check"></i><b>4.3.3</b> GGPLOT2: mais parâmetros</a></li>
+<li class="chapter" data-level="4.3.4" data-path="gráficos.html"><a href="gráficos.html#diagrama-de-venn"><i class="fa fa-check"></i><b>4.3.4</b> Diagrama de Venn</a></li>
+<li class="chapter" data-level="4.3.5" data-path="gráficos.html"><a href="gráficos.html#diagramas"><i class="fa fa-check"></i><b>4.3.5</b> Diagramas</a></li>
+<li class="chapter" data-level="4.3.6" data-path="gráficos.html"><a href="gráficos.html#outra-opção-é-o-pacote-ggflowchart"><i class="fa fa-check"></i><b>4.3.6</b> Outra opção é o pacote ggflowchart</a></li>
+<li class="chapter" data-level="4.3.7" data-path="gráficos.html"><a href="gráficos.html#datas-e-séries-temporais"><i class="fa fa-check"></i><b>4.3.7</b> Datas e séries temporais</a></li>
+<li class="chapter" data-level="4.3.8" data-path="gráficos.html"><a href="gráficos.html#time-series---dados-de-casos-de-covid-no-paraná"><i class="fa fa-check"></i><b>4.3.8</b> Time series - Dados de casos de COVID no Paraná</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="estatística.html"><a href="estatística.html"><i class="fa fa-check"></i><b>5</b> Estatística</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="estatística.html"><a href="estatística.html#estatística-descritiva"><i class="fa fa-check"></i><b>5.1</b> Estatística descritiva</a></li>
+<li class="chapter" data-level="5.2" data-path="estatística.html"><a href="estatística.html#testes-estatísticos"><i class="fa fa-check"></i><b>5.2</b> Testes estatísticos</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="estatística.html"><a href="estatística.html#normalidade"><i class="fa fa-check"></i><b>5.2.1</b> Normalidade</a></li>
+<li class="chapter" data-level="5.2.2" data-path="estatística.html"><a href="estatística.html#assimetria-e-curtose"><i class="fa fa-check"></i><b>5.2.2</b> Assimetria e curtose</a></li>
+<li class="chapter" data-level="5.2.3" data-path="estatística.html"><a href="estatística.html#teste-t"><i class="fa fa-check"></i><b>5.2.3</b> Teste t</a></li>
+<li class="chapter" data-level="5.2.4" data-path="estatística.html"><a href="estatística.html#teste-qui-quadrado"><i class="fa fa-check"></i><b>5.2.4</b> Teste qui-quadrado</a></li>
+<li class="chapter" data-level="5.2.5" data-path="estatística.html"><a href="estatística.html#correlação"><i class="fa fa-check"></i><b>5.2.5</b> Correlação</a></li>
+<li class="chapter" data-level="5.2.6" data-path="estatística.html"><a href="estatística.html#regressão"><i class="fa fa-check"></i><b>5.2.6</b> Regressão</a></li>
+<li class="chapter" data-level="5.2.7" data-path="estatística.html"><a href="estatística.html#anova"><i class="fa fa-check"></i><b>5.2.7</b> ANOVA</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="estatística.html"><a href="estatística.html#visualização-de-resultados-estatísticos"><i class="fa fa-check"></i><b>5.3</b> Visualização de resultados estatísticos</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="funções-e-loops.html"><a href="funções-e-loops.html"><i class="fa fa-check"></i><b>6</b> Funções e loops</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="funções-e-loops.html"><a href="funções-e-loops.html#funções"><i class="fa fa-check"></i><b>6.1</b> Funções</a></li>
+<li class="chapter" data-level="6.2" data-path="funções-e-loops.html"><a href="funções-e-loops.html#loops"><i class="fa fa-check"></i><b>6.2</b> Loops</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="funções-e-loops.html"><a href="funções-e-loops.html#for"><i class="fa fa-check"></i><b>6.2.1</b> for</a></li>
+<li class="chapter" data-level="6.2.2" data-path="funções-e-loops.html"><a href="funções-e-loops.html#while"><i class="fa fa-check"></i><b>6.2.2</b> while</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="funções-e-loops.html"><a href="funções-e-loops.html#if-e-else"><i class="fa fa-check"></i><b>6.3</b> if e else</a></li>
+<li class="chapter" data-level="6.4" data-path="funções-e-loops.html"><a href="funções-e-loops.html#funções-apply-lapply-sapply-tapply-mapply"><i class="fa fa-check"></i><b>6.4</b> Funções apply, lapply, sapply, tapply, mapply</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="genética.html"><a href="genética.html"><i class="fa fa-check"></i><b>7</b> Genética</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="genética.html"><a href="genética.html#genética-de-populações"><i class="fa fa-check"></i><b>7.1</b> Genética de populações</a></li>
+<li class="chapter" data-level="7.2" data-path="genética.html"><a href="genética.html#genotipagem-com-genetics-e-loop"><i class="fa fa-check"></i><b>7.2</b> Genotipagem com genetics e loop</a></li>
+<li class="chapter" data-level="7.3" data-path="genética.html"><a href="genética.html#heredogramas"><i class="fa fa-check"></i><b>7.3</b> Heredogramas</a></li>
+<li class="chapter" data-level="7.4" data-path="genética.html"><a href="genética.html#análises-filogenéticas"><i class="fa fa-check"></i><b>7.4</b> Análises filogenéticas</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="network.html"><a href="network.html"><i class="fa fa-check"></i><b>8</b> Network</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="network.html"><a href="network.html#pacote-igraph"><i class="fa fa-check"></i><b>8.1</b> Pacote Igraph</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="bioconductor.html"><a href="bioconductor.html"><i class="fa fa-check"></i><b>9</b> Bioconductor</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="bioconductor.html"><a href="bioconductor.html#pacote-msa"><i class="fa fa-check"></i><b>9.1</b> Pacote msa</a></li>
+<li class="chapter" data-level="9.2" data-path="bioconductor.html"><a href="bioconductor.html#pacote-multimir"><i class="fa fa-check"></i><b>9.2</b> Pacote multiMiR</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html"><i class="fa fa-check"></i><b>10</b> Dados não estruturados</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#texto"><i class="fa fa-check"></i><b>10.1</b> Texto</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#análise-de-sentimentos"><i class="fa fa-check"></i><b>10.1.1</b> Análise de sentimentos</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#imagens"><i class="fa fa-check"></i><b>10.2</b> Imagens</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#edição-de-imagens"><i class="fa fa-check"></i><b>10.2.1</b> Edição de imagens</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="dados-não-estruturados.html"><a href="dados-não-estruturados.html#áudio"><i class="fa fa-check"></i><b>10.3</b> Áudio</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html"><i class="fa fa-check"></i><b>11</b> Pesquisa bibliográfica e Bibliometria</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#pesquisa-bibliográfica"><i class="fa fa-check"></i><b>11.1</b> Pesquisa bibliográfica</a>
+<ul>
+<li class="chapter" data-level="11.1.1" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#termos-da-busca"><i class="fa fa-check"></i><b>11.1.1</b> Termos da busca</a></li>
+<li class="chapter" data-level="11.1.2" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#bases-de-dados"><i class="fa fa-check"></i><b>11.1.2</b> Bases de dados</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#pubmed"><i class="fa fa-check"></i><b>11.2</b> PubMed</a></li>
+<li class="chapter" data-level="11.3" data-path="pesquisa-bibliográfica-e-bibliometria.html"><a href="pesquisa-bibliográfica-e-bibliometria.html#bibliometria"><i class="fa fa-check"></i><b>11.3</b> Bibliometria</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="r-markdown.html"><a href="r-markdown.html"><i class="fa fa-check"></i><b>12</b> R Markdown</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="r-markdown.html"><a href="r-markdown.html#incluindo-gráficos"><i class="fa fa-check"></i><b>12.1</b> Incluindo gráficos</a></li>
+<li class="chapter" data-level="12.2" data-path="r-markdown.html"><a href="r-markdown.html#chunk-opções"><i class="fa fa-check"></i><b>12.2</b> Chunk: opções</a></li>
+<li class="chapter" data-level="12.3" data-path="r-markdown.html"><a href="r-markdown.html#formatação"><i class="fa fa-check"></i><b>12.3</b> Formatação</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://docs.ufpr.br/~lehtonen/" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análises de Dados com R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="r-markdown" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">Capítulo 12</span> R Markdown<a href="r-markdown.html#r-markdown" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Este é um documento R Markdown. Markdown é uma sintaxe de formatação simples para criar documentos HTML, PDF e MS Word. Para obter mais detalhes sobre o uso do R Markdown, consulte <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
+<p>Ao clicar no botão <strong>Knit</strong>, será gerado um documento que inclui tanto o conteúdo quanto a saída de qualquer fragmento de código R incorporado no documento. Você pode incorporar um pedaço de código R como este, no qual vamos carregar os pacotes, os dados, e gerar uma tabela com alguns informações estatísticas:</p>
+<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="r-markdown.html#cb597-1" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
+<span id="cb597-2"><a href="r-markdown.html#cb597-2" tabindex="-1"></a><span class="fu">library</span>(nortest)</span>
+<span id="cb597-3"><a href="r-markdown.html#cb597-3" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb597-4"><a href="r-markdown.html#cb597-4" tabindex="-1"></a>dados<span class="ot">&lt;-</span><span class="fu">read.xlsx</span>(<span class="st">&quot;dados/Data_Cortex_Nuclear.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">1</span>, <span class="at">colNames =</span> T)</span>
+<span id="cb597-5"><a href="r-markdown.html#cb597-5" tabindex="-1"></a><span class="fu">head</span>(dados)</span></code></pre></div>
+<pre><code>##   MouseID  DYRK1A_N   ITSN1_N    BDNF_N    NR1_N   NR2A_N    pAKT_N   pBRAF_N pCAMKII_N   pCREB_N   pELK_N    pERK_N
+## 1   309_1 0.5036439 0.7471932 0.4301753 2.816329 5.990152 0.2188300 0.1775655  2.373744 0.2322238 1.750936 0.6879062
+## 2   309_2 0.5146171 0.6890635 0.4117703 2.789514 5.685038 0.2116362 0.1728170  2.292150 0.2269721 1.596377 0.6950062
+## 3   309_3 0.5091831 0.7302468 0.4183088 2.687201 5.622059 0.2090109 0.1757222  2.283337 0.2302468 1.561316 0.6773484
+## 4   309_4 0.4421067 0.6170762 0.3586263 2.466947 4.979503 0.2228858 0.1764626  2.152301 0.2070042 1.595086 0.5832768
+## 5   309_5 0.4349402 0.6174298 0.3588022 2.365785 4.718679 0.2131059 0.1736270  2.134014 0.1921579 1.504230 0.5509601
+## 6   309_6 0.4475064 0.6281758 0.3673881 2.385939 4.807635 0.2185778 0.1762334  2.141282 0.1951875 1.442398 0.5663396
+##      pJNK_N    PKCA_N    pMEK_N    pNR1_N   pNR2A_N  pNR2B_N pPKCAB_N    pRSK_N     AKT_N    BRAF_N  CAMKII_N    CREB_N
+## 1 0.3063817 0.4026984 0.2969273 1.0220603 0.6056726 1.877684 2.308745 0.4415994 0.8593658 0.4162891 0.3696080 0.1789443
+## 2 0.2990511 0.3859868 0.2813189 0.9566759 0.5875587 1.725774 2.043037 0.4452219 0.8346593 0.4003642 0.3561775 0.1736797
+## 3 0.2912761 0.3810025 0.2817103 1.0036350 0.6024488 1.731873 2.017984 0.4676679 0.8143294 0.3998469 0.3680888 0.1739047
+## 4 0.2967287 0.3770870 0.3138320 0.8753903 0.5202932 1.566852 2.132754 0.4776707 0.7277046 0.3856387 0.3629700 0.1794489
+## 5 0.2869612 0.3635021 0.2779643 0.8649120 0.5079898 1.480059 2.013697 0.4834161 0.6877937 0.3675305 0.3553109 0.1748355
+## 6 0.2898239 0.3638930 0.2668369 0.8591209 0.5213066 1.538244 1.968275 0.4959000 0.6724022 0.3694045 0.3571717 0.1797285
+##      ELK_N    ERK_N  GSK3B_N     JNK_N     MEK_N    TRKA_N     RSK_N     APP_N Bcatenin_N    SOD1_N    MTOR_N     P38_N
+## 1 1.866358 3.685247 1.537227 0.2645263 0.3196770 0.8138665 0.1658460 0.4539098   3.037621 0.3695096 0.4585385 0.3353358
+## 2 1.761047 3.485287 1.509249 0.2557270 0.3044187 0.7805042 0.1571935 0.4309403   2.921882 0.3422793 0.4235599 0.3248347
+## 3 1.765544 3.571456 1.501244 0.2596135 0.3117467 0.7851540 0.1608954 0.4231873   2.944136 0.3436962 0.4250048 0.3248517
+## 4 1.286277 2.970137 1.419710 0.2595358 0.2792181 0.7344917 0.1622099 0.4106149   2.500204 0.3445093 0.4292113 0.3301208
+## 5 1.324695 2.896334 1.359876 0.2507050 0.2736672 0.7026991 0.1548274 0.3985498   2.456560 0.3291258 0.4087552 0.3134148
+## 6 1.227450 2.956983 1.447910 0.2508402 0.2840436 0.7043958 0.1568759 0.3910472   2.467133 0.3275978 0.4044899 0.2962764
+##     pMTOR_N   DSCR1_N   AMPKA_N    NR2B_N   pNUMB_N  RAPTOR_N   TIAM1_N  pP70S6_N    NUMB_N   P70S6_N  pGSK3B_N
+## 1 0.8251920 0.5769155 0.4480993 0.5862714 0.3947213 0.3395706 0.4828639 0.2941698 0.1821505 0.8427252 0.1926084
+## 2 0.7617176 0.5450973 0.4208761 0.5450973 0.3682546 0.3219592 0.4545193 0.2764306 0.1820863 0.8476146 0.1948153
+## 3 0.7570308 0.5436197 0.4046298 0.5529941 0.3638799 0.3130859 0.4471972 0.2566482 0.1843877 0.8561658 0.2007373
+## 4 0.7469798 0.5467626 0.3868603 0.5478485 0.3667707 0.3284919 0.4426497 0.3985340 0.1617677 0.7602335 0.1841694
+## 5 0.6919565 0.5368605 0.3608164 0.5128240 0.3515510 0.3122063 0.4190949 0.3934470 0.1602002 0.7681129 0.1857183
+## 6 0.6744186 0.5397231 0.3542143 0.5143164 0.3472241 0.3031321 0.4128243 0.3825783 0.1623303 0.7796946 0.1867930
+##    pPKCG_N    CDK5_N      S6_N ADARB1_N AcetylH3K9_N    RRP1_N     BAX_N     ARC_N   ERBB4_N    nNOS_N     Tau_N
+## 1 1.443091 0.2947000 0.3546045 1.339070    0.1701188 0.1591024 0.1888517 0.1063052 0.1449893 0.1766677 0.1251904
+## 2 1.439460 0.2940598 0.3545483 1.306323    0.1714271 0.1581289 0.1845700 0.1065922 0.1504709 0.1783090 0.1342751
+## 3 1.524364 0.3018807 0.3860868 1.279600    0.1854563 0.1486963 0.1905322 0.1083031 0.1453302 0.1762129 0.1325604
+## 4 1.612382 0.2963818 0.2906795 1.198765    0.1597991 0.1661123 0.1853235 0.1031838 0.1406558 0.1638042 0.1232096
+## 5 1.645807 0.2968294 0.3093450 1.206995    0.1646503 0.1606870 0.1882214 0.1047838 0.1419830 0.1677096 0.1368377
+## 6 1.634615 0.2880373 0.3323671 1.123445    0.1756929 0.1505939 0.1838235 0.1064762 0.1395645 0.1748445 0.1305147
+##      GFAP_N   GluR3_N   GluR4_N    IL1B_N   P3525_N pCASP9_N  PSD95_N    SNCA_N Ubiquitin_N pGSK3B_Tyr216_N     SHH_N
+## 1 0.1152909 0.2280435 0.1427556 0.4309575 0.2475378 1.603310 2.014875 0.1082343   1.0449792       0.8315565 0.1888517
+## 2 0.1182345 0.2380731 0.1420366 0.4571562 0.2576322 1.671738 2.004605 0.1097485   1.0098831       0.8492704 0.2004036
+## 3 0.1177602 0.2448173 0.1424450 0.5104723 0.2553430 1.663550 2.016831 0.1081962   0.9968476       0.8467087 0.1936845
+## 4 0.1174394 0.2349467 0.1450682 0.4309959 0.2511031 1.484624 1.957233 0.1198832   0.9902247       0.8332768 0.1921119
+## 5 0.1160478 0.2555277 0.1408705 0.4812265 0.2517730 1.534835 2.009109 0.1195244   0.9977750       0.8786678 0.2056042
+## 6 0.1152432 0.2368495 0.1364536 0.4785775 0.2444853 1.507777 2.003535 0.1206872   0.9201782       0.8436793 0.1904695
+##       BAD_N BCL2_N     pS6_N   pCFOS_N     SYP_N H3AcK18_N    EGR1_N  H3MeK4_N   CaNA_N Genotype Treatment Behavior
+## 1 0.1226520     NA 0.1063052 0.1083359 0.4270992 0.1147832 0.1317900 0.1281856 1.675652  Control Memantine      C/S
+## 2 0.1166822     NA 0.1065922 0.1043154 0.4415813 0.1119735 0.1351030 0.1311187 1.743610  Control Memantine      C/S
+## 3 0.1185082     NA 0.1083031 0.1062193 0.4357769 0.1118829 0.1333618 0.1274311 1.926427  Control Memantine      C/S
+## 4 0.1327812     NA 0.1031838 0.1112620 0.3916910 0.1304053 0.1474442 0.1469011 1.700563  Control Memantine      C/S
+## 5 0.1299541     NA 0.1047838 0.1106939 0.4341538 0.1184814 0.1403143 0.1483799 1.839730  Control Memantine      C/S
+## 6 0.1315752     NA 0.1064762 0.1094457 0.4398331 0.1166572 0.1407664 0.1421804 1.816389  Control Memantine      C/S
+##    class
+## 1 c-CS-m
+## 2 c-CS-m
+## 3 c-CS-m
+## 4 c-CS-m
+## 5 c-CS-m
+## 6 c-CS-m</code></pre>
+<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="r-markdown.html#cb599-1" tabindex="-1"></a>nomes<span class="ot">&lt;-</span><span class="fu">colnames</span>(dados)</span>
+<span id="cb599-2"><a href="r-markdown.html#cb599-2" tabindex="-1"></a>tabela1<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">Proteina=</span><span class="fu">as.character</span>(<span class="cn">NA</span>),<span class="at">Media=</span><span class="cn">NA</span>,<span class="at">Mediana=</span><span class="cn">NA</span>, <span class="at">Desvio=</span><span class="cn">NA</span>, <span class="at">Minimo=</span><span class="cn">NA</span>,<span class="at">Maximo=</span><span class="cn">NA</span>,<span class="at">Normalidade=</span><span class="cn">NA</span>)</span>
+<span id="cb599-3"><a href="r-markdown.html#cb599-3" tabindex="-1"></a></span>
+<span id="cb599-4"><a href="r-markdown.html#cb599-4" tabindex="-1"></a>i<span class="ot">&lt;-</span><span class="dv">2</span></span>
+<span id="cb599-5"><a href="r-markdown.html#cb599-5" tabindex="-1"></a>j<span class="ot">&lt;-</span><span class="dv">1</span></span>
+<span id="cb599-6"><a href="r-markdown.html#cb599-6" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> i<span class="sc">:</span><span class="dv">78</span>) {</span>
+<span id="cb599-7"><a href="r-markdown.html#cb599-7" tabindex="-1"></a>  nome_snp<span class="ot">&lt;-</span>nomes[i]</span>
+<span id="cb599-8"><a href="r-markdown.html#cb599-8" tabindex="-1"></a>  m<span class="ot">&lt;-</span><span class="fu">mean</span>(dados[,i],<span class="at">na.rm=</span>T)</span>
+<span id="cb599-9"><a href="r-markdown.html#cb599-9" tabindex="-1"></a>  md<span class="ot">&lt;-</span><span class="fu">median</span>(dados[,i],<span class="at">na.rm=</span>T)</span>
+<span id="cb599-10"><a href="r-markdown.html#cb599-10" tabindex="-1"></a>  std<span class="ot">&lt;-</span><span class="fu">sd</span>(dados[,i],<span class="at">na.rm=</span>T)</span>
+<span id="cb599-11"><a href="r-markdown.html#cb599-11" tabindex="-1"></a>  mi<span class="ot">&lt;-</span><span class="fu">min</span>(dados[,i],<span class="at">na.rm=</span>T)</span>
+<span id="cb599-12"><a href="r-markdown.html#cb599-12" tabindex="-1"></a>  ma<span class="ot">&lt;-</span><span class="fu">max</span>(dados[,i],<span class="at">na.rm=</span>T)</span>
+<span id="cb599-13"><a href="r-markdown.html#cb599-13" tabindex="-1"></a>  x<span class="ot">&lt;-</span><span class="fu">lillie.test</span>(dados[,i])</span>
+<span id="cb599-14"><a href="r-markdown.html#cb599-14" tabindex="-1"></a>  p<span class="ot">&lt;-</span>x<span class="sc">$</span>p.value</span>
+<span id="cb599-15"><a href="r-markdown.html#cb599-15" tabindex="-1"></a>  </span>
+<span id="cb599-16"><a href="r-markdown.html#cb599-16" tabindex="-1"></a>  tabela1[j,]<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">Proteina=</span><span class="fu">as.character</span>(nome_snp),<span class="at">Media=</span>m,<span class="at">Mediana=</span>md, <span class="at">Desvio=</span>std, <span class="at">Minimo=</span>mi,<span class="at">Maximo=</span>ma, <span class="at">Normalidade=</span>p)</span>
+<span id="cb599-17"><a href="r-markdown.html#cb599-17" tabindex="-1"></a>  </span>
+<span id="cb599-18"><a href="r-markdown.html#cb599-18" tabindex="-1"></a>  j<span class="ot">&lt;-</span>j<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb599-19"><a href="r-markdown.html#cb599-19" tabindex="-1"></a>}</span>
+<span id="cb599-20"><a href="r-markdown.html#cb599-20" tabindex="-1"></a></span>
+<span id="cb599-21"><a href="r-markdown.html#cb599-21" tabindex="-1"></a></span>
+<span id="cb599-22"><a href="r-markdown.html#cb599-22" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb599-23"><a href="r-markdown.html#cb599-23" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb599-24"><a href="r-markdown.html#cb599-24" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<p>Agora podemos formatar a tabela e exibir o resulado:</p>
+<div class="sourceCode" id="cb600"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb600-1"><a href="r-markdown.html#cb600-1" tabindex="-1"></a><span class="fu">kable</span>(tabela1, <span class="at">caption=</span><span class="st">&quot;Tabela 1. Arquivo Cortex: análise descritiva&quot;</span>, <span class="at">escape =</span> F)<span class="sc">%&gt;%</span></span>
+<span id="cb600-2"><a href="r-markdown.html#cb600-2" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>, <span class="st">&quot;condensed&quot;</span>, <span class="st">&quot;responsive&quot;</span>), <span class="at">full_width =</span> F)</span></code></pre></div>
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+(#tab:12- markdown 2)Tabela 1. Arquivo Cortex: análise descritiva
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Proteina
+</th>
+<th style="text-align:right;">
+Media
+</th>
+<th style="text-align:right;">
+Mediana
+</th>
+<th style="text-align:right;">
+Desvio
+</th>
+<th style="text-align:right;">
+Minimo
+</th>
+<th style="text-align:right;">
+Maximo
+</th>
+<th style="text-align:right;">
+Normalidade
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+DYRK1A_N
+</td>
+<td style="text-align:right;">
+0.4258102
+</td>
+<td style="text-align:right;">
+0.3663776
+</td>
+<td style="text-align:right;">
+0.2493620
+</td>
+<td style="text-align:right;">
+0.1453265
+</td>
+<td style="text-align:right;">
+2.5163674
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ITSN1_N
+</td>
+<td style="text-align:right;">
+0.6171020
+</td>
+<td style="text-align:right;">
+0.5657818
+</td>
+<td style="text-align:right;">
+0.2516400
+</td>
+<td style="text-align:right;">
+0.2453585
+</td>
+<td style="text-align:right;">
+2.6026621
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BDNF_N
+</td>
+<td style="text-align:right;">
+0.3190884
+</td>
+<td style="text-align:right;">
+0.3165642
+</td>
+<td style="text-align:right;">
+0.0493831
+</td>
+<td style="text-align:right;">
+0.1151814
+</td>
+<td style="text-align:right;">
+0.4971599
+</td>
+<td style="text-align:right;">
+0.0000669
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NR1_N
+</td>
+<td style="text-align:right;">
+2.2972691
+</td>
+<td style="text-align:right;">
+2.2965459
+</td>
+<td style="text-align:right;">
+0.3472929
+</td>
+<td style="text-align:right;">
+1.3308307
+</td>
+<td style="text-align:right;">
+3.7576413
+</td>
+<td style="text-align:right;">
+0.7412549
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NR2A_N
+</td>
+<td style="text-align:right;">
+3.8439339
+</td>
+<td style="text-align:right;">
+3.7608554
+</td>
+<td style="text-align:right;">
+0.9331001
+</td>
+<td style="text-align:right;">
+1.7375399
+</td>
+<td style="text-align:right;">
+8.4825534
+</td>
+<td style="text-align:right;">
+0.0000087
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pAKT_N
+</td>
+<td style="text-align:right;">
+0.2331681
+</td>
+<td style="text-align:right;">
+0.2311767
+</td>
+<td style="text-align:right;">
+0.0416345
+</td>
+<td style="text-align:right;">
+0.0632360
+</td>
+<td style="text-align:right;">
+0.5390501
+</td>
+<td style="text-align:right;">
+0.0001755
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pBRAF_N
+</td>
+<td style="text-align:right;">
+0.1818464
+</td>
+<td style="text-align:right;">
+0.1823022
+</td>
+<td style="text-align:right;">
+0.0270421
+</td>
+<td style="text-align:right;">
+0.0640426
+</td>
+<td style="text-align:right;">
+0.3170656
+</td>
+<td style="text-align:right;">
+0.0009099
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pCAMKII_N
+</td>
+<td style="text-align:right;">
+3.5371091
+</td>
+<td style="text-align:right;">
+3.3265198
+</td>
+<td style="text-align:right;">
+1.2951695
+</td>
+<td style="text-align:right;">
+1.3439982
+</td>
+<td style="text-align:right;">
+7.4640702
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pCREB_N
+</td>
+<td style="text-align:right;">
+0.2125739
+</td>
+<td style="text-align:right;">
+0.2105943
+</td>
+<td style="text-align:right;">
+0.0325870
+</td>
+<td style="text-align:right;">
+0.1128118
+</td>
+<td style="text-align:right;">
+0.3062472
+</td>
+<td style="text-align:right;">
+0.0071059
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pELK_N
+</td>
+<td style="text-align:right;">
+1.4286819
+</td>
+<td style="text-align:right;">
+1.3558456
+</td>
+<td style="text-align:right;">
+0.4669037
+</td>
+<td style="text-align:right;">
+0.4290323
+</td>
+<td style="text-align:right;">
+6.1133475
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pERK_N
+</td>
+<td style="text-align:right;">
+0.5459041
+</td>
+<td style="text-align:right;">
+0.4436439
+</td>
+<td style="text-align:right;">
+0.3453091
+</td>
+<td style="text-align:right;">
+0.1491552
+</td>
+<td style="text-align:right;">
+3.5666854
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pJNK_N
+</td>
+<td style="text-align:right;">
+0.3135054
+</td>
+<td style="text-align:right;">
+0.3213296
+</td>
+<td style="text-align:right;">
+0.0519781
+</td>
+<td style="text-align:right;">
+0.0521104
+</td>
+<td style="text-align:right;">
+0.4934259
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PKCA_N
+</td>
+<td style="text-align:right;">
+0.3179395
+</td>
+<td style="text-align:right;">
+0.3129771
+</td>
+<td style="text-align:right;">
+0.0522363
+</td>
+<td style="text-align:right;">
+0.1914307
+</td>
+<td style="text-align:right;">
+0.4739920
+</td>
+<td style="text-align:right;">
+0.0000007
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pMEK_N
+</td>
+<td style="text-align:right;">
+0.2750332
+</td>
+<td style="text-align:right;">
+0.2773925
+</td>
+<td style="text-align:right;">
+0.0461636
+</td>
+<td style="text-align:right;">
+0.0568182
+</td>
+<td style="text-align:right;">
+0.4580006
+</td>
+<td style="text-align:right;">
+0.0168937
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pNR1_N
+</td>
+<td style="text-align:right;">
+0.8258128
+</td>
+<td style="text-align:right;">
+0.8210764
+</td>
+<td style="text-align:right;">
+0.1179692
+</td>
+<td style="text-align:right;">
+0.5001597
+</td>
+<td style="text-align:right;">
+1.4081688
+</td>
+<td style="text-align:right;">
+0.0960042
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pNR2A_N
+</td>
+<td style="text-align:right;">
+0.7269328
+</td>
+<td style="text-align:right;">
+0.7195913
+</td>
+<td style="text-align:right;">
+0.1880132
+</td>
+<td style="text-align:right;">
+0.2812848
+</td>
+<td style="text-align:right;">
+1.4127502
+</td>
+<td style="text-align:right;">
+0.0470035
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pNR2B_N
+</td>
+<td style="text-align:right;">
+1.5619653
+</td>
+<td style="text-align:right;">
+1.5636965
+</td>
+<td style="text-align:right;">
+0.2707372
+</td>
+<td style="text-align:right;">
+0.3016086
+</td>
+<td style="text-align:right;">
+2.7239654
+</td>
+<td style="text-align:right;">
+0.5573777
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pPKCAB_N
+</td>
+<td style="text-align:right;">
+1.5253377
+</td>
+<td style="text-align:right;">
+1.3657443
+</td>
+<td style="text-align:right;">
+0.4817800
+</td>
+<td style="text-align:right;">
+0.5678405
+</td>
+<td style="text-align:right;">
+3.0613871
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pRSK_N
+</td>
+<td style="text-align:right;">
+0.4428477
+</td>
+<td style="text-align:right;">
+0.4405978
+</td>
+<td style="text-align:right;">
+0.0666722
+</td>
+<td style="text-align:right;">
+0.0959416
+</td>
+<td style="text-align:right;">
+0.6509618
+</td>
+<td style="text-align:right;">
+0.0000459
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AKT_N
+</td>
+<td style="text-align:right;">
+0.6822365
+</td>
+<td style="text-align:right;">
+0.6824689
+</td>
+<td style="text-align:right;">
+0.1274340
+</td>
+<td style="text-align:right;">
+0.0644212
+</td>
+<td style="text-align:right;">
+1.1821747
+</td>
+<td style="text-align:right;">
+0.0106329
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BRAF_N
+</td>
+<td style="text-align:right;">
+0.3785185
+</td>
+<td style="text-align:right;">
+0.3266579
+</td>
+<td style="text-align:right;">
+0.2163879
+</td>
+<td style="text-align:right;">
+0.1438936
+</td>
+<td style="text-align:right;">
+2.1334157
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CAMKII_N
+</td>
+<td style="text-align:right;">
+0.3633566
+</td>
+<td style="text-align:right;">
+0.3602602
+</td>
+<td style="text-align:right;">
+0.0523518
+</td>
+<td style="text-align:right;">
+0.2129595
+</td>
+<td style="text-align:right;">
+0.5862445
+</td>
+<td style="text-align:right;">
+0.0000002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CREB_N
+</td>
+<td style="text-align:right;">
+0.1804916
+</td>
+<td style="text-align:right;">
+0.1795798
+</td>
+<td style="text-align:right;">
+0.0263702
+</td>
+<td style="text-align:right;">
+0.1136364
+</td>
+<td style="text-align:right;">
+0.3195582
+</td>
+<td style="text-align:right;">
+0.0011003
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ELK_N
+</td>
+<td style="text-align:right;">
+1.1733998
+</td>
+<td style="text-align:right;">
+1.0961858
+</td>
+<td style="text-align:right;">
+0.3357856
+</td>
+<td style="text-align:right;">
+0.4976950
+</td>
+<td style="text-align:right;">
+2.8029483
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ERK_N
+</td>
+<td style="text-align:right;">
+2.4744915
+</td>
+<td style="text-align:right;">
+2.4014622
+</td>
+<td style="text-align:right;">
+0.6533970
+</td>
+<td style="text-align:right;">
+1.1317957
+</td>
+<td style="text-align:right;">
+5.1984041
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GSK3B_N
+</td>
+<td style="text-align:right;">
+1.1726026
+</td>
+<td style="text-align:right;">
+1.1598224
+</td>
+<td style="text-align:right;">
+0.2447518
+</td>
+<td style="text-align:right;">
+0.1511243
+</td>
+<td style="text-align:right;">
+2.4757512
+</td>
+<td style="text-align:right;">
+0.0000051
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JNK_N
+</td>
+<td style="text-align:right;">
+0.2416441
+</td>
+<td style="text-align:right;">
+0.2449473
+</td>
+<td style="text-align:right;">
+0.0339009
+</td>
+<td style="text-align:right;">
+0.0462978
+</td>
+<td style="text-align:right;">
+0.3871907
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MEK_N
+</td>
+<td style="text-align:right;">
+0.2727890
+</td>
+<td style="text-align:right;">
+0.2733610
+</td>
+<td style="text-align:right;">
+0.0410755
+</td>
+<td style="text-align:right;">
+0.1472015
+</td>
+<td style="text-align:right;">
+0.4154079
+</td>
+<td style="text-align:right;">
+0.0035729
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TRKA_N
+</td>
+<td style="text-align:right;">
+0.6931796
+</td>
+<td style="text-align:right;">
+0.7049644
+</td>
+<td style="text-align:right;">
+0.1208253
+</td>
+<td style="text-align:right;">
+0.1987434
+</td>
+<td style="text-align:right;">
+1.0016229
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RSK_N
+</td>
+<td style="text-align:right;">
+0.1684168
+</td>
+<td style="text-align:right;">
+0.1666920
+</td>
+<td style="text-align:right;">
+0.0281377
+</td>
+<td style="text-align:right;">
+0.1073944
+</td>
+<td style="text-align:right;">
+0.3051360
+</td>
+<td style="text-align:right;">
+0.0000267
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+APP_N
+</td>
+<td style="text-align:right;">
+0.4048083
+</td>
+<td style="text-align:right;">
+0.4020387
+</td>
+<td style="text-align:right;">
+0.0611728
+</td>
+<td style="text-align:right;">
+0.2355954
+</td>
+<td style="text-align:right;">
+0.6326627
+</td>
+<td style="text-align:right;">
+0.0029963
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Bcatenin_N
+</td>
+<td style="text-align:right;">
+2.1465500
+</td>
+<td style="text-align:right;">
+2.1147694
+</td>
+<td style="text-align:right;">
+0.4357422
+</td>
+<td style="text-align:right;">
+1.1348861
+</td>
+<td style="text-align:right;">
+3.6805518
+</td>
+<td style="text-align:right;">
+0.0131664
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SOD1_N
+</td>
+<td style="text-align:right;">
+0.5426346
+</td>
+<td style="text-align:right;">
+0.4441345
+</td>
+<td style="text-align:right;">
+0.2805681
+</td>
+<td style="text-align:right;">
+0.2171202
+</td>
+<td style="text-align:right;">
+1.8728985
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MTOR_N
+</td>
+<td style="text-align:right;">
+0.4524587
+</td>
+<td style="text-align:right;">
+0.4524914
+</td>
+<td style="text-align:right;">
+0.0654883
+</td>
+<td style="text-align:right;">
+0.2011434
+</td>
+<td style="text-align:right;">
+0.6767480
+</td>
+<td style="text-align:right;">
+0.0000448
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+P38_N
+</td>
+<td style="text-align:right;">
+0.4153108
+</td>
+<td style="text-align:right;">
+0.4077935
+</td>
+<td style="text-align:right;">
+0.0892897
+</td>
+<td style="text-align:right;">
+0.2278804
+</td>
+<td style="text-align:right;">
+0.9332563
+</td>
+<td style="text-align:right;">
+0.0000027
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pMTOR_N
+</td>
+<td style="text-align:right;">
+0.7590468
+</td>
+<td style="text-align:right;">
+0.7607562
+</td>
+<td style="text-align:right;">
+0.1224459
+</td>
+<td style="text-align:right;">
+0.1665787
+</td>
+<td style="text-align:right;">
+1.1248834
+</td>
+<td style="text-align:right;">
+0.0012843
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+DSCR1_N
+</td>
+<td style="text-align:right;">
+0.5851857
+</td>
+<td style="text-align:right;">
+0.5767120
+</td>
+<td style="text-align:right;">
+0.1006012
+</td>
+<td style="text-align:right;">
+0.1553210
+</td>
+<td style="text-align:right;">
+0.9164295
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AMPKA_N
+</td>
+<td style="text-align:right;">
+0.3683699
+</td>
+<td style="text-align:right;">
+0.3585030
+</td>
+<td style="text-align:right;">
+0.0625834
+</td>
+<td style="text-align:right;">
+0.2264087
+</td>
+<td style="text-align:right;">
+0.7008385
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NR2B_N
+</td>
+<td style="text-align:right;">
+0.5653166
+</td>
+<td style="text-align:right;">
+0.5634724
+</td>
+<td style="text-align:right;">
+0.0882014
+</td>
+<td style="text-align:right;">
+0.1847845
+</td>
+<td style="text-align:right;">
+0.9720198
+</td>
+<td style="text-align:right;">
+0.0001657
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pNUMB_N
+</td>
+<td style="text-align:right;">
+0.3570947
+</td>
+<td style="text-align:right;">
+0.3473567
+</td>
+<td style="text-align:right;">
+0.0630253
+</td>
+<td style="text-align:right;">
+0.1855976
+</td>
+<td style="text-align:right;">
+0.6310522
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RAPTOR_N
+</td>
+<td style="text-align:right;">
+0.3158128
+</td>
+<td style="text-align:right;">
+0.3048973
+</td>
+<td style="text-align:right;">
+0.0541627
+</td>
+<td style="text-align:right;">
+0.1948245
+</td>
+<td style="text-align:right;">
+0.5266814
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TIAM1_N
+</td>
+<td style="text-align:right;">
+0.4186054
+</td>
+<td style="text-align:right;">
+0.4071995
+</td>
+<td style="text-align:right;">
+0.0672879
+</td>
+<td style="text-align:right;">
+0.2377771
+</td>
+<td style="text-align:right;">
+0.7221216
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pP70S6_N
+</td>
+<td style="text-align:right;">
+0.3944753
+</td>
+<td style="text-align:right;">
+0.3777001
+</td>
+<td style="text-align:right;">
+0.1561702
+</td>
+<td style="text-align:right;">
+0.1311198
+</td>
+<td style="text-align:right;">
+1.1291715
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NUMB_N
+</td>
+<td style="text-align:right;">
+0.1810801
+</td>
+<td style="text-align:right;">
+0.1782350
+</td>
+<td style="text-align:right;">
+0.0292964
+</td>
+<td style="text-align:right;">
+0.1179985
+</td>
+<td style="text-align:right;">
+0.3165753
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+P70S6_N
+</td>
+<td style="text-align:right;">
+0.9431161
+</td>
+<td style="text-align:right;">
+0.9312826
+</td>
+<td style="text-align:right;">
+0.1728377
+</td>
+<td style="text-align:right;">
+0.3441198
+</td>
+<td style="text-align:right;">
+1.6799532
+</td>
+<td style="text-align:right;">
+0.0001440
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pGSK3B_N
+</td>
+<td style="text-align:right;">
+0.1612110
+</td>
+<td style="text-align:right;">
+0.1602122
+</td>
+<td style="text-align:right;">
+0.0193079
+</td>
+<td style="text-align:right;">
+0.0999759
+</td>
+<td style="text-align:right;">
+0.2532101
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pPKCG_N
+</td>
+<td style="text-align:right;">
+1.7065987
+</td>
+<td style="text-align:right;">
+1.6645600
+</td>
+<td style="text-align:right;">
+0.5784423
+</td>
+<td style="text-align:right;">
+0.5987666
+</td>
+<td style="text-align:right;">
+3.3819763
+</td>
+<td style="text-align:right;">
+0.0021165
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CDK5_N
+</td>
+<td style="text-align:right;">
+0.2924341
+</td>
+<td style="text-align:right;">
+0.2938195
+</td>
+<td style="text-align:right;">
+0.0373799
+</td>
+<td style="text-align:right;">
+0.1811570
+</td>
+<td style="text-align:right;">
+0.8174018
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S6_N
+</td>
+<td style="text-align:right;">
+0.4292256
+</td>
+<td style="text-align:right;">
+0.4009994
+</td>
+<td style="text-align:right;">
+0.1374403
+</td>
+<td style="text-align:right;">
+0.1302063
+</td>
+<td style="text-align:right;">
+0.8226108
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ADARB1_N
+</td>
+<td style="text-align:right;">
+1.1974200
+</td>
+<td style="text-align:right;">
+1.1282548
+</td>
+<td style="text-align:right;">
+0.3617434
+</td>
+<td style="text-align:right;">
+0.5291078
+</td>
+<td style="text-align:right;">
+2.5398896
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+AcetylH3K9_N
+</td>
+<td style="text-align:right;">
+0.2164822
+</td>
+<td style="text-align:right;">
+0.1504173
+</td>
+<td style="text-align:right;">
+0.1853087
+</td>
+<td style="text-align:right;">
+0.0525284
+</td>
+<td style="text-align:right;">
+1.4593869
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RRP1_N
+</td>
+<td style="text-align:right;">
+0.1666312
+</td>
+<td style="text-align:right;">
+0.1620995
+</td>
+<td style="text-align:right;">
+0.0318956
+</td>
+<td style="text-align:right;">
+-0.0620079
+</td>
+<td style="text-align:right;">
+0.6123770
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BAX_N
+</td>
+<td style="text-align:right;">
+0.1793067
+</td>
+<td style="text-align:right;">
+0.1807448
+</td>
+<td style="text-align:right;">
+0.0188264
+</td>
+<td style="text-align:right;">
+0.0723255
+</td>
+<td style="text-align:right;">
+0.2411411
+</td>
+<td style="text-align:right;">
+0.0000033
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ARC_N
+</td>
+<td style="text-align:right;">
+0.1215208
+</td>
+<td style="text-align:right;">
+0.1216265
+</td>
+<td style="text-align:right;">
+0.0142765
+</td>
+<td style="text-align:right;">
+0.0672543
+</td>
+<td style="text-align:right;">
+0.1587478
+</td>
+<td style="text-align:right;">
+0.0164045
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ERBB4_N
+</td>
+<td style="text-align:right;">
+0.1564775
+</td>
+<td style="text-align:right;">
+0.1563714
+</td>
+<td style="text-align:right;">
+0.0150708
+</td>
+<td style="text-align:right;">
+0.1002173
+</td>
+<td style="text-align:right;">
+0.2086975
+</td>
+<td style="text-align:right;">
+0.0066606
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nNOS_N
+</td>
+<td style="text-align:right;">
+0.1813001
+</td>
+<td style="text-align:right;">
+0.1826720
+</td>
+<td style="text-align:right;">
+0.0249190
+</td>
+<td style="text-align:right;">
+0.0997344
+</td>
+<td style="text-align:right;">
+0.2607386
+</td>
+<td style="text-align:right;">
+0.0522203
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Tau_N
+</td>
+<td style="text-align:right;">
+0.2104892
+</td>
+<td style="text-align:right;">
+0.1886295
+</td>
+<td style="text-align:right;">
+0.0690099
+</td>
+<td style="text-align:right;">
+0.0962328
+</td>
+<td style="text-align:right;">
+0.6027681
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GFAP_N
+</td>
+<td style="text-align:right;">
+0.1208891
+</td>
+<td style="text-align:right;">
+0.1204592
+</td>
+<td style="text-align:right;">
+0.0132333
+</td>
+<td style="text-align:right;">
+0.0861142
+</td>
+<td style="text-align:right;">
+0.2136206
+</td>
+<td style="text-align:right;">
+0.0000001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GluR3_N
+</td>
+<td style="text-align:right;">
+0.2218510
+</td>
+<td style="text-align:right;">
+0.2169020
+</td>
+<td style="text-align:right;">
+0.0348858
+</td>
+<td style="text-align:right;">
+0.1113821
+</td>
+<td style="text-align:right;">
+0.3310159
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GluR4_N
+</td>
+<td style="text-align:right;">
+0.1265601
+</td>
+<td style="text-align:right;">
+0.1235490
+</td>
+<td style="text-align:right;">
+0.0268850
+</td>
+<td style="text-align:right;">
+0.0725797
+</td>
+<td style="text-align:right;">
+0.5370041
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+IL1B_N
+</td>
+<td style="text-align:right;">
+0.5273487
+</td>
+<td style="text-align:right;">
+0.5266815
+</td>
+<td style="text-align:right;">
+0.0820574
+</td>
+<td style="text-align:right;">
+0.2840013
+</td>
+<td style="text-align:right;">
+0.8897351
+</td>
+<td style="text-align:right;">
+0.1160793
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+P3525_N
+</td>
+<td style="text-align:right;">
+0.2912763
+</td>
+<td style="text-align:right;">
+0.2906460
+</td>
+<td style="text-align:right;">
+0.0300151
+</td>
+<td style="text-align:right;">
+0.2074378
+</td>
+<td style="text-align:right;">
+0.4437350
+</td>
+<td style="text-align:right;">
+0.0298268
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pCASP9_N
+</td>
+<td style="text-align:right;">
+1.5483477
+</td>
+<td style="text-align:right;">
+1.5226932
+</td>
+<td style="text-align:right;">
+0.2481315
+</td>
+<td style="text-align:right;">
+0.8531756
+</td>
+<td style="text-align:right;">
+2.5862159
+</td>
+<td style="text-align:right;">
+0.0000035
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PSD95_N
+</td>
+<td style="text-align:right;">
+2.2352360
+</td>
+<td style="text-align:right;">
+2.2421973
+</td>
+<td style="text-align:right;">
+0.2543948
+</td>
+<td style="text-align:right;">
+1.2060978
+</td>
+<td style="text-align:right;">
+2.8778734
+</td>
+<td style="text-align:right;">
+0.0035208
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SNCA_N
+</td>
+<td style="text-align:right;">
+0.1598210
+</td>
+<td style="text-align:right;">
+0.1575492
+</td>
+<td style="text-align:right;">
+0.0241501
+</td>
+<td style="text-align:right;">
+0.1012332
+</td>
+<td style="text-align:right;">
+0.2576159
+</td>
+<td style="text-align:right;">
+0.0000003
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ubiquitin_N
+</td>
+<td style="text-align:right;">
+1.2392704
+</td>
+<td style="text-align:right;">
+1.2365858
+</td>
+<td style="text-align:right;">
+0.1735803
+</td>
+<td style="text-align:right;">
+0.7506641
+</td>
+<td style="text-align:right;">
+1.8972023
+</td>
+<td style="text-align:right;">
+0.1640128
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pGSK3B_Tyr216_N
+</td>
+<td style="text-align:right;">
+0.8487666
+</td>
+<td style="text-align:right;">
+0.8498583
+</td>
+<td style="text-align:right;">
+0.0943114
+</td>
+<td style="text-align:right;">
+0.5773968
+</td>
+<td style="text-align:right;">
+1.2045981
+</td>
+<td style="text-align:right;">
+0.0001821
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SHH_N
+</td>
+<td style="text-align:right;">
+0.2266765
+</td>
+<td style="text-align:right;">
+0.2239997
+</td>
+<td style="text-align:right;">
+0.0289890
+</td>
+<td style="text-align:right;">
+0.1558693
+</td>
+<td style="text-align:right;">
+0.3582888
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BAD_N
+</td>
+<td style="text-align:right;">
+0.1579142
+</td>
+<td style="text-align:right;">
+0.1523133
+</td>
+<td style="text-align:right;">
+0.0295365
+</td>
+<td style="text-align:right;">
+0.0883046
+</td>
+<td style="text-align:right;">
+0.2820163
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BCL2_N
+</td>
+<td style="text-align:right;">
+0.1347617
+</td>
+<td style="text-align:right;">
+0.1294683
+</td>
+<td style="text-align:right;">
+0.0274170
+</td>
+<td style="text-align:right;">
+0.0806568
+</td>
+<td style="text-align:right;">
+0.2615057
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pS6_N
+</td>
+<td style="text-align:right;">
+0.1215208
+</td>
+<td style="text-align:right;">
+0.1216265
+</td>
+<td style="text-align:right;">
+0.0142765
+</td>
+<td style="text-align:right;">
+0.0672543
+</td>
+<td style="text-align:right;">
+0.1587478
+</td>
+<td style="text-align:right;">
+0.0164045
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pCFOS_N
+</td>
+<td style="text-align:right;">
+0.1310530
+</td>
+<td style="text-align:right;">
+0.1265230
+</td>
+<td style="text-align:right;">
+0.0238627
+</td>
+<td style="text-align:right;">
+0.0854192
+</td>
+<td style="text-align:right;">
+0.2565289
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SYP_N
+</td>
+<td style="text-align:right;">
+0.4460730
+</td>
+<td style="text-align:right;">
+0.4484586
+</td>
+<td style="text-align:right;">
+0.0664322
+</td>
+<td style="text-align:right;">
+0.2586258
+</td>
+<td style="text-align:right;">
+0.7595884
+</td>
+<td style="text-align:right;">
+0.1174341
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+H3AcK18_N
+</td>
+<td style="text-align:right;">
+0.1696092
+</td>
+<td style="text-align:right;">
+0.1582403
+</td>
+<td style="text-align:right;">
+0.0594023
+</td>
+<td style="text-align:right;">
+0.0796909
+</td>
+<td style="text-align:right;">
+0.4797633
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+EGR1_N
+</td>
+<td style="text-align:right;">
+0.1831345
+</td>
+<td style="text-align:right;">
+0.1749352
+</td>
+<td style="text-align:right;">
+0.0404056
+</td>
+<td style="text-align:right;">
+0.1055372
+</td>
+<td style="text-align:right;">
+0.3606921
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+H3MeK4_N
+</td>
+<td style="text-align:right;">
+0.2054396
+</td>
+<td style="text-align:right;">
+0.1939935
+</td>
+<td style="text-align:right;">
+0.0555139
+</td>
+<td style="text-align:right;">
+0.1017870
+</td>
+<td style="text-align:right;">
+0.4139027
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CaNA_N
+</td>
+<td style="text-align:right;">
+1.3377837
+</td>
+<td style="text-align:right;">
+1.3174408
+</td>
+<td style="text-align:right;">
+0.3171262
+</td>
+<td style="text-align:right;">
+0.5864788
+</td>
+<td style="text-align:right;">
+2.1297911
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+</tbody>
+</table>
+<div id="incluindo-gráficos" class="section level2 hasAnchor" number="12.1">
+<h2><span class="header-section-number">12.1</span> Incluindo gráficos<a href="r-markdown.html#incluindo-gráficos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Você pode incluir um gráfico, como no exemplo abaixo:</p>
+<p><img src="_main_files/figure-html/12-%20markdown%203-1.png" width="672" /></p>
+<p>Veja que com echo = FALSE adicionado ao chunk previne que o código seja incluído no documento gerado.</p>
+</div>
+<div id="chunk-opções" class="section level2 hasAnchor" number="12.2">
+<h2><span class="header-section-number">12.2</span> Chunk: opções<a href="r-markdown.html#chunk-opções" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As opções de chunk são escritas nos cabeçalhos.</p>
+<p>Por exemplo:</p>
+<p>{r my-chunk, fig.height=4, dev=‘jpeg’, my-chunk, echo=FALSE}</p>
+<p>Uma opção de chunk especial é o rótulo (my-chunk, no exemplo acima). O rótulo para cada chunk é considerado exclusivo dentro do documento. Isso é especialmente importante para nomes de arquivos de cache e plotagem, porque esses nomes de arquivos são baseados em rótulos de chunk.</p>
+<p>Execução do código</p>
+<p>eval: (TRUE; lógico ou numérico) Se deve executar o código do chunk. Também pode ser um vetor numérico para escolher quais expressões R executar, por exemplo, eval = c(1, 3, 4) avaliará a primeira, terceira e quarta expressões e eval = -(4:5) avaliará todas as expressões, exceto a quarta e a quinta.</p>
+<p>Saída de texto</p>
+<p>echo: (TRUE; lógico ou numérico) Se o código-fonte deve ser exibido no documento de saída. Além de TRUE/FALSE, que mostra/oculta o código-fonte, também podemos usar um vetor numérico para escolher qual(is) expressão(ões) R ecoará em um pedaço, por exemplo, echo = 2:3 significa ecoar apenas a 2ª e a 3ª expressões , e echo = -4 significa excluir a 4ª expressão.</p>
+<p>Outras opções: <a href="https://yihui.org/knitr/options/" class="uri">https://yihui.org/knitr/options/</a></p>
+</div>
+<div id="formatação" class="section level2 hasAnchor" number="12.3">
+<h2><span class="header-section-number">12.3</span> Formatação<a href="r-markdown.html#formatação" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Para formatar um um texto em <em>itálico</em>, coloque o texto entre asteriscos. Para <strong>negrito</strong>, coloque entre 2 asteriscos. Para subescrito coloque em sinais de til (H<sub>2</sub>O) e para sobrescrito, coloque entre acentos circunflexos (p<sup>2</sup>).</p>
+<p>Também podemos inserir códigos dentro das linhas. Nesse caso, o código deve ser inserido entre sinais de crase.</p>
+<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="r-markdown.html#cb601-1" tabindex="-1"></a>x<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">34</span>,<span class="dv">45</span>,<span class="dv">12</span>,<span class="dv">33</span>,<span class="dv">56</span>,<span class="dv">74</span>,<span class="dv">42</span>,<span class="dv">23</span>,<span class="dv">45</span>,<span class="dv">55</span>)</span>
+<span id="cb601-2"><a href="r-markdown.html#cb601-2" tabindex="-1"></a>media<span class="ot">&lt;-</span><span class="fu">mean</span>(x)</span></code></pre></div>
+<p>Então em vez de digitar um valor no texto, podemos fazer assim:<br />
+O tamnho da amostra é N = <code>length(x)</code>, a média é <code>mean(x)</code> e o desvio padrão é <code>sd(x)</code>.</p>
+<p>Para saber mais:
+<span class="citation">(<a href="#ref-xie2023r">Xie, Allaire, and Grolemund 2023</a>)</span></p>
+
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-xie2023r" class="csl-entry">
+Xie, Yihui, Joseph J Allaire, and Garrett Grolemund. 2023. <em>R Markdown: The Definitive Guide</em>. CRC Press.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="pesquisa-bibliográfica-e-bibliometria.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
